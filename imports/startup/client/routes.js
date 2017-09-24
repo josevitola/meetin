@@ -8,9 +8,9 @@ FlowRouter.route('/', {
   name: 'home'
 });
 
-FlowRouter.route('/workshop', {
-  action: function() {
+FlowRouter.route('/workshops/:_id', {
+  action: function( params, queryParams ) {
     BlazeLayout.render('applicationLayout', { main: 'workshop' })
   },
-  name: 'home'
+  name: 'workshop'
 });

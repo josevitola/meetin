@@ -4,6 +4,10 @@ import '../components/workCreateModal.js';
 import './home.html';
 
 Template.home.events({
+  'click .ui.logout.button'() {
+    Meteor.logout();
+  },
+
   'submit .ui.signup.form'(e) {
     e.preventDefault();
     const target = e.currentTarget;
