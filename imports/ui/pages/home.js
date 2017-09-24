@@ -8,6 +8,11 @@ import './home.html';
 
 Template.home.helpers({
   getWorkshops() {
-    return Workshops.find().fetch();
+    const workshops = Workshops.find().fetch();
+    let ids = [];
+    workshops.forEach((element) => {
+      ids.push(element._id);
+    });
+    return ids;
   }
 });

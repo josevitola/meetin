@@ -1,0 +1,13 @@
+<template name="user">
+  <h1>{{getName}}</h1>
+
+  <h3>Eventos creados por {{getName}}</h3>
+  {{#each getOwnedWorkshops}}
+    {{> workshopCard id=this}}
+  {{/each}}
+
+  <h3>Eventos a los que {{getName}} asistirá</h3>
+  {{#each getWorkshopsToAttend}}
+    {{> workshopCard id=this}}
+  {{/each}}
+</template>
