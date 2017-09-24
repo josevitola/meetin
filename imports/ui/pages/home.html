@@ -4,4 +4,9 @@
   {{#if currentUser}}
     {{> workCreateButton}}
   {{/if}}
+
+  {{#each getWorkshops}}
+    {{> workshopCard ws=this}}
+  {{/each}}
+
 </template>

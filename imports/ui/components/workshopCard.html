@@ -1,0 +1,21 @@
+<template name="workshopCard">
+  <a class="ui card" href="/workshops/{{ws._id}}">
+  <div class="content">
+    <div class="header">{{ws.name}}</div>
+    <div class="meta">
+      <span class="category">Taller</span>
+    </div>
+    <div class="description">
+      <p>Esta es una descripción del evento.</p>
+    </div>
+  </div>
+  <div class="extra content">
+    <div class="right floated author">
+      <a href="#">
+        <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+        {{getOwnerName ws.owner}}
+      </a>
+    </div>
+  </div>
+</a>
+</template>

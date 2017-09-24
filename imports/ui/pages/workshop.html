@@ -1,21 +1,22 @@
 <template name="workshop">
   <h1>Taller: {{getWorkshopName}}</h1>
 
-  <ol>
+  <ul>
     <li>Nombre: {{getWorkshopName}}</li>
     <li>Dirección: {{getWorkshopAddr}}</li>
     <li>Precio: {{getWorkshopPrice}}</li>
-  </ol>
+    <li>Creador: <a href="#">{{getOwnerName}}</a></li>
+  </ul>
 
   {{#if isUserAttending}}
     <button class="ui join workshop labeled icon button">
-      <i class="right arrow icon"></i>
-      Asistir
+      <i class="check icon"></i>
+      Estás asistiendo
     </button>
   {{else}}
     <button class="ui join workshop labeled icon button">
-      <i class="check icon"></i>
-      Estás asistiendo
+      <i class="right arrow icon"></i>
+      Asistir
     </button>
   {{/if}}
 </template>

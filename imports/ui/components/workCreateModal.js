@@ -13,12 +13,14 @@ Template.workCreateButton.events({
       onApprove: function() {
         const name = $('input[name=work-name]').val();
         const addr = $('input[name=work-addr]').val();
-        const price = $('input[name=work-price]').val();
+        // TODO security on field - stop creation if price is NaN
+        const price = parseInt($('input[name=work-price]').val());
 
         const workshop = {
           name: name,
           addr: addr,
-          price: price
+          price: price,
+          owner: Meteor.userId()
         }
 
         Meteor.call('workshops.insert', workshop);

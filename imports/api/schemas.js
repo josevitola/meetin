@@ -14,6 +14,7 @@ export const UserSchema = new SimpleSchema({
 
 export const WorkshopSchema = new SimpleSchema({
   name: { type: String },
+  owner: { type: String },
   addr: { type: String },
   price: { type: Number }
 });
