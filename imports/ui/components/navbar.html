@@ -1,0 +1,21 @@
+<template name="navbar">
+  <div class="ui secondary pointing menu">
+    <a href="/" class="active item">
+      Meetin
+    </a>
+    <div class="right menu">
+      {{#if currentUser}}
+      <a class="ui logout item">
+        Cerrar sesión
+      </a>
+      {{else}}
+      <a class="ui item">
+        {{> loginButton}}
+      </a>
+      <a class="ui item">
+        {{> signupButton}}
+      </a>
+      {{/if}}
+    </div>
+  </div>
+</template>

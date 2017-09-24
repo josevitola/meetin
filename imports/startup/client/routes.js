@@ -1,16 +1,17 @@
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/workshop.js';
+import '/imports/ui/components/navbar.js';
 
 FlowRouter.route('/', {
   action: function() {
-    BlazeLayout.render('applicationLayout', { main: 'home' })
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home' })
   },
   name: 'home'
 });
 
 FlowRouter.route('/workshops/:_id', {
   action: function( params, queryParams ) {
-    BlazeLayout.render('applicationLayout', { main: 'workshop' })
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'workshop' })
   },
   name: 'workshop'
 });
