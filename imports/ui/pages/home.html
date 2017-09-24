@@ -1,5 +1,9 @@
 <template name="home">
   <h1>Home page</h1>
+
+  {{#if currentUser}}
+    {{> workCreateButton}}
+  {{else}}
   <h2>Crear un usuario</h2>
   <form class="ui login form">
     <div class="field">
@@ -31,4 +35,5 @@
     </div>
     <button class="ui button" type="submit">Submit</button>
   </form>
+  {{/if}}
 </template>
