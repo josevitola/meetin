@@ -1,13 +1,34 @@
 <template name="home">
-  <h1>Home page</h1>
+
+  <header class="masthead">
+    <div class="header-content">
+      <div class="header-content-inner">
+        <h3 id="homeHeading">
+          Descubre nuevas experiencias organizadas por personas como tú
+        </h2>
+      </div>
+    </div>
+  </header>
+
+  <section id="activities">
+    <div class="ui menu">
+      <div class="ui right menu">
+        <div class="ui icon input">
+          <input type="text" placeholder="Buscar...">
+          <i class="search icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four link cards">
+      {{#each getWorkshops}}
+        {{> workshopCard id=this}}
+      {{/each}}
+    </div>
+  </section>
 
   {{#if currentUser}}
     {{> workCreateButton}}
   {{/if}}
-
-  <!-- TODO create WorkshopDashboard -->
-  {{#each getWorkshops}}
-    {{> workshopCard id=this}}
-  {{/each}}
 
 </template>
