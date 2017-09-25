@@ -8,15 +8,17 @@
     <li>Creador: <a href="/users/{{getOwnerId}}">{{getOwnerName}}</a></li>
   </ul>
 
-  {{#if isUserAttending}}
-    <button class="ui join workshop labeled icon button">
-      <i class="check icon"></i>
-      Estás asistiendo
-    </button>
-  {{else}}
-    <button class="ui join workshop labeled icon button">
-      <i class="right arrow icon"></i>
-      Asistir
-    </button>
+  {{#if currentUser}}
+    {{#if isUserAttending}}
+      <button class="ui join workshop labeled icon button">
+        <i class="check icon"></i>
+        Estás asistiendo
+      </button>
+    {{else}}
+      <button class="ui join workshop labeled icon button">
+        <i class="right arrow icon"></i>
+        Asistir
+      </button>
+    {{/if}}
   {{/if}}
 </template>

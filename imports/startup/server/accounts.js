@@ -18,8 +18,9 @@ Meteor.methods({
     if (!userDraft.password || userDraft.password.length < 4) {
       throw new Meteor.Error(403, 'Password must be longer than 3 ');
     }
+    console.log(userDraft);
     if (!validateEmail(userDraft.email)) {
-      throw new Meteor.Error(403, 'Username must have at least 3 characters');
+      throw new Meteor.Error(403, 'Email is not validated');
     }
     if (!userDraft.profile.name) {
       throw new Meteor.Error(403, 'Name may not be empty')
