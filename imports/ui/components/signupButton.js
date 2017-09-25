@@ -4,7 +4,7 @@ import './signupButton.html';
 
 Template.signupButton.events({
   'click .ui.signup.button'() {
-    $('#modalView').modal({
+    $('#signupModalView').modal({
       onDeny: function(){
         console.log('canceled')
         return false;

@@ -4,7 +4,7 @@ import './loginButton.html';
 
 Template.loginButton.events({
   'click .ui.login.button'() {
-    $('#modalView').modal({
+    $('#loginModalView').modal({
       onDeny: function(){
         console.log('canceled')
         return false;

@@ -5,7 +5,7 @@
     <li>Nombre: {{getWorkshopName}}</li>
     <li>Dirección: {{getWorkshopAddr}}</li>
     <li>Precio: {{getWorkshopPrice}}</li>
-    <li>Creador: <a href="#">{{getOwnerName}}</a></li>
+    <li>Creador: <a href="/users/{{getOwnerId}}">{{getOwnerName}}</a></li>
   </ul>
 
   {{#if isUserAttending}}

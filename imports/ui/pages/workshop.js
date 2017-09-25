@@ -16,9 +16,12 @@ Template.workshop.helpers({
   isUserAttending() {
     return Meteor.user().profile.workshops.indexOf(FlowRouter.getParam('_id')) > -1;
   },
-  getOwnerName(owner) {
-    let id = Template.instance().ws.get().owner;
-    return Meteor.users.find({_id: id}).fetch()[0].profile.name;
+  getOwnerId() {
+    return Template.instance().ws.get().owner;
+  },
+  getOwnerName() {
+    let wsId = Template.instance().ws.get().owner;
+    return Meteor.users.find({_id: wsId}).fetch()[0].profile.name;
   },
   getWorkshopName() {
     return Template.instance().ws.get().name;
