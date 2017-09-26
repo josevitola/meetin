@@ -3,23 +3,26 @@
   <header class="masthead">
     <div class="header-content">
       <div class="header-content-inner">
-        <h1 id="homeHeading">
+        <h1 class="ui heading" id="home-heading">
           Descubre nuevas experiencias organizadas por personas como tú
         </h1>
+        <a class="ui item">
+          {{> callToAction}}
+        </a>
       </div>
     </div>
   </header>
 
-  <section id="activities">
-    <div class="ui menu">
-      <div class="ui right menu">
-        <div class="ui icon input">
-          <input type="text" placeholder="Buscar...">
-          <i class="search icon"></i>
-        </div>
+  <div class="ui secondary menu">
+    <div class="ui right menu">
+      <div class="ui icon input">
+        <input type="text" placeholder="Buscar...">
+        <i class="search icon"></i>
       </div>
     </div>
+  </div>
 
+  <section id="activities">
     <div class="ui four link cards">
       {{#each getWorkshops}}
         {{> workshopCard id=this}}
