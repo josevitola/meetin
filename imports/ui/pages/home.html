@@ -3,8 +3,16 @@
   <header class="masthead">
     <div class="header-content">
       <div class="header-content-inner">
-        <h2>Descubre nuevas experiencias organizadas por personas como tú</h2>
 
+        <!-- <h2>Descubre nuevas experiencias organizadas por personas como tú</h2>
+
+
+      </div>
+    </div>
+  </header> -->
+        <h1 class="ui heading" id="home-heading">
+          Descubre nuevas experiencias organizadas por personas como tú
+        </h1>
         <div class="ui big search">
           <div class="ui icon input">
             <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
@@ -12,6 +20,9 @@
           </div>
           <div class="results"></div>
         </div>
+        <a class="ui item">
+          {{> callToAction}}
+        </a>     
       </div>
     </div>
   </header>
