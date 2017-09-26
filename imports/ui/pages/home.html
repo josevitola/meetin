@@ -1,25 +1,27 @@
 <template name="home">
-
+  {{#unless currentUser}}
   <header class="masthead">
     <div class="header-content">
       <div class="header-content-inner">
-        <h2 id="homeHeading">
-          Descubre nuevas experiencias organizadas por personas como tú
-        </h2>
-      </div>
-    </div>
-  </header>
+        <h2>Descubre nuevas experiencias organizadas por personas como tú</h2>
 
-  <section id="activities">
-    <div class="ui menu">
-      <div class="ui right menu">
-        <div class="ui icon input">
-          <input type="text" placeholder="Buscar...">
-          <i class="search icon"></i>
+        <div class="ui big search">
+          <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
         </div>
       </div>
     </div>
+  </header>
+  {{/unless}}
 
+  {{#if currentUser}}
+    {{> workCreateButton}}
+  {{/if}}
+
+  <section id="activities">
     <div class="ui four link cards">
       {{#each getWorkshops}}
         {{> workshopCard id=this}}
@@ -27,8 +29,19 @@
     </div>
   </section>
 
-  {{#if currentUser}}
-    {{> workCreateButton}}
-  {{/if}}
-
+  <section id="footnote" class="ui grid">
+    <div class="ten wide column">
+      <!-- <h1>Lalala</h1> -->
+    </div>
+    <div class="six wide column">
+      <h3>Meetin - un prototipo de Apps.co</h3>
+      <ul>
+        <li>Jose Nieto</li>
+        <li>Sophie Cisneros</li>
+        <li>Yeliana Torres</li>
+        <li>Jesús Chavarro</li>
+        <li>Kevin</li>
+      </ul>
+    </div>
+  </section>
 </template>

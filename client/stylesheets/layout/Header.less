@@ -1,0 +1,79 @@
+@import "../base/colors";
+
+header.masthead {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  text-align: center;
+  color: #fff;
+  background-image: url("https://i2.wp.com/www.mugsnoticias.com.mx/wp-content/uploads/IMG-20161226-WA0017.jpg");
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  // -webkit-filter: blur(5px);
+  // -moz-filter: blur(5px);
+  // -o-filter: blur(5px);
+  // -ms-filter: blur(5px);
+  // filter: blur(5px);
+}
+
+header.masthead .header-content {
+  position: relative;
+  width: 100%;
+  padding: 150px 15px 100px;
+  text-align: center;
+}
+
+header.masthead .header-content .header-content-inner h2 {
+  display: inline;
+  font-size: 30px;
+  padding: 10px 15px 10px 15px;
+  background-color: @aqua;
+  font-weight: 700;
+}
+
+header.masthead .header-content .header-content-inner hr {
+  margin: 30px auto;
+}
+
+header.masthead .header-content .header-content-inner p {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 50px;
+  color: rgba(255,255,255,.7);
+}
+@media (min-width:768px) {
+  header.masthead {
+    height: 100%;
+    min-height: 600px;
+  }
+
+  header.masthead .header-content {
+    position: absolute;
+    top: 50%;
+    padding: 0 50px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  header.masthead .header-content .header-content-inner {
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  header.masthead .header-content .header-content-inner h1 {
+    font-size: 50px;
+  }
+
+  header.masthead .header-content .header-content-inner p {
+    font-size: 18px;
+    max-width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
