@@ -22,12 +22,13 @@
     </header>
     {{/unless}}
 
-    {{#if currentUser}}
-      {{> workCreateButton}}
-    {{/if}}
-
     <section id="activities">
       {{#if currentUser}}
+        <h1 class="ui centered header">¡Bienvenido a Meetin!</h1>
+        <center>
+          {{> workCreateButton}}
+        </center>
+
         {{> userDashboard}}
       {{else}}
         {{> generalDashboard}}

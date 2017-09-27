@@ -1,5 +1,5 @@
 <template name="workCreateButton">
-  <button class="ui create workshop button">Crear taller</button>
+  <button class="ui light red orange create workshop button">Crear taller</button>
   {{> workCreateModal}}
 </template>
 
@@ -19,6 +19,10 @@
         <div class="field">
           <label>Precio</label>
           <input type="number" name="work-price" placeholder="Precio">
+        </div>
+        <div class="field">
+          <label>Añade una descripción de tu evento</label>
+          <textarea name="work-desc" rows="8" cols="80" placeholder="Descripción..."></textarea>
         </div>
       </form>
     </div>

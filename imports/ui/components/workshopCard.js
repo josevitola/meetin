@@ -19,5 +19,8 @@ Template.workshopCard.helpers({
   getOwnerName() {
     const id = Template.instance().workshop.get().owner;
     return Meteor.users.findOne({_id: id}).profile.name;
+  },
+  getWorkshopDesc() {
+    return Template.instance().workshop.get().desc;
   }
 });
