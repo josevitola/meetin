@@ -1,7 +1,24 @@
 @import "../base/colors";
 
 #navbar {
-  margin: 0px;
-  transition: opacity 0.25s;
+  margin-bottom: 0;
+  position: fixed;
+  z-index: 1000;
+  width: 100.5%;
+  color: rgba(64, 177, 128, 0) !important;
+  // transition: opacity 0.25s;
   // padding: 10px 15px 0px 15px;
+}
+
+.ui.secondary.menu .item {
+  color: rgba(64, 177, 128, 0);
+}
+
+.ui.secondary.menu.scrolled {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  transition: background-color 200ms linear;
+}
+
+.ui.secondary.menu.scrolled .item {
+  color: black!important;
 }
