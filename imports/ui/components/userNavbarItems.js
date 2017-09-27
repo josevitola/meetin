@@ -17,6 +17,8 @@ Template.userNavbar.helpers({
 
 Template.userNavbar.events({
   'click .logout.item'() {
-    Meteor.logout();
+    Meteor.logout(() => {
+      FlowRouter.go('/');
+    });
   }
 });
