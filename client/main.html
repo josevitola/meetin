@@ -8,5 +8,8 @@
 
 <template name="applicationLayout">
   {{> Template.dynamic template=top}}
-  {{> Template.dynamic template=main}}
+  <div class="main layout">
+    {{> Template.dynamic template=main}}
+  </div>
+  {{> Template.dynamic template=footer}}
 </template>
