@@ -1,16 +1,16 @@
 import { Template } from 'meteor/templating';
 
-import './signupButton.html';
+import './signupModal.html';
 
-Template.signupButton.events({
-  'click .ui.signup.button'() {
-    $('#signupModalView').modal({
+Template.signupModal.onRendered(function signupModalOnRendered() {
+    $("#signupModal").modal({
       onDeny: function(){
         console.log('canceled')
         return false;
       },
       onApprove: function() {
         // TODO security on forms
+        console.log("lala");
         const name = $('input[name=signup-name]').val();
         const mail = $('input[name=signup-email]').val();
         const pass = $('input[name=signup-pass]').val();
@@ -26,6 +26,6 @@ Template.signupButton.events({
 
         Meteor.call('users.insert', user);
       }
-    }).modal('show');
+    });
   }
-});
+);

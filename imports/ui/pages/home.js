@@ -16,3 +16,9 @@ Template.home.helpers({
     return ids;
   }
 });
+
+Template.home.events({
+  'click .ui.signup.button'() {
+    $("#signupModal").modal('show');
+  }
+})
