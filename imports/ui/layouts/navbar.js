@@ -1,14 +1,11 @@
 import { Template } from 'meteor/templating';
 
-import './loginModal.js';
-import './signupModal.js';
+import '../components/loginModal.js';
+import '../components/signupModal.js';
+import '../components/userNavbarItems.js';
 import './navbar.html';
 
 Template.navbar.events({
-  'click .ui.logout.item'() {
-    Meteor.logout();
-  },
-
   'click .ui.login.button'() {
     $("#loginModal").modal('show');
   },

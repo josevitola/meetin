@@ -4,28 +4,21 @@
       <h3 class="ui header">Meetin</h3>
     </a>
     <div class="right menu">
-      {{#if currentUser}}
-      <a class="ui item">
-        <div class="ui icon input">
-          <input type="text" placeholder="Buscar...">
-          <i class="search icon"></i>
-        </div>
-      </a>
-      <a class="ui logout item">
-        Cerrar sesión
-      </a>
-      {{else}}
+      {{#unless currentUser}}
       <a class="ui item">
         <button class="ui dark-blue login button">Iniciar sesión</button>
       </a>
       <a class="ui item">
         <button class="ui light-aqua signup button">Regístrate</button>
       </a>
-      {{/if}}
+      {{else}}
+        {{> userNavbar}}
+      {{/unless}}
     </div>
   </div>
 
+  {{#unless currentUser}}
   {{> loginModal}}
   {{> signupModal}}
-
+  {{/unless}}
 </template>

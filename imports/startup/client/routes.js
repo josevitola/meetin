@@ -1,7 +1,8 @@
+import '/imports/ui/layouts/navbar.js';
+
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/user.js';
 import '/imports/ui/pages/workshop.js';
-import '/imports/ui/components/navbar.js';
 
 // BlazeLayout.setRoot('body');
 
