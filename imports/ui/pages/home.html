@@ -27,22 +27,11 @@
     {{/if}}
 
     <section id="activities">
-      <div class="ui four link cards">
-        {{#each getWorkshops}}
-          {{> workshopCard id=this}}
-        {{/each}}
-      </div>
+      {{#if currentUser}}
+        {{> userDashboard}}
+      {{else}}
+        {{> generalDashboard}}
+      {{/if}}
     </section>
   </div>
-</template>
-
-<template name="footer">
-  <section id="footer" class="ui grid">
-    <div class="ten wide column">
-      <!-- <h1>Lalala</h1> -->
-    </div>
-    <div class="six wide column">
-      <p>Meetin - un prototipo de Apps.co. Bogotá D.C., 2017</p>
-    </div>
-  </section>
 </template>
