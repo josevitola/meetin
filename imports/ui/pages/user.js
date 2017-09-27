@@ -8,16 +8,13 @@ import './user.html';
 Template.user.onCreated(function userOnCreated() {
   Tracker.autorun(() => {
     let id = FlowRouter.getParam('_id');
-    console.log(id);
     let user = Meteor.users.find({_id: id}).fetch()[0];
-    console.log(user);
     this.user = new ReactiveVar(user);
   });
 });
 
 Template.user.helpers({
   getName() {
-    console.log(Template.instance().user.get());
     return Template.instance().user.get().profile.name;
   },
   getOwnedWorkshops() {
