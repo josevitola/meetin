@@ -3,9 +3,11 @@ import '/imports/ui/pages/user.js';
 import '/imports/ui/pages/workshop.js';
 import '/imports/ui/components/navbar.js';
 
+// BlazeLayout.setRoot('body');
+
 FlowRouter.route('/', {
   action: function() {
-    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home' })
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home', footer: 'footer' })
   },
   name: 'home'
 });

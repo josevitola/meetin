@@ -1,38 +1,42 @@
 <template name="home">
-  {{#unless currentUser}}
-  <header class="masthead">
-    <div class="header-content">
-      <div class="header-content-inner">
-        <h1 class="ui heading" id="home-heading">
-          Descubre nuevas experiencias organizadas por personas como tú
-        </h1>
-        <div class="ui big search">
-          <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
-            <i class="search icon"></i>
+  <div class="main layout">
+    {{#unless currentUser}}
+    <header class="masthead">
+      <div class="header-content">
+        <div class="header-content-inner">
+          <h1 class="ui heading" id="home-heading">
+            Descubre nuevas experiencias organizadas por personas como tú
+          </h1>
+          <div class="ui big search">
+            <div class="ui icon input">
+              <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
           </div>
-          <div class="results"></div>
+          <a class="ui item">
+            <button class="ui light-aqua signup button">Únete a la comunidad</button>
+          </a>
         </div>
-        <a class="ui item">
-          <button class="ui light-aqua signup button">Únete a la comunidad</button>
-        </a>
       </div>
-    </div>
-  </header>
-  {{/unless}}
+    </header>
+    {{/unless}}
 
-  {{#if currentUser}}
-    {{> workCreateButton}}
-  {{/if}}
+    {{#if currentUser}}
+      {{> workCreateButton}}
+    {{/if}}
 
-  <section id="activities">
-    <div class="ui four link cards">
-      {{#each getWorkshops}}
-        {{> workshopCard id=this}}
-      {{/each}}
-    </div>
-  </section>
+    <section id="activities">
+      <div class="ui four link cards">
+        {{#each getWorkshops}}
+          {{> workshopCard id=this}}
+        {{/each}}
+      </div>
+    </section>
+  </div>
+</template>
 
+<template name="footer">
   <section id="footer" class="ui grid">
     <div class="ten wide column">
       <!-- <h1>Lalala</h1> -->
