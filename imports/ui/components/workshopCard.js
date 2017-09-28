@@ -22,5 +22,11 @@ Template.workshopCard.helpers({
   },
   getWorkshopDesc() {
     return Template.instance().workshop.get().desc;
+  },
+  getWorkshopAddr() {
+    return Template.instance().workshop.get().addr;
+  },
+  getWorkshopPrice() {
+    return Template.instance().workshop.get().price;
   }
 });

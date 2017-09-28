@@ -1,21 +1,24 @@
 <template name="userDashboard">
-  {{#with getWorkshopsToday}}
-  <h3>Eventos hoy!</h3>
-  <div class="ui four link cards">
-    {{#each this}}
-      {{> workshopCard id=this}}
-    {{/each}}
+  <div class="dashboard">
+    {{#with getWorkshopsToday}}
+    <h3 class="ui dividing header">Eventos hoy!</h3>
+    <div class="ui four link cards">
+      {{#each this}}
+        {{> workshopCard id=this}}
+      {{/each}}
+    </div>
+    {{/with}}
   </div>
-  {{/with}}
-
-  {{#with getWorkshopsToAttend}}
-  <h3>Eventos a los que asistirás</h3>
-  <div class="ui four link cards">
-    {{#each this}}
-      {{> workshopCard id=this}}
-    {{/each}}
+  <div class="dashboard">
+    {{#with getWorkshopsToAttend}}
+    <h3 class="ui dividing header">Eventos a los que asistirás</h3>
+    <div class="ui four link cards">
+      {{#each this}}
+        {{> workshopCard id=this}}
+      {{/each}}
+    </div>
+    {{/with}}
   </div>
-  {{/with}}
 
   {{> generalDashboard}}
 </template>

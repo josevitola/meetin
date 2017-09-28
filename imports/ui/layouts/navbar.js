@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 import '../components/loginModal.js';
 import '../components/signupModal.js';
-import '../components/userNavbarItems.js';
+import '../components/userNavbar.js';
 import './navbar.html';
 
 Template.navbar.events({

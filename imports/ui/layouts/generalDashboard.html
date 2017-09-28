@@ -1,8 +1,10 @@
 <template name="generalDashboard">
-  <h3>Eventos populares</h3>
-  <div class="ui four link cards">
-    {{#each getWorkshops}}
-      {{> workshopCard id=this}}
-    {{/each}}
+  <div class="dashboard">
+    <h3 class="ui dividing header">Eventos populares</h3>
+    <div class="ui four link cards">
+      {{#each getWorkshops}}
+        {{> workshopCard id=this}}
+      {{/each}}
+    </div>
   </div>
 </template>

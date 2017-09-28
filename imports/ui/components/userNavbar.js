@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import './userNavbarItems.html';
+import './userNavbar.html';
 
 Template.userNavbar.onRendered(function userNavbarOnRendered() {
   $('.ui.options.dropdown').dropdown();
