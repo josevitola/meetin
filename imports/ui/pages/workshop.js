@@ -32,6 +32,9 @@ Template.workshop.helpers({
   getWorkshopPrice() {
     return Template.instance().ws.get().price;
   },
+  getWorkshopDesc() {
+    return Template.instance().ws.get().desc;
+  }
 });
 
 Template.workshop.events({

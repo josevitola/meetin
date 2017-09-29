@@ -1,21 +1,26 @@
 <template name="workshopCard">
   <a class="ui card" href="/workshops/{{id}}">
-  <div class="content">
-    <div class="header">{{getWorkshopName}}</div>
-    <div class="meta">
-      <span class="category">Taller</span>
+    <div class="image">
+      <img src="https://www.butarque.es/wp-content/uploads/2016/09/taller_de_arte.jpg">
     </div>
-    <div class="description">
-      <p>Esta es una descripción del evento.</p>
+    <div class="content">
+      <div class="header">{{getWorkshopName}}</div>
+      <div class="meta">
+        <div>creado por <a href="/users/{{getOwnerId}}">{{getOwnerName}}</a></div>
+      </div>
+      <div class="description">
+        {{getWorkshopDesc}}
+      </div>
     </div>
-  </div>
-  <div class="extra content">
-    <div class="right floated author">
-      <a href="/users/{{getOwnerId}}">
-        <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg">
-        {{getOwnerName}}
-      </a>
+    <div class="extra content">
+      <div class="right floated author">
+        <i class="dollar icon"></i>
+        {{getWorkshopPrice}}
+      </div>
+      <span>
+        <i class="home icon"></i>
+        {{getWorkshopAddr}}
+      </span>
     </div>
-  </div>
-</a>
+  </a>
 </template>

@@ -16,5 +16,6 @@ export const WorkshopSchema = new SimpleSchema({
   name: { type: String },
   owner: { type: String },
   addr: { type: String },
+  desc: { type: String, optional: true },
   price: { type: Number }
 });

@@ -1,48 +1,39 @@
 <template name="home">
-  {{#unless currentUser}}
-  <header class="masthead">
-    <div class="header-content">
-      <div class="header-content-inner">
-        <h1 class="ui heading" id="home-heading">
-          Descubre nuevas experiencias organizadas por personas como tú
-        </h1>
-        <div class="ui big search">
-          <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
-            <i class="search icon"></i>
+  <div class="main layout">
+    {{#unless currentUser}}
+    <header class="masthead">
+      <div class="header-content">
+        <div class="header-content-inner">
+          <h1 class="ui heading" id="home-heading">
+            Descubre nuevas experiencias organizadas por personas como tú
+          </h1><br><br>
+          <div class="ui big left floated search">
+            <div class="ui icon compact left floated input">
+              <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
+              <i class="search icon"></i>
+            </div>
+            <div class="ui left floated text container">
+              - o -
+            </div>
+            <div class="results"></div>
+            <button class="ui teal big signup right floated button">Crea tu propia actividad</button>
           </div>
-          <div class="results"></div>
         </div>
       </div>
-    </div>
-  </header>
-  {{/unless}}
+    </header>
+    {{/unless}}
 
-  {{#if currentUser}}
-    {{> workCreateButton}}
-  {{/if}}
+    <section id="activities">
+      {{#if currentUser}}
+        <h1 class="ui centered header">¡Bienvenido a Meetin!</h1>
+        <center>
+          {{> workCreateButton}}
+        </center>
 
-  <section id="activities">
-    <div class="ui four link cards">
-      {{#each getWorkshops}}
-        {{> workshopCard id=this}}
-      {{/each}}
-    </div>
-  </section>
-
-  <section id="footnote" class="ui grid">
-    <div class="ten wide column">
-      <!-- <h1>Lalala</h1> -->
-    </div>
-    <div class="six wide column">
-      <h3>Meetin - un prototipo de Apps.co</h3>
-      <ul>
-        <li>Jose Nieto</li>
-        <li>Sophie Cisneros</li>
-        <li>Yeliana Torres</li>
-        <li>Jesús Chavarro</li>
-        <li>Kevin</li>
-      </ul>
-    </div>
-  </section>
+        {{> userDashboard}}
+      {{else}}
+        {{> generalDashboard}}
+      {{/if}}
+    </section>
+  </div>
 </template>
