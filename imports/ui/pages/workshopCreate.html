@@ -18,6 +18,19 @@
       <label>Añade una descripción de tu evento</label>
       <textarea name="work-desc" rows="8" cols="80" placeholder="Descripción..."></textarea>
     </div>
+    <div class="field">
+      <label>Tags</label>
+      <div class="ui action input">
+        <input name="work-tags" type="text" placeholder='Tags...'/>
+        <div class="ui teal add tag button">Agregar</div>
+      </div>
+      {{#each tags}}
+        <div class="ui label">
+          {{this}}
+          <i class="delete icon"></i>
+        </div>
+      {{/each}}
+    </div>
     <div class="ui create workshop button">Crear</div>
   </form>
 </template>

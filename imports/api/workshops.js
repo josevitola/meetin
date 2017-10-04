@@ -6,7 +6,6 @@ export const Workshops = new Mongo.Collection('workshops');
 Meteor.methods({
   'workshops.insert'( workshop ) {
     WorkshopSchema.validate(workshop);
-    console.log(workshop.desc);
     return Workshops.insert( workshop );
   }
 });
