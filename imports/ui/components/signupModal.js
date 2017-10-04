@@ -5,7 +5,7 @@ import './signupModal.html';
 Template.signupModal.onRendered(function signupModalOnRendered() {
     $("#signupModal").modal({
       onDeny: function(){
-        console.log('canceled')
+        $("#signupModal").modal('hide');
         return false;
       },
       onApprove: function() {
