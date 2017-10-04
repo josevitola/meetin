@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 
-import '../components/workCreateModal.js';
 import '../components/workshopCard.js';
 
 import '../layouts/generalDashboard.js';
