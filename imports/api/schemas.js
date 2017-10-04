@@ -19,5 +19,7 @@ export const WorkshopSchema = new SimpleSchema({
   desc: { type: String, optional: true },
   price: { type: Number },
   tags: { type: Array },
-  'tags.$': { type: String }
+  'tags.$': { type: String },
+  participants: { type: Array },
+  'participants.$': { type: String }
 });

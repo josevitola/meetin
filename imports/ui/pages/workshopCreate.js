@@ -21,11 +21,13 @@ Template.workshopCreate.events({
     const desc = $('textarea[name=work-desc]').val();
     const price = parseInt($('input[name=work-price]').val());
     const tags = instance.tags.get();
+    const participants = [];
 
     const workshop = {
       name: name,
       addr: addr,
       desc: desc,
+      participants: participants,
       price: price,
       tags: tags,
       owner: Meteor.userId()
