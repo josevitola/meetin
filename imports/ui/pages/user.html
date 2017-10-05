@@ -4,8 +4,11 @@
       <div class="ui grid">
         <div class="twelve wide column">
           <h1 class="ui header">{{user.profile.name}}</h1>
+          {{#with user.profile.desc}}
           <h5>Descripción</h5>
-          <p>{{user.profile.desc}}</p>
+            <p>{{this}}</p>
+          {{/with}}
+
           <h5>Información</h5>
           <div class="ui list">
             {{#with user.profile.phone}}
@@ -22,18 +25,22 @@
       </div>
     </div>
 
-
+    {{#with getOwnedWorkshops}}
     <h3>Eventos creados por {{user.profile.name}}</h3>
     <div class="ui four link cards">
-      {{#each getOwnedWorkshops}}
+      {{#each this}}
         {{> workshopCard id=this}}
       {{/each}}
     </div>
+    {{/with}}
+
+    {{#with user.profile.workshops}}
     <h3>Eventos a los que {{user.profile.name}} asistirá</h3>
     <div class="ui four link cards">
-      {{#each user.profile.workshops}}
+      {{#each this}}
         {{> workshopCard id=this}}
       {{/each}}
     </div>
+    {{/with}}
   </div>
 </template>

@@ -25,13 +25,16 @@
           {{#each workshop.tags}}
             <div class="ui label">{{this}}</div>
           {{/each}}
+          {{#with workshop.desc}}
           <div class="ui divider"></div>
           <h5 class="ui header">¿Qué se hace en este taller?</h5>
-            <p>{{workshop.desc}}</p>
+            <p>{{this}}</p>
+          {{/with}}
+          {{#with workshop.items}}
           <div class="ui divider"></div>
           <h5 class="ui header">¿Qué hay que traer?</h5>
           <div class="ui list">
-            {{#each workshop.items}}
+            {{#each this}}
             <div class="item">
               <i class="check icon"></i>
               <div class="content">
@@ -40,6 +43,7 @@
             </div>
             {{/each}}
           </div>
+          {{/with}}
         </div>
       </div>
       <div class="eight wide column">
