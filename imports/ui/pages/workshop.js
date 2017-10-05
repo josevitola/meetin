@@ -18,6 +18,12 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingPrice = new ReactiveVar(false);
 });
 
+Template.workshop.onRendered(function workshopOnRendered() {
+  if(Meteor.user() || Meteor.loggingIn()) {
+    $('.ui.accordion').accordion();
+  }
+})
+
 Template.workshop.helpers({
   // TODO declare subscriptions when autopublish is deleted
   isUserAttending() {
@@ -96,5 +102,27 @@ Template.workshop.events({
 
   'click .ui.edit.button'(event, instance) {
     instance.isEditing.set(true);
+  },
+
+  /* === DELETE === */
+  'click a.delete.event'(event, instance) {
+    $('#confirmDeleteModal').modal('show');
   }
 });
+
+Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
+  $("#confirmDeleteModal").modal({
+    onDeny: function(){
+      // $("#confirmDeleteModal").modal('hide');
+      return false;
+    },
+    onApprove: function() {
+      const id = FlowRouter.getParam('_id');
+      Meteor.call('workshops.delete', id, (error, result) => {
+        if(!error) {
+          FlowRouter.go('/');
+        }
+      });
+    }
+  });
+})

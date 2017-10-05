@@ -52,5 +52,10 @@ Meteor.methods({
      Workshops.update(workshopId, {
       $set: { participants: participants }
     });
+  },
+  'workshops.delete'( workshopId ) {
+    check(workshopId, String);
+
+    Workshops.remove(workshopId);
   }
 });
