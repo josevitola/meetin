@@ -26,15 +26,13 @@ Meteor.methods({
       throw new Meteor.Error(403, 'Name may not be empty')
     }
 
-    // add blank properties
-    userDraft.profile.workshops = [];
     Accounts.createUser( userDraft );
   },
 
   'users.updateWorkshops'( workshops ) {
     check(workshops, [String]);
     Meteor.users.update(this.userId, {
-      $set: { 'profile.workshops': workshops }
+      $set: { 'profile.attendsTo': workshops }
     });
   }
 })

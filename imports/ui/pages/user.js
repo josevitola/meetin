@@ -29,8 +29,5 @@ Template.user.helpers({
       ids.push(element._id);
     });
     return ids;
-  },
-  getWorkshopsToAttend() {
-    return Template.instance().user.get().profile.workshops;
   }
 });

@@ -37,17 +37,12 @@ Template.workshop.helpers({
 
 Template.workshop.events({
   'click .ui.join.workshop.button'(event, instance) {
-    let workshops = Meteor.user().profile.workshops;
+    let workshops = Meteor.user().profile.attendsTo;
     let ws = instance.ws.get();
     const workId = ws._id;
     const participants = instance.ws.get().participants;
 
     Meteor.call('users.updateWorkshops', toggle(workshops, workId));
     Meteor.call('workshops.setUserAsParticipant', workId);
-
-    // TODO just a workaround. Should listen from database!
-    // toggle(participants, Meteor.userId());
-    // ws.participants = participants;
-    // instance.ws.set(ws);
   }
 });

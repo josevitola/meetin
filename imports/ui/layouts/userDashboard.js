@@ -13,6 +13,6 @@ Template.userDashboard.onCreated(function userDashboardOnCreated() {
 
 Template.userDashboard.helpers({
   getWorkshopsToAttend() {
-    return Template.instance().user.get().profile.workshops;
+    return Template.instance().user.get().profile.attendsTo;
   }
 });

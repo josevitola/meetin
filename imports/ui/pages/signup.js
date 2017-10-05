@@ -11,6 +11,9 @@ Template.signup.events({
     const pass = $('input[name=signup-pass]').val();
     const conf = $('input[name=signup-conf]').val();
 
+    const attendsTo = [];
+    const owns = [];
+
     const user = {
       email: mail,
       password: pass,
@@ -18,6 +21,8 @@ Template.signup.events({
         name: name,
         phone: phone,
         desc: desc,
+        attendsTo: attendsTo,
+        owns: owns
       }
     }
 
