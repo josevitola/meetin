@@ -2,26 +2,28 @@
   <div class="main layout">
     {{#unless currentUser}}
     <header class="masthead">
+      <div class="overlay"></div>
       <div class="header-content">
         <div class="header-content-inner">
-          <h1 class="ui heading" id="home-heading">
-            Descubre nuevas experiencias organizadas por personas como tú
-          </h1><br><br>
-          <div class="ui big left floated search">
-            <div class="ui icon compact left floated input">
+          <h1 class="ui inverted header">
+            Descubre <b>nuevas experiencias</b> organizadas por personas como tú
+          </h1>
+          <br><br><br>
+          <div class="ui big search">
+            <div class="ui icon compact input">
               <input class="prompt" type="text" placeholder="¿Qué quieres hacer?">
               <i class="search icon"></i>
             </div>
-            <div class="ui left floated text container">
-              - o -
-            </div>
-            <div class="results"></div>
-            <button class="ui teal big signup right floated button">Crea tu propia actividad</button>
           </div>
+          <div class="ui text container">
+            --------------- ó ---------------
+          </div>
+          <a class="ui teal big home signup button" href=""> Crea tu propia Actividad </a>
         </div>
       </div>
     </header>
     {{/unless}}
+
 
     <section id="activities">
       {{#if currentUser}}
