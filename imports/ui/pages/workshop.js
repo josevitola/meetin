@@ -51,6 +51,7 @@ Template.workshop.helpers({
 });
 
 Template.workshop.events({
+  // name
   'click .edit.name.icon'(event, instance) {
     instance.isEditingName.set(true);
   },
@@ -63,6 +64,7 @@ Template.workshop.events({
     instance.isEditingName.set(false);
   },
 
+  // desc
   'click .edit.desc.icon'(event, instance) {
     instance.isEditingDesc.set(true);
   },
@@ -73,6 +75,13 @@ Template.workshop.events({
     Meteor.call('workshops.updateDesc', workshopId, newDesc);
 
     instance.isEditingDesc.set(false);
+  },
+
+  // tags
+  'click .delete.tag.icon'(event) {
+    const workshopId = FlowRouter.getParam('_id');
+    const target = event.currentTarget;
+    Meteor.call('workshops.deleteTag', workshopId, $(target.parentNode).data('idx'));
   },
 
   'click .ui.join.workshop.button'(event, instance) {

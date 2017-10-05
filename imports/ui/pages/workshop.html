@@ -36,10 +36,11 @@
       <div class="eight wide column">
         <!-- Descripción, tags -->
         <div class="ui segment">
+          <!-- Tags -->
           {{#each workshop.tags}}
-            <a class="ui label">
+            <a data-idx="{{@index}}" class="ui label">
               {{this}}
-              {{#if isUserOwner workshop.owner}} <i class="delete icon"></i> {{/if}}
+              {{#if isUserOwner workshop.owner}} <i class="delete tag icon"></i> {{/if}}
             </a>
           {{/each}}
           {{#if isUserOwner workshop.owner}}
