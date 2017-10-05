@@ -5,12 +5,20 @@
   position: fixed;
   z-index: 1000;
   width: 100.5%;
-  color: rgba(64, 177, 128, 0) !important;
+  color: @transparent-white !important;
   padding: 0 10%;
 }
 
+#navbar.user {
+  background: @translucid-dark-blue;
+}
+
+#navbar.user .item {
+  color: white;
+}
+
 .ui.secondary.menu .item {
-  color: rgba(64, 177, 128, 0);
+  color: @transparent-white;
 }
 
 .ui.secondary.menu.scrolled {
