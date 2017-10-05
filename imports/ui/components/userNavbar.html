@@ -1,5 +1,5 @@
 <template name="userNavbar">
-  <a class="ui item">
+  <!-- <a class="ui item">
     <div class="ui icon input">
       <input type="text" placeholder="Buscar...">
       <i class="search icon"></i>
@@ -11,14 +11,13 @@
   </a>
   <a class="ui add item">
     <i class="big add circle icon"></i>
-  </a>
+  </a> -->
   <a class="ui options pointing dropdown item">
-    <i class="settings icon"></i>
-    <i class="dropdown icon"></i>
+    <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+    {{getUserName}} <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="header">Opciones</div>
-      <div class="logout item"><i class="configure icon"></i> Configuración</div>
-      <div class="logout item"><i class="sign out icon"></i> Cerrar sesión</div>
+      <a class="item" href="/users/{{currentUser._id}}">Mi perfil</a>
+      <div class="logout item">Cerrar sesión</div>
     </div>
   </a>
 </template>
