@@ -1,19 +1,23 @@
 <template name="workshop">
   <div class="ui main workshop container">
+    <!-- Name header -->
     {{#unless isEditingName}}
     <h1 class="ui header">{{workshop.name}}
       {{#if isUserOwner workshop.owner}}
+      <!-- Edit icon -->
       <a href="#"><i class="small edit name icon"></i></a>
       {{/if}}
       <div class="sub header">creado por <a href="/users/{{workshop.owner}}">{{getOwnerName workshop.owner}}</a></div>
     </h1>
     {{else}}
-    <div class="ui big action input">
+    <!-- Edit input -->
+    <div class="ui big edit action input">
       <input type="text" name="wedit-name" value="{{workshop.name}}"/>
       <button class="ui teal icon save name button"><i class="check icon"></i></button>
     </div><br>
     {{/unless}}
 
+    <!-- Attend button -->
     {{#if currentUser}}
       {{#if isUserAttending}}
         <button class="ui dark-blue join workshop labeled icon button">
@@ -33,16 +37,43 @@
         <!-- Descripción, tags -->
         <div class="ui segment">
           {{#each workshop.tags}}
-            <div class="ui label">{{this}}</div>
+            <a class="ui label">
+              {{this}}
+              {{#if isUserOwner workshop.owner}} <i class="delete icon"></i> {{/if}}
+            </a>
           {{/each}}
+          {{#if isUserOwner workshop.owner}}
+          <button class="circular ui teal icon mini button">
+            <i class="add icon"></i>
+          </button>
+          {{/if}}
           {{#with workshop.desc}}
           <div class="ui divider"></div>
-          <h5 class="ui header">¿Qué se hace en este taller?</h5>
+          <h5 class="ui header">
+            ¿Qué se hace en este taller?
+            {{#if isUserOwner workshop.owner}}
+            <a href="#"><i class="small edit desc icon"></i></a>
+            {{/if}}
+          </h5>
+            {{#if isEditingDesc}}
+            <div class="ui desc form">
+              <div class="field">
+                <textarea name="wedit-desc" rows="6" value="{{this}}" placeholder="Descríbete como persona!"></textarea>
+              </div>
+              <button class="ui save desc button">Guardar</button>
+            </div>
+            {{else}}
             <p>{{this}}</p>
+            {{/if}}
           {{/with}}
           {{#with workshop.items}}
           <div class="ui divider"></div>
-          <h5 class="ui header">¿Qué hay que traer?</h5>
+          <h5 class="ui header">
+            ¿Qué hay que traer?
+            {{#if isUserOwner workshop.owner}}
+            <a href="#"><i class="small edit name icon"></i></a>
+            {{/if}}
+          </h5>
           <div class="ui list">
             {{#each this}}
             <div class="item">
@@ -71,12 +102,18 @@
               <i class="home icon"></i>
               <div class="content">
                 {{workshop.addr}}
+                {{#if isUserOwner workshop.owner}}
+                <a href="#"><i class="small edit name icon"></i></a>
+                {{/if}}
               </div>
             </div>
             <div class="item">
               <i class="dollar icon"></i>
               <div class="content">
                 {{workshop.price}}
+                {{#if isUserOwner workshop.owner}}
+                <a href="#"><i class="small edit name icon"></i></a>
+                {{/if}}
               </div>
             </div>
           </div>

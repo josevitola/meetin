@@ -23,6 +23,16 @@ Meteor.methods({
       })
     }
   },
+  'workshops.updateDesc'( workshopId, newDesc ) {
+    check(newDesc, String);
+    const workshop = Workshops.findOne({_id: workshopId});
+
+    if(this.userId === workshop.owner) {
+      Workshops.update(workshopId, {
+        $set: { desc: newDesc }
+      })
+    }
+  },
   'workshops.setUserAsParticipant'( workshopId ) {
     const workshop = Workshops.findOne({_id: workshopId});
     let participants = workshop.participants;

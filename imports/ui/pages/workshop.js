@@ -12,6 +12,10 @@ Template.workshop.onCreated(function workshopOnCreated() {
   });
 
   this.isEditingName = new ReactiveVar(false);
+  this.isEditingDesc = new ReactiveVar(false);
+  this.isEditingList = new ReactiveVar(false);
+  this.isEditingAddr = new ReactiveVar(false);
+  this.isEditingPrice = new ReactiveVar(false);
 });
 
 Template.workshop.helpers({
@@ -40,6 +44,9 @@ Template.workshop.helpers({
   },
   isEditingName() {
     return Template.instance().isEditingName.get();
+  },
+  isEditingDesc() {
+    return Template.instance().isEditingDesc.get();
   }
 });
 
@@ -54,6 +61,18 @@ Template.workshop.events({
     Meteor.call('workshops.updateName', workshopId, newName);
 
     instance.isEditingName.set(false);
+  },
+
+  'click .edit.desc.icon'(event, instance) {
+    instance.isEditingDesc.set(true);
+  },
+
+  'click .ui.save.desc.button'(event, instance) {
+    const newDesc = $('textarea[name=wedit-desc]').val();
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.updateDesc', workshopId, newDesc);
+
+    instance.isEditingDesc.set(false);
   },
 
   'click .ui.join.workshop.button'(event, instance) {
