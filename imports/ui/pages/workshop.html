@@ -121,7 +121,8 @@
               </div>
             </div>
           </div>
-
+          <!-- Eliminar -->
+          {{#if isUserOwner workshop.owner}}
           <div class="ui accordion">
             <div class="active title">
               <i class="dropdown icon"></i>
@@ -132,6 +133,7 @@
               <a class="delete event" href="#">Eliminar este evento</a>
             </div>
           </div>
+          {{/if}}
         </div>
       </div>
     </div>

@@ -29,7 +29,14 @@ Meteor.methods({
     Accounts.createUser( userDraft );
   },
 
-  'users.updateWorkshops'( workshops ) {
+  'users.updateAttendsTo'( userId, workshops ) {
+    check(workshops, [String]);
+    Meteor.users.update(userId, {
+      $set: { 'profile.attendsTo': workshops }
+    });
+  },
+
+  'user.updateOwnAttendsTo'( workshops ) {
     check(workshops, [String]);
     Meteor.users.update(this.userId, {
       $set: { 'profile.attendsTo': workshops }

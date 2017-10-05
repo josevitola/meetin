@@ -5,10 +5,16 @@ import { toggle } from '/imports/lib/datahelpers.js';
 import { Workshops } from '/imports/api/workshops.js';
 import './workshop.html';
 
+// TODO pop up when error occurs (event is deleted)
+
 Template.workshop.onCreated(function workshopOnCreated() {
   Tracker.autorun(() => {
     ws = Workshops.find(FlowRouter.getParam('_id')).fetch()[0];
-    this.ws = new ReactiveVar(ws);
+    if(!ws) {
+      FlowRouter.go('/');
+    } else {
+      this.ws = new ReactiveVar(ws);
+    }
   });
 
   this.isEditingName = new ReactiveVar(false);
@@ -92,11 +98,9 @@ Template.workshop.events({
 
   'click .ui.join.workshop.button'(event, instance) {
     let workshops = Meteor.user().profile.attendsTo;
-    let ws = instance.ws.get();
-    const workId = ws._id;
-    const participants = instance.ws.get().participants;
+    const workId = FlowRouter.getParam('_id');
 
-    Meteor.call('users.updateWorkshops', toggle(workshops, workId));
+    Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
     Meteor.call('workshops.setUserAsParticipant', workId);
   },
 
@@ -118,6 +122,10 @@ Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
     },
     onApprove: function() {
       const id = FlowRouter.getParam('_id');
+      $("#confirmDeleteModal").modal('hide');
+
+      // TODO smoothen page refreshing when event is deleted
+      FlowRouter.go('/');
       Meteor.call('workshops.delete', id, (error, result) => {
         if(!error) {
           FlowRouter.go('/');

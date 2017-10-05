@@ -4,6 +4,19 @@ import { toggle } from '/imports/lib/datahelpers.js';
 import { WorkshopSchema } from '/imports/api/schemas.js';
 import { Workshops } from './workshops.js';
 
+Workshops.after.remove((userId, workshop) => {
+  const users = [];
+  console.log(workshop.participants.length);
+  console.log(workshop.participants);
+  for(var i = 0; i < workshop.participants.length; i++) {
+    const user = Meteor.users.findOne({_id: workshop.participants[i]});
+    let attendsTo = user.profile.attendsTo;
+    let idx = attendsTo.indexOf(workshop._id);
+    attendsTo.splice(idx, 1);
+    Meteor.call('users.updateAttendsTo', user._id, attendsTo);
+  }
+})
+
 Meteor.methods({
   'workshops.insert'( workshop ) {
     WorkshopSchema.validate(workshop);
