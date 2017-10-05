@@ -10,12 +10,13 @@ Template.workshop.onCreated(function workshopOnCreated() {
     ws = Workshops.find(FlowRouter.getParam('_id')).fetch()[0];
     this.ws = new ReactiveVar(ws);
   });
+  this.isEditing = new ReactiveVar(false);
 });
 
 Template.workshop.helpers({
   // TODO declare subscriptions when autopublish is deleted
   isUserAttending() {
-    return Meteor.user().profile.workshops.indexOf(FlowRouter.getParam('_id')) > -1;
+    return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
   getOwnerName(ownerId) {
     return Meteor.users.findOne(ownerId).profile.name;
@@ -32,6 +33,12 @@ Template.workshop.helpers({
     } else {
       return participants;
     }
+  },
+  isUserOwner(ownerId) {
+    return Meteor.userId() === ownerId;
+  },
+  isEditing() {
+    return Template.instance().isEditing.get();
   }
 });
 
@@ -44,5 +51,9 @@ Template.workshop.events({
 
     Meteor.call('users.updateWorkshops', toggle(workshops, workId));
     Meteor.call('workshops.setUserAsParticipant', workId);
+  },
+
+  'click .ui.edit.button'(event, instance) {
+    instance.isEditing.set(true);
   }
 });

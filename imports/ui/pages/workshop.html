@@ -10,6 +10,10 @@
           <i class="check icon"></i>
           Estás asistiendo
         </button>
+
+        {{#if isUserOwner workshop.owner}}
+        <button class="ui right floated labeled icon edit button"><i class="settings icon"></i>Editar</button>
+        {{/if}}
       {{else}}
         <button class="ui light-aqua join workshop labeled icon button">
           <i class="right arrow icon"></i>
