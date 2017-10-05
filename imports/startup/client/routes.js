@@ -4,6 +4,7 @@ import '/imports/ui/layouts/footer.html';
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/user.js';
 import '/imports/ui/pages/workshop.js';
+import '/imports/ui/pages/workshopCreate.js';
 
 // BlazeLayout.setRoot('body');
 
@@ -12,6 +13,13 @@ FlowRouter.route('/', {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home', footer: 'footer' })
   },
   name: 'home'
+});
+
+FlowRouter.route('/workshops/create', {
+  action: function( params, queryParams ) {
+    BlazeLayout.render('applicationLayout', { main: 'workshopCreate' })
+  },
+  name: 'workshop'
 });
 
 FlowRouter.route('/workshops/:_id', {

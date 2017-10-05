@@ -5,7 +5,7 @@ import './loginModal.html';
 Template.loginModal.onRendered(function loginModalOnRendered() {
   $("#loginModal").modal({
     onDeny: function(){
-      console.log('canceled')
+      $("#loginModal").modal('hide');
       return false;
     },
     onApprove: function() {
