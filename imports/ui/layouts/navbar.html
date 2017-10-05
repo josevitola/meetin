@@ -9,7 +9,7 @@
         <button class="ui inverted login button">Iniciar sesión</button>
       </a>
       <a class="ui item">
-        <button class="ui teal signup button">Registrarse</button>
+        <a href="/signup"><button class="ui teal signup button">Registrarse</button></a>
       </a>
       {{else}}
         {{> userNavbar}}
@@ -19,6 +19,5 @@
 
   {{#unless currentUser}}
   {{> loginModal}}
-  {{> signupModal}}
   {{/unless}}
 </template>

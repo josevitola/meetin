@@ -9,7 +9,11 @@ export const UserSchema = new SimpleSchema({
   profile: { type: Object },
   'profile.name': { type: String },
   'profile.workshops': { type: Array },
-  'profile.workshops.$': { type: String }
+  'profile.workshops.$': { type: String },
+  'profile.phone': { type: Number },
+  'profile.desc': { type: String },
+  // 'profile.tags': { type: Array },
+  // 'profile.tags.$': { type: String }
 });
 
 export const WorkshopSchema = new SimpleSchema({

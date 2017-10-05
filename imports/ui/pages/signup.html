@@ -1,0 +1,49 @@
+<template name="signup">
+  <div class="ui main container">
+    <a href="/">
+      <img class="ui medium centered image" src="logo_light_back.svg" alt="">
+    </a>
+
+    <h2 class="ui centered header">Registro</h2>
+    <form class="ui signup form">
+      <div class="field"> <!-- Nombre -->
+        <label>Nombre</label>
+        <input type="text" name="signup-name" placeholder="Nombre y Apellido">
+      </div>
+      <div class="field"> <!-- Correo -->
+        <label>Correo electrónico</label>
+        <input type="email" name="signup-email" placeholder="Correo electrónico">
+      </div>
+      <div class="field"> <!-- Teléfono -->
+        <label>Teléfono</label>
+        <input type="tel" name="signup-phone" placeholder="Teléfono o celular">
+      </div>
+      <div class="field"> <!-- Descripción -->
+        <label>Desc</label>
+        <textarea name="signup-desc" rows="8" cols="80" placeholder="Descríbete como persona!"></textarea>
+      </div>
+      <!-- <div class="field">
+        <label>Tags</label>
+        <div class="ui action input">
+          <input name="signup-tags" type="text" placeholder='Tags...'/>
+          <div class="ui teal add tag button">Agregar</div>
+        </div>
+      </div> -->
+      <div class="field"> <!-- Contraseña -->
+        <label>Contraseña</label>
+        <div class="two fields">
+          <div class="field">
+            <input type="password" name="signup-pass" placeholder="Nueva contraseña para Meetin">
+          </div>
+          <div class="field">
+            <input type="password" name="signup-confirm" placeholder="Confirma la contraseña">
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <center>
+      <div class="ui teal signup button">Registrarse</div>
+    </center>
+  </div>
+</template>

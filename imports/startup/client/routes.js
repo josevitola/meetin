@@ -2,6 +2,7 @@ import '/imports/ui/layouts/navbar.js';
 import '/imports/ui/layouts/footer.html';
 
 import '/imports/ui/pages/home.js';
+import '/imports/ui/pages/signup.js';
 import '/imports/ui/pages/user.js';
 import '/imports/ui/pages/workshop.js';
 import '/imports/ui/pages/workshopCreate.js';
@@ -13,6 +14,13 @@ FlowRouter.route('/', {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home', footer: 'footer' })
   },
   name: 'home'
+});
+
+FlowRouter.route('/signup', {
+  action: function( params, queryParams ) {
+    BlazeLayout.render('applicationLayout', { main: 'signup' })
+  },
+  name: 'user'
 });
 
 FlowRouter.route('/workshops/create', {

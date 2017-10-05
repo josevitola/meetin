@@ -45,6 +45,7 @@ Template.workshopCreate.events({
     });
   },
 
+  // TODO generalize these functions into ToggleInput template
   'click .ui.add.tag.button'(event, instance) {
     const tag = $('input[name=work-tags]').val();
     if(tag.trim().length !== 0) {
