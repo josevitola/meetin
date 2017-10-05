@@ -1,7 +1,7 @@
 <template name="navbar">
   <div id="navbar" class="ui secondary menu">
     <a href="/" class="item">
-      <h1 class="ui inverted header" id="logo">Meetin</h1>
+      <img class="ui small image" src="/logo.svg" alt="Meet-in">
     </a>
     <div class="right menu">
       {{#unless currentUser}}
@@ -9,7 +9,7 @@
         <button class="ui inverted login button">Iniciar sesión</button>
       </a>
       <a class="ui item">
-        <button class="ui teal signup button">Regístrate</button>
+        <button class="ui teal signup button">Registrarse</button>
       </a>
       {{else}}
         {{> userNavbar}}
