@@ -1,5 +1,5 @@
 <template name="home">
-  <div class="main layout">
+  <div class="main {{profile}} container">
     {{#unless currentUser}}
     <header class="masthead">
       <div class="overlay"></div>
@@ -27,7 +27,6 @@
 
 
     {{#if currentUser}}
-    <div class="block"></div>
     <h1 class="ui centered header">¡Bienvenido a Meetin!</h1>
     <center>
       <a href="workshops/create"><div class="ui light-red-orange button">Crear un evento</div></a>

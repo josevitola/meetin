@@ -1,21 +1,17 @@
 <template name="user">
-  <div class="main layout">
-    <div class="ui container">
-      <h1>{{getName}}</h1>
-
-      <h3>Eventos creados por {{getName}}</h3>
-      <div class="ui four link cards">
-        {{#each getOwnedWorkshops}}
-          {{> workshopCard id=this}}
-        {{/each}}
-      </div>
-
-      <h3>Eventos a los que {{getName}} asistirá</h3>
-      <div class="ui four link cards">
-        {{#each getWorkshopsToAttend}}
-          {{> workshopCard id=this}}
-        {{/each}}
-      </div>
+  <div class="ui main container">
+    <h1>{{getName}}</h1>
+    <h3>Eventos creados por {{getName}}</h3>
+    <div class="ui four link cards">
+      {{#each getOwnedWorkshops}}
+        {{> workshopCard id=this}}
+      {{/each}}
+    </div>
+    <h3>Eventos a los que {{getName}} asistirá</h3>
+    <div class="ui four link cards">
+      {{#each getWorkshopsToAttend}}
+        {{> workshopCard id=this}}
+      {{/each}}
     </div>
   </div>
 </template>
