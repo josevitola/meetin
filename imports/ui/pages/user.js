@@ -14,12 +14,15 @@ Template.user.onCreated(function userOnCreated() {
 });
 
 Template.user.helpers({
+  user() {
+    return Meteor.users.findOne(FlowRouter.getParam('_id'));
+  },
   getName() {
     return Template.instance().user.get().profile.name;
   },
   getOwnedWorkshops() {
     // TODO decide whether to use double reference in database or not
-    const userId = Template.instance().user.get()._id;
+    const userId = FlowRouter.getParam('_id');
     let workshops = Workshops.find({owner: userId}).fetch();
     let ids = [];
     workshops.forEach((element) => {

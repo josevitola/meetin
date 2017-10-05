@@ -1,15 +1,37 @@
 <template name="user">
   <div class="ui main container">
-    <h1>{{getName}}</h1>
-    <h3>Eventos creados por {{getName}}</h3>
+    <div class="ui segment">
+      <div class="ui grid">
+        <div class="twelve wide column">
+          <h1 class="ui header">{{user.profile.name}}</h1>
+          <h5>Descripción</h5>
+          <p>{{user.profile.desc}}</p>
+          <h5>Información</h5>
+          <div class="ui list">
+            {{#with user.profile.phone}}
+            <div class="item">
+              <i class="call icon"></i>
+              {{this}}
+            </div>
+            {{/with}}
+          </div>
+        </div>
+        <div class="four wide column">
+          <img class="ui small right floated rounded image" src="https://semantic-ui.com/images/wireframe/square-image.png" alt="">
+        </div>
+      </div>
+    </div>
+
+
+    <h3>Eventos creados por {{user.profile.name}}</h3>
     <div class="ui four link cards">
       {{#each getOwnedWorkshops}}
         {{> workshopCard id=this}}
       {{/each}}
     </div>
-    <h3>Eventos a los que {{getName}} asistirá</h3>
+    <h3>Eventos a los que {{user.profile.name}} asistirá</h3>
     <div class="ui four link cards">
-      {{#each getWorkshopsToAttend}}
+      {{#each user.profile.workshops}}
         {{> workshopCard id=this}}
       {{/each}}
     </div>
