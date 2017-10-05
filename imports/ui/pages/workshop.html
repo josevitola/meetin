@@ -22,12 +22,24 @@
       <div class="eight wide column">
         <!-- Descripción, tags -->
         <div class="ui segment">
-          <h5 class="ui header">Descripción</h5>
+          {{#each workshop.tags}}
+            <div class="ui label">{{this}}</div>
+          {{/each}}
+          <div class="ui divider"></div>
+          <h5 class="ui header">¿Qué se hace en este taller?</h5>
             <p>{{workshop.desc}}</p>
           <div class="ui divider"></div>
-            {{#each workshop.tags}}
-              <div class="ui label">{{this}}</div>
+          <h5 class="ui header">¿Qué hay que traer?</h5>
+          <div class="ui list">
+            {{#each workshop.items}}
+            <div class="item">
+              <i class="check icon"></i>
+              <div class="content">
+                {{this}}
+              </div>
+            </div>
             {{/each}}
+          </div>
         </div>
       </div>
       <div class="eight wide column">

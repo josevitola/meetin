@@ -21,5 +21,7 @@ export const WorkshopSchema = new SimpleSchema({
   tags: { type: Array },
   'tags.$': { type: String },
   participants: { type: Array },
-  'participants.$': { type: String }
+  'participants.$': { type: String },
+  items: { type: Array },
+  'items.$': { type: String }
 });

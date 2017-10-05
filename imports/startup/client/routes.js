@@ -17,7 +17,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/workshops/create', {
   action: function( params, queryParams ) {
-    BlazeLayout.render('applicationLayout', { main: 'workshopCreate' })
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'workshopCreate' })
   },
   name: 'workshop'
 });

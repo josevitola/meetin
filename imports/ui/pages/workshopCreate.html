@@ -1,36 +1,67 @@
 <template name="workshopCreate">
-  <h1>Workshop Create</h1>
+  <div class="main workshop-create layout">
+    <h1>Workshop Create</h1>
 
-  <form class="ui workshop form">
-    <div class="field">
-      <label>Nombre</label>
-      <input type="text" name="work-name" placeholder="Nombre">
-    </div>
-    <div class="field">
-      <label>Dirección</label>
-      <input type="text" name="work-addr" placeholder="Dirección">
-    </div>
-    <div class="field">
-      <label>Precio</label>
-      <input type="number" name="work-price" placeholder="Precio">
-    </div>
-    <div class="field">
-      <label>Añade una descripción de tu evento</label>
-      <textarea name="work-desc" rows="8" cols="80" placeholder="Descripción..."></textarea>
-    </div>
-    <div class="field">
-      <label>Tags</label>
-      <div class="ui action input">
-        <input name="work-tags" type="text" placeholder='Tags...'/>
-        <div class="ui teal add tag button">Agregar</div>
-      </div>
-      {{#each tags}}
-        <div class="ui label">
-          {{this}}
-          <i class="delete icon"></i>
+    <div class="ui segment">
+      <form class="ui workshop form">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" name="work-name" placeholder="Nombre">
         </div>
-      {{/each}}
+        <div class="field">
+          <label>Dirección</label>
+          <input type="text" name="work-addr" placeholder="Dirección">
+        </div>
+        <div class="field">
+          <label>Precio</label>
+          <input type="number" name="work-price" placeholder="Precio">
+        </div>
+        <div class="field">
+          <label>Añade una descripción de tu evento. ¿Qué van a hacer?</label>
+          <textarea name="work-desc" rows="8" cols="80" placeholder="¿Qué se hará en tu evento?"></textarea>
+        </div>
+        <div class="field">  <!-- Lista de cosas para llevar -->
+          <label>¿Hay que llevar algo? Lista aquí las cosas que los asistentes a tu evento deberían llevar.</label>
+          <div class="ui action input">
+            <input name="work-items" type="text" placeholder='Lista de cosas para llevar...'/>
+            <div class="ui light-aqua add item button">Agregar</div>
+          </div>
+
+          <div class="ui message">
+            {{#unless items}}
+            <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
+            {{else}}
+            <div class="ui middle aligned relaxed divided list">
+              {{#each items}}
+              <div class="item" data-idx="{{@index}}">
+                <div class="right floated content">
+                  <a href="#"><i class="item delete icon"></i></a>
+                </div>
+                <i class="check icon"></i>
+                <div class="content">
+                  {{this}}
+                </div>
+              </div>
+              {{/each}}
+            </div>
+            {{/unless}}
+          </div>
+        </div>
+        <div class="field">
+          <label>Tags</label>
+          <div class="ui action input">
+            <input name="work-tags" type="text" placeholder='Tags...'/>
+            <div class="ui teal add tag button">Agregar</div>
+          </div>
+          {{#each tags}}
+            <div class="ui label">
+              {{this}}
+              <i class="tag delete icon"></i>
+            </div>
+          {{/each}}
+        </div>
+        <div class="ui create workshop button">Crear</div>
+      </form>
     </div>
-    <div class="ui create workshop button">Crear</div>
-  </form>
+  </div>
 </template>
