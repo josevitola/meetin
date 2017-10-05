@@ -13,6 +13,16 @@ Meteor.methods({
     WorkshopSchema.validate(workshop);
     return Workshops.insert( workshop );
   },
+  'workshops.updateName'( workshopId, newName ) {
+    check(newName, String);
+    const workshop = Workshops.findOne({_id: workshopId});
+
+    if(this.userId === workshop.owner) {
+      Workshops.update(workshopId, {
+        $set: { name: newName }
+      })
+    }
+  },
   'workshops.setUserAsParticipant'( workshopId ) {
     const workshop = Workshops.findOne({_id: workshopId});
     let participants = workshop.participants;

@@ -1,8 +1,18 @@
 <template name="workshop">
   <div class="ui main workshop container">
+    {{#unless isEditingName}}
     <h1 class="ui header">{{workshop.name}}
+      {{#if isUserOwner workshop.owner}}
+      <a href="#"><i class="small edit name icon"></i></a>
+      {{/if}}
       <div class="sub header">creado por <a href="/users/{{workshop.owner}}">{{getOwnerName workshop.owner}}</a></div>
     </h1>
+    {{else}}
+    <div class="ui big action input">
+      <input type="text" name="wedit-name" value="{{workshop.name}}"/>
+      <button class="ui teal icon save name button"><i class="check icon"></i></button>
+    </div><br>
+    {{/unless}}
 
     {{#if currentUser}}
       {{#if isUserAttending}}
@@ -10,10 +20,6 @@
           <i class="check icon"></i>
           Estás asistiendo
         </button>
-
-        {{#if isUserOwner workshop.owner}}
-        <button class="ui right floated labeled icon edit button"><i class="settings icon"></i>Editar</button>
-        {{/if}}
       {{else}}
         <button class="ui light-aqua join workshop labeled icon button">
           <i class="right arrow icon"></i>

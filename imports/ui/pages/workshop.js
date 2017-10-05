@@ -10,7 +10,8 @@ Template.workshop.onCreated(function workshopOnCreated() {
     ws = Workshops.find(FlowRouter.getParam('_id')).fetch()[0];
     this.ws = new ReactiveVar(ws);
   });
-  this.isEditing = new ReactiveVar(false);
+
+  this.isEditingName = new ReactiveVar(false);
 });
 
 Template.workshop.helpers({
@@ -37,12 +38,24 @@ Template.workshop.helpers({
   isUserOwner(ownerId) {
     return Meteor.userId() === ownerId;
   },
-  isEditing() {
-    return Template.instance().isEditing.get();
+  isEditingName() {
+    return Template.instance().isEditingName.get();
   }
 });
 
 Template.workshop.events({
+  'click .edit.name.icon'(event, instance) {
+    instance.isEditingName.set(true);
+  },
+
+  'click .ui.save.name.button'(event, instance) {
+    const newName = $('input[name=wedit-name]').val();
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.updateName', workshopId, newName);
+
+    instance.isEditingName.set(false);
+  },
+
   'click .ui.join.workshop.button'(event, instance) {
     let workshops = Meteor.user().profile.attendsTo;
     let ws = instance.ws.get();
