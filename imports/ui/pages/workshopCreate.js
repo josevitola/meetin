@@ -17,13 +17,36 @@ Template.workshopCreate.helpers({
   }
 });
 
+Template.workshopCreate.onRendered(function workCreateOnRendered() {
+  $('#initDate').calendar({
+    minDate: new Date(Date.now()+1000*60*60*24),
+    onChange: function (date, text, mode) {
+      $('#endDate').calendar({
+        minDate: date
+      });
+    }
+  });
+  $('#endDate').calendar({
+    minDate: new Date(Date.now()+1000*60*60*25)
+  });
+})
+
 Template.workshopCreate.events({
+  'change input' (event) {
+    console.log(this);
+    $('#endDate').calendar({
+      minDate: new Date( $('#initDate').calendar("get date"))
+    });
+  },
+
   'click .ui.create.workshop.button' (event, instance) {
     // TODO security on field - stop creation if price is NaN
     const name = $('input[name=work-name]').val();
     const addr = $('input[name=work-addr]').val();
     const desc = $('textarea[name=work-desc]').val();
     const price = parseInt($('input[name=work-price]').val());
+    const initDate =  $('#initDate').calendar("get date");
+    const endDate =  $('#endDate').calendar("get date");
     const tags = instance.tags.get();
     const items = instance.items.get();
     const participants = [];
