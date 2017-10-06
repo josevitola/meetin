@@ -70,6 +70,31 @@ Meteor.methods({
       });
     }
   },
+  'workshops.createItem'( workshopId, item ) {
+    check(item, String);
+    const workshop = Workshops.findOne({_id: workshopId});
+    console.log(workshop);
+    if(this.userId === workshop.owner) {
+      let newItems = workshop.items;
+      console.log(newItems);
+      newItems.push(item);
+      Workshops.update(workshopId, {
+        $set: { items: newItems }
+      });
+    }
+  },
+  'workshops.deleteItem'( workshopId, itemIdx ) {
+    check(itemIdx, Number);
+    const workshop = Workshops.findOne({_id: workshopId});
+
+    if(this.userId === workshop.owner) {
+      let newItems = workshop.items;
+      newItems.splice(itemIdx, 1);
+      Workshops.update(workshopId, {
+        $set: { items: newItems }
+      });
+    }
+  },
   'workshops.setUserAsParticipant'( workshopId ) {
     const workshop = Workshops.findOne({_id: workshopId});
     let participants = workshop.participants;

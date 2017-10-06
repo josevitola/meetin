@@ -11,7 +11,7 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
-  this.isEditingList = new ReactiveVar(false);
+  this.isEditingItems = new ReactiveVar(false);
   this.isEditingAddr = new ReactiveVar(false);
   this.isEditingPrice = new ReactiveVar(false);
 });
@@ -54,6 +54,9 @@ Template.workshop.helpers({
   },
   isEditingTag() {
     return Template.instance().isEditingTag.get();
+  },
+  isEditingItems() {
+    return Template.instance().isEditingItems.get();
   }
 });
 
@@ -68,7 +71,6 @@ Template.workshop.events({
     const newName = $('input[name=wedit-name]').val();
     const workshopId = FlowRouter.getParam('_id');
     Meteor.call('workshops.updateName', workshopId, newName);
-
     instance.isEditingName.set(false);
   },
 
@@ -88,15 +90,14 @@ Template.workshop.events({
   /* --- tags --- */
   'click .create.tag.icon'(event, instance) {
     instance.isEditingTag.set(true);
-    /*const workshopId = FlowRouter.getParam('_id');
-    const target = event.currentTarget;
-    Meteor.call('workshops.createTag', workshopId, $(target.parentNode).data('idx'));*/
   },
 
   'click .ui.save.tag.button'(event, instance) {
     const tag = $('input[name=wedit-tag]').val();
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.createTag', workshopId, tag);
+    if(tag){
+      const workshopId = FlowRouter.getParam('_id');
+      Meteor.call('workshops.createTag', workshopId, tag);
+    }
     instance.isEditingTag.set(false);
   },
 
@@ -104,6 +105,47 @@ Template.workshop.events({
     const workshopId = FlowRouter.getParam('_id');
     const target = event.currentTarget;
     Meteor.call('workshops.deleteTag', workshopId, $(target.parentNode).data('idx'));
+  },
+  /* --- items list --- */
+
+  'click .edit.items.icon'(event, instance) {
+    instance.isEditingItems.set(true);
+  },
+
+  'click .ui.add.item.button'(event, instance) {
+    const item = $('input[name=wedit-item]').val();
+    console.log(item);
+    if(item.trim().length !== 0) {
+      const workshopId = FlowRouter.getParam('_id');
+      Meteor.call('workshops.createItem', workshopId, item);
+    }
+    $('input[name=wedit-item]').val("");
+    $('input[name=wedit-item]').focus();
+  },
+
+  'click .item.delete.icon'(event, instance) {
+    const target = event.currentTarget.parentNode.parentNode.parentNode;
+    let idx = $(target).data("idx");
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.deleteItem', workshopId, $(target).data("idx"));
+  },
+
+  /* --- Addre ---*/
+  /*'click .edit.name.icon'(event, instance) {
+    instance.isEditingName.set(true);
+  },
+
+  'click .ui.save.name.button'(event, instance) {
+    const newName = $('input[name=wedit-name]').val();
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.updateName', workshopId, newName);
+    instance.isEditingName.set(false);
+  },*/
+
+
+
+  'click .ui.save.items.button'(event, instance) {
+    instance.isEditingItems.set(false);
   },
 
   'click .ui.join.workshop.button'(event, instance) {

@@ -59,10 +59,8 @@
               <input type="text" name="wedit-tag" value=""/>
               <button class="ui teal icon save tag button"><i class="check icon"></i></button>
             </div>
-
             <br>
             {{/unless}}
-
 
           {{/if}}
 
@@ -85,26 +83,60 @@
             <p>{{this}}</p>
             {{/if}}
           {{/with}}
+
           {{#with workshop.items}}
-          <div class="ui divider"></div>
-          <h5 class="ui header">
-            ¿Qué hay que traer?
-            {{#if isUserOwner workshop.owner}}
-            <a href="#"><i class="small edit name icon"></i></a>
-            {{/if}}
-          </h5>
-          <div class="ui list">
-            {{#each this}}
-            <div class="item">
-              <i class="check icon"></i>
-              <div class="content">
-                {{this}}
+            <div class="ui divider"></div>
+            <h5 class="ui header">
+              ¿Qué hay que traer?
+              {{#if isUserOwner workshop.owner}}
+              <a href="#"><i class="small edit items icon"></i></a>
+              {{/if}}
+            </h5>
+            {{#unless isEditingItems}}
+              <div class="ui items">
+                {{#each this}}
+                <div class="item">
+                  <i class="check icon"></i>
+                  <div class="content">
+                    {{this}}
+                  </div>
+                </div>
+                {{/each}}
               </div>
-            </div>
-            {{/each}}
-          </div>
+            {{else}}
+              <!-- Edit input -->
+              <div class="ui items form">  <!-- Lista de cosas para llevar -->
+                <div class="ui action input">
+                  <input name="wedit-item" type="text" placeholder='Lista de cosas para llevar...'/>
+                  <div class="ui light-aqua add item button">Agregar</div>
+                </div>
+
+                <div class="ui message">
+                  {{#unless workshop.items}}
+                  <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
+                  {{else}}
+                    <div class="ui middle aligned relaxed divided list">
+                      {{#each workshop.items}}
+                      <div class="item" data-idx="{{@index}}">
+                        <div class="right floated content">
+                          <a href="#"><i class="item delete icon"></i></a>
+                        </div>
+                        <i class="check icon"></i>
+                        <div class="content">
+                          {{this}}
+                        </div>
+                      </div>
+                      {{/each}}
+                    </div>
+                  {{/unless}}
+                </div>
+                <button class="ui save items button">Guardar</button>
+              </div>
+              <br>
+            {{/unless}}
           {{/with}}
         </div>
+
       </div>
       <div class="six wide column">
         <!-- Participantes -->
@@ -117,7 +149,7 @@
           {{/each}}
           <!-- Información -->
           <h5 class="ui header">Información</h5>
-          <div class="ui list">
+          <div class="ui items">
             <!-- Dirección -->
             <div class="item">
               <i class="home icon"></i>
