@@ -23,6 +23,8 @@ export const WorkshopSchema = new SimpleSchema({
   owner: { type: String },
   addr: { type: String },
   desc: { type: String, optional: true },
+  initDate: { type: Date },
+  endDate: { type: Date },
   price: { type: Number },
   tags: { type: Array },
   'tags.$': { type: String },

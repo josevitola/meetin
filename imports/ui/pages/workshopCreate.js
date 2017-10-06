@@ -55,11 +55,13 @@ Template.workshopCreate.events({
       name: name,
       addr: addr,
       desc: desc,
-      participants: participants,
       price: price,
+      initDate: initDate,
+      endDate: endDate,
       tags: tags,
       items: items,
-      owner: Meteor.userId()
+      owner: Meteor.userId(),
+      participants: participants
     }
 
     Meteor.call('workshops.insert', workshop, (error, result) => {

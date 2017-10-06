@@ -9,6 +9,8 @@ import './workshop.html';
 Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
+  this.isEditingInitDate = new ReactiveVar(false);
+  this.isEditingEndDate = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
   this.isEditingItems = new ReactiveVar(false);
   this.isEditingAddr = new ReactiveVar(false);
@@ -19,6 +21,8 @@ Template.workshop.onRendered(function workshopOnRendered() {
   if(Meteor.user() || Meteor.loggingIn()) {
     $('.ui.accordion').accordion();
   }
+  $('#initDate').calendar();
+  $('#endDate').calendar();
 })
 
 Template.workshop.helpers({
@@ -66,9 +70,13 @@ Template.workshop.helpers({
   isEditingPrice() {
     return Template.instance().isEditingPrice.get();
   },
+  isEditingInitDate() {
+    return Template.instance().isEditingInitDate.get();
+  },
+  isEditingEndDate() {
+    return Template.instance().isEditingEndDate.get();
+  },
   exist() {
-    console.log("\n\n\n");
-    console.log(Workshops.findOne(FlowRouter.getParam('_id')));
     return Workshops.findOne(FlowRouter.getParam('_id'));
   }
 });
@@ -170,6 +178,45 @@ Template.workshop.events({
       instance.isEditingPrice.set(false);
     }
   },
+  /* --- Init Date---*/
+  'click .edit.initDate.icon'(event, instance) {
+    instance.isEditingInitDate.set(true);
+    setTimeout(function () {
+      $('#initDate').calendar({
+        onChange: function (date, text, mode) {
+          $('#endDate').calendar({
+            minDate: date
+          });
+          const workshopId = FlowRouter.getParam('_id');
+          Meteor.call('workshops.update', workshopId, { initDate: date});
+          instance.isEditingInitDate.set(false);
+        }
+      });
+    }, 100);
+  },
+
+
+  /* --- End Date---*/
+  'click .edit.endDate.icon'(event, instance) {
+    instance.isEditingEndDate.set(true);
+    setTimeout(function () {
+      $('#endDate').calendar({
+        onChange: function (date, text, mode) {
+          const workshopId = FlowRouter.getParam('_id');
+          Meteor.call('workshops.update', workshopId, { endDate: date});
+          instance.isEditingEndDate.set(false);
+        }
+      });
+    }, 100);
+  },
+
+  'click .ui.save.addr.button'(event, instance) {
+    const newEndDate = $('input[name=wedit-endDate]').calendar("get date");
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.update', workshopId, { endDate: newEndDate});
+    instance.isEditingEndDate.set(false);
+  },
+
 
   'click .ui.join.workshop.button'(event, instance) {
     if(Meteor.user()){
