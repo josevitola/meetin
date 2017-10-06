@@ -23,21 +23,19 @@
     {{/unless}}
 
     <!-- Attend button -->
-    {{#if currentUser}}
-      {{#if isUserAttending}}
-        <button class="ui dark-blue join workshop labeled icon button">
-          <i class="check icon"></i>
-          Estás asistiendo
-        </button>
-       {{/if}}
-    {{else}}
+    {{#unless isUserAttending}}
       {{#unless isUserOwner workshop.owner}}
         <button class="ui light-aqua join workshop labeled icon button">
           <i class="right arrow icon"></i>
           Asistir
         </button>
       {{/unless}}
-    {{/if}}
+      {{else}}
+      <button class="ui dark-blue join workshop labeled icon button">
+        <i class="check icon"></i>
+        Estás asistiendo
+      </button>
+    {{/unless}}
 
     <div class="ui workshop info grid">
       <div class="ten wide column">

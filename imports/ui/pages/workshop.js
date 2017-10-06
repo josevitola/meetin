@@ -157,16 +157,6 @@ Template.workshop.events({
     Meteor.call('workshops.update', workshopId, { addr: newAddr});
     instance.isEditingAddr.set(false);
   },
-
-
-  'click .ui.join.workshop.button'(event, instance) {
-    let workshops = Meteor.user().profile.attendsTo;
-    const workId = FlowRouter.getParam('_id');
-
-    Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
-    Meteor.call('workshops.setUserAsParticipant', workId);
-  },
-
   /* --- Price --- */
   'click .edit.price.icon'(event, instance) {
     instance.isEditingPrice.set(true);
@@ -181,14 +171,18 @@ Template.workshop.events({
     }
   },
 
-
   'click .ui.join.workshop.button'(event, instance) {
-    let workshops = Meteor.user().profile.attendsTo;
-    const workId = FlowRouter.getParam('_id');
+    if(Meteor.user()){
+      let workshops = Meteor.user().profile.attendsTo;
+      const workId = FlowRouter.getParam('_id');
 
-    Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
-    Meteor.call('workshops.setUserAsParticipant', workId);
+      Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
+      Meteor.call('workshops.setUserAsParticipant', workId);
+    }else{
+      $("#loginModal").modal('show');
+    }
   },
+
 
   /* === DELETE === */
   'click a.delete.event'(event, instance) {
