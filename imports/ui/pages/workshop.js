@@ -57,6 +57,12 @@ Template.workshop.helpers({
   },
   isEditingItems() {
     return Template.instance().isEditingItems.get();
+  },
+  isEditingAddr() {
+    return Template.instance().isEditingAddr.get();
+  },
+  isEditingPrice() {
+    return Template.instance().isEditingPrice.get();
   }
 });
 
@@ -70,7 +76,7 @@ Template.workshop.events({
   'click .ui.save.name.button'(event, instance) {
     const newName = $('input[name=wedit-name]').val();
     const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.updateName', workshopId, newName);
+    Meteor.call('workshops.update', workshopId, {name:newName});
     instance.isEditingName.set(false);
   },
 
@@ -82,7 +88,7 @@ Template.workshop.events({
   'click .ui.save.desc.button'(event, instance) {
     const newDesc = $('textarea[name=wedit-desc]').val();
     const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.updateDesc', workshopId, newDesc);
+    Meteor.call('workshops.update', workshopId, {desc: newDesc});
 
     instance.isEditingDesc.set(false);
   },
@@ -114,7 +120,6 @@ Template.workshop.events({
 
   'click .ui.add.item.button'(event, instance) {
     const item = $('input[name=wedit-item]').val();
-    console.log(item);
     if(item.trim().length !== 0) {
       const workshopId = FlowRouter.getParam('_id');
       Meteor.call('workshops.createItem', workshopId, item);
@@ -130,23 +135,43 @@ Template.workshop.events({
     Meteor.call('workshops.deleteItem', workshopId, $(target).data("idx"));
   },
 
-  /* --- Addre ---*/
-  /*'click .edit.name.icon'(event, instance) {
-    instance.isEditingName.set(true);
-  },
-
-  'click .ui.save.name.button'(event, instance) {
-    const newName = $('input[name=wedit-name]').val();
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.updateName', workshopId, newName);
-    instance.isEditingName.set(false);
-  },*/
-
-
-
   'click .ui.save.items.button'(event, instance) {
     instance.isEditingItems.set(false);
   },
+
+  /* --- Address---*/
+  'click .edit.addr.icon'(event, instance) {
+    instance.isEditingAddr.set(true);
+  },
+
+  'click .ui.save.addr.button'(event, instance) {
+    const newAddr = $('input[name=wedit-addr]').val();
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.update', workshopId, { addr: newAddr});
+    instance.isEditingAddr.set(false);
+  },
+
+
+  'click .ui.join.workshop.button'(event, instance) {
+    let workshops = Meteor.user().profile.attendsTo;
+    const workId = FlowRouter.getParam('_id');
+
+    Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
+    Meteor.call('workshops.setUserAsParticipant', workId);
+  },
+
+  /* --- Price --- */
+  'click .edit.price.icon'(event, instance) {
+    instance.isEditingPrice.set(true);
+  },
+
+  'click .ui.save.price.button'(event, instance) {
+    const newPrice = $('input[name=wedit-price]').val();
+    const workshopId = FlowRouter.getParam('_id');
+    Meteor.call('workshops.update', workshopId, { price: newPrice});
+    instance.isEditingPrice.set(false);
+  },
+
 
   'click .ui.join.workshop.button'(event, instance) {
     let workshops = Meteor.user().profile.attendsTo;

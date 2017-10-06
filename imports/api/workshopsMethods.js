@@ -24,23 +24,12 @@ Meteor.methods({
   },
 
   // EDIT METHODS
-  'workshops.updateName'( workshopId, newName ) {
-    check(newName, String);
+  //esta funcion remplaza a cualquier update que funcione con atributos que no sean arrays
+  'workshops.update'( workshopId, newAttr ) {
     const workshop = Workshops.findOne({_id: workshopId});
-
     if(this.userId === workshop.owner) {
       Workshops.update(workshopId, {
-        $set: { name: newName }
-      })
-    }
-  },
-  'workshops.updateDesc'( workshopId, newDesc ) {
-    check(newDesc, String);
-    const workshop = Workshops.findOne({_id: workshopId});
-
-    if(this.userId === workshop.owner) {
-      Workshops.update(workshopId, {
-        $set: { desc: newDesc }
+        $set: newAttr
       })
     }
   },
