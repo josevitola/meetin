@@ -6,11 +6,9 @@ import '../components/workshopCard.js';
 import './user.html';
 
 Template.user.onCreated(function userOnCreated() {
-  Tracker.autorun(() => {
     let id = FlowRouter.getParam('_id');
     let user = Meteor.users.find({_id: id}).fetch()[0];
     this.user = new ReactiveVar(user);
-  });
 });
 
 Template.user.helpers({

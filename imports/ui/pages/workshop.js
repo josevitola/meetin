@@ -8,15 +8,6 @@ import './workshop.html';
 // TODO pop up when error occurs (event is deleted)
 
 Template.workshop.onCreated(function workshopOnCreated() {
-  Tracker.autorun(() => {
-    ws = Workshops.find(FlowRouter.getParam('_id')).fetch()[0];
-    if(!ws) {
-      FlowRouter.go('/');
-    } else {
-      this.ws = new ReactiveVar(ws);
-    }
-  });
-
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingList = new ReactiveVar(false);
@@ -63,7 +54,8 @@ Template.workshop.helpers({
 });
 
 Template.workshop.events({
-  // name
+  /* == DATA == */
+  /* --- name --- */
   'click .edit.name.icon'(event, instance) {
     instance.isEditingName.set(true);
   },
@@ -76,7 +68,7 @@ Template.workshop.events({
     instance.isEditingName.set(false);
   },
 
-  // desc
+  /* --- description --- */
   'click .edit.desc.icon'(event, instance) {
     instance.isEditingDesc.set(true);
   },
@@ -89,7 +81,7 @@ Template.workshop.events({
     instance.isEditingDesc.set(false);
   },
 
-  // tags
+  /* --- tags --- */
   'click .delete.tag.icon'(event) {
     const workshopId = FlowRouter.getParam('_id');
     const target = event.currentTarget;
@@ -103,11 +95,7 @@ Template.workshop.events({
     Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
     Meteor.call('workshops.setUserAsParticipant', workId);
   },
-
-  'click .ui.edit.button'(event, instance) {
-    instance.isEditing.set(true);
-  },
-
+  
   /* === DELETE === */
   'click a.delete.event'(event, instance) {
     $('#confirmDeleteModal').modal('show');
