@@ -27,12 +27,12 @@
           <i class="check icon"></i>
           Estás asistiendo
         </button>
-      {{/if}}
-    {{else}}
-      <button class="ui light-aqua join workshop labeled icon button">
-        <i class="right arrow icon"></i>
-        Asistir
-      </button>
+        {{else}}
+         <button class="ui light-aqua join workshop labeled icon button">
+           <i class="right arrow icon"></i>
+           Asistir
+         </button>
+       {{/if}}
     {{/if}}
 
     <div class="ui workshop info grid">
@@ -46,11 +46,26 @@
               {{#if isUserOwner workshop.owner}} <i class="delete tag icon"></i> {{/if}}
             </a>
           {{/each}}
+
           {{#if isUserOwner workshop.owner}}
-          <button class="circular ui teal icon mini button">
-            <i class="add icon"></i>
-          </button>
+
+            {{#unless isEditingTag}}
+              <button class="circular ui teal create tag icon mini button">
+                <i class="add icon"></i>
+              </button>
+            {{else}}
+            <!-- Edit input -->
+            <div class="ui edit action input">
+              <input type="text" name="wedit-tag" value=""/>
+              <button class="ui teal icon save tag button"><i class="check icon"></i></button>
+            </div>
+
+            <br>
+            {{/unless}}
+
+
           {{/if}}
+
           {{#with workshop.desc}}
           <div class="ui divider"></div>
           <h5 class="ui header">

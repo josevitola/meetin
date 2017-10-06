@@ -44,6 +44,19 @@ Meteor.methods({
       })
     }
   },
+  'workshops.createTag'( workshopId, tag ) {
+    check(tag, String);
+    const workshop = Workshops.findOne({_id: workshopId});
+
+    if(this.userId === workshop.owner) {
+      console.log(tag);
+      let newTags = workshop.tags;
+      newTags.push(tag);
+      Workshops.update(workshopId, {
+        $set: { tags: newTags }
+      });
+    }
+  },
   'workshops.deleteTag'( workshopId, tagIdx ) {
     check(tagIdx, Number);
     const workshop = Workshops.findOne({_id: workshopId});
