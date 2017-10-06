@@ -6,7 +6,6 @@ import { Workshops } from '/imports/api/workshops.js';
 import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
-
 Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
@@ -43,6 +42,9 @@ Template.workshop.helpers({
       return participants;
     }
   },
+  getUserName( id ) {
+    return Meteor.users.findOne(id).profile.name;
+  },
   isUserOwner(ownerId) {
     return Meteor.userId() === ownerId;
   },
@@ -63,6 +65,11 @@ Template.workshop.helpers({
   },
   isEditingPrice() {
     return Template.instance().isEditingPrice.get();
+  },
+  exist() {
+    console.log("\n\n\n");
+    console.log(Workshops.findOne(FlowRouter.getParam('_id')));
+    return Workshops.findOne(FlowRouter.getParam('_id'));
   }
 });
 
@@ -167,9 +174,11 @@ Template.workshop.events({
 
   'click .ui.save.price.button'(event, instance) {
     const newPrice = $('input[name=wedit-price]').val();
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.update', workshopId, { price: newPrice});
-    instance.isEditingPrice.set(false);
+    if(+newPrice){
+      const workshopId = FlowRouter.getParam('_id');
+      Meteor.call('workshops.update', workshopId, { price: newPrice});
+      instance.isEditingPrice.set(false);
+    }
   },
 
 
@@ -190,7 +199,7 @@ Template.workshop.events({
 Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
   $("#confirmDeleteModal").modal({
     onDeny: function(){
-      // $("#confirmDeleteModal").modal('hide');
+      $("#confirmDeleteModal").modal('hide');
       return false;
     },
     onApprove: function() {

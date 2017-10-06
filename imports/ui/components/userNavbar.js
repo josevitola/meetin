@@ -12,6 +12,12 @@ Template.userNavbar.helpers({
       return Meteor.user().profile.name;
     }
     else return "";
+  },
+  getUserEmail() {
+    if(Meteor.user()) {
+      return Meteor.user().email;
+    }
+    else return "";
   }
 });
 
