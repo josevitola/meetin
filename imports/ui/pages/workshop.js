@@ -184,9 +184,6 @@ Template.workshop.events({
     setTimeout(function () {
       $('#initDate').calendar({
         onChange: function (date, text, mode) {
-          $('#endDate').calendar({
-            minDate: date
-          });
           const workshopId = FlowRouter.getParam('_id');
           Meteor.call('workshops.update', workshopId, { initDate: date});
           instance.isEditingInitDate.set(false);
@@ -201,6 +198,7 @@ Template.workshop.events({
     instance.isEditingEndDate.set(true);
     setTimeout(function () {
       $('#endDate').calendar({
+        minDate: new Date($('.content.initDate').text()),
         onChange: function (date, text, mode) {
           const workshopId = FlowRouter.getParam('_id');
           Meteor.call('workshops.update', workshopId, { endDate: date});
