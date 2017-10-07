@@ -13,7 +13,7 @@ tracker@1.1.3                 # Meteor's client-side reactive programming librar
 
 standard-minifier-js@2.1.2    # JS minifier run for production mode
 es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers
-ecmascript@0.8.3              # Enable ECMAScript2015+ syntax in app code
+ecmascript              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4            # Server-side component of the `meteor shell` command
 
 kadira:flow-router
@@ -26,3 +26,4 @@ msavin:mongol
 aldeed:simple-schema
 autopublish@1.0.7
 matb33:collection-hooks
+edgee:slingshot
