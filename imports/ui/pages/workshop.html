@@ -190,7 +190,54 @@
                 </div><br>
               {{/unless}}
             </div>
+
+            <div class="item">
+              {{#unless isEditingInitDate}}
+                <i class="calendar icon"></i>
+                <div class="content initDate">
+                  {{workshop.initDate}}
+                  {{#if isUserOwner workshop.owner}}
+                    <a href="#"><i class="small edit initDate icon"></i></a>
+                  {{/if}}
+                </div>
+              {{else}}
+                <!-- Edit input -->
+                <div class="ui edit action input">
+                  <!-- <label>Fecha inicial</label> -->
+                  <div class="ui calendar" id="initDate">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input type="text" name="wedit-initDate" value="{{workshop.initDate}}">
+                    </div>
+                  </div>
+                </div><br>
+              {{/unless}}
+            </div>
+            <div class="item">
+              {{#unless isEditingEndDate}}
+                <i class="calendar icon"></i>
+                <div class="content endDate">
+                  {{workshop.endDate}}
+                  {{#if isUserOwner workshop.owner}}
+                    <a href="#"><i class="small edit endDate icon"></i></a>
+                  {{/if}}
+                </div>
+              {{else}}
+                <!-- Edit input -->
+                <div class="ui edit action input">
+                  <!-- <label>Fecha inicial</label> -->
+                  <div class="ui calendar" id="endDate">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input type="text" name="wedit-endDate" value="{{workshop.endDate}}">
+                    </div>
+                  </div>
+                </div><br>
+              {{/unless}}
+            </div>
+
           </div>
+
           <!-- Eliminar -->
           {{#if isUserOwner workshop.owner}}
           <div class="ui accordion">
