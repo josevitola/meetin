@@ -16,6 +16,12 @@ Template.navbar.events({
   },
 });
 
+Template.homeNavbar.events({
+  'click .ui.login.button'() {
+    $("#loginModal").modal('show');
+  },
+});
+
 $(function () {
   $(document).scroll(function () {
     var $nav = $("#homeNavbar");
