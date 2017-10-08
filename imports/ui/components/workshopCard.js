@@ -34,7 +34,7 @@ Template.workshopCard.helpers({
     return Template.instance().workshop.get().addr;
   },
   getWorkshopPrice() {
-    return Template.instance().workshop.get().price;
+    return formatPrice(Template.instance().workshop.get().price);
   },
   getWorkshopInitDate() {
     return formatDate(Template.instance().workshop.get().initDate);
@@ -73,4 +73,18 @@ function formatTime(date) {
   }
 
   return hours + ':' + minutes;
+}
+
+function formatPrice(price) {
+  var m = price / 1000;
+  console.log(m);
+  var u = (price - (m * 1000)).toString();
+  console.log(u);
+  if(u.length == 2) {
+    u = '0' + price;
+  }
+  if(u.length == 1) {
+    u = '00' + u;
+  }
+  return '$' + m + '.' + u;
 }

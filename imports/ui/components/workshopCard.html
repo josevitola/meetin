@@ -3,6 +3,7 @@
     <div class="image">
       <div class="overlay"></div>
       <img src="https://www.butarque.es/wp-content/uploads/2016/09/taller_de_arte.jpg">
+      <h3 class="workshop price">{{getWorkshopPrice}}</h3>
       <div class="info">
         <a href="/users/{{getOwnerId}}">
           <img class="ui named avatar image" data-content="{{getOwnerName}}" src="https://robohash.org/{{getUserName}}.png?size=50x50">
@@ -10,11 +11,11 @@
         <h3 class="workshop name">{{getWorkshopName}}</h3>
       </div>
     </div>
-    <div class="content">
+    <!-- <div class="content">
       <div class="description">
         {{getWorkshopPrice}}
       </div>
-    </div>
+    </div> -->
     <div class="dates content">
       <div class="ui grid">
         <div class="five wide column">
