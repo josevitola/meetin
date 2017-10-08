@@ -6,32 +6,26 @@
       <h3 class="workshop price">{{getWorkshopPrice}}</h3>
       <div class="info">
         <a href="/users/{{getOwnerId}}">
-          <img class="ui named avatar image" data-content="{{getOwnerName}}" src="https://robohash.org/{{getUserName}}.png?size=50x50">
+          <img class="ui named avatar image" data-content="{{getOwnerName}}" src="https://robohash.org/{{getOwnerName}}.png?size=50x50">
         </a>
         <h3 class="workshop name">{{getWorkshopName}}</h3>
       </div>
     </div>
-    <!-- <div class="content">
-      <div class="description">
-        {{getWorkshopPrice}}
+
+    <div class="content">
+      <div class="description" style="margin-bottom:10px;">
+        {{getWorkshopDesc}}
       </div>
-    </div> -->
+    </div>
+
     <div class="dates content">
       <div class="ui grid">
-        <div class="five wide column">
-          Inicio <h5 class="ui teal header">{{getWorkshopInitDate}}</h5>
-        </div>
-        <div class="five wide column">
-          Cierre <h5 class="ui teal header">{{getWorkshopEndDate}}</h5>
+        <div class="ten wide column">
+          Fecha de la actividad <h5 class="ui teal header">{{getWorkshopInitDate}}</h5>
         </div>
         <div class="six wide column">
           Horario <h5 class="ui teal header">{{getWorkshopInitTime}}-{{getWorkshopEndTime}}</h5>
         </div>
-      </div>
-    </div>
-    <div class="content">
-      <div class="description" style="margin-bottom:10px;">
-        {{getWorkshopDesc}}
       </div>
       <center><div class="ui teal button">Asistir</div></center>
     </div>

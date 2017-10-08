@@ -62,7 +62,7 @@ function formatDate(date) {
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
 
-  return day + '/' + monthIndex + '/' + year;
+  return day + ' ' + monthNames[monthIndex] + ' de ' + year;
 }
 
 function formatTime(date) {
@@ -76,7 +76,7 @@ function formatTime(date) {
 }
 
 function formatPrice(price) {
-  var m = price / 1000;
+  var m = Math.trunc(price / 1000);
   console.log(m);
   var u = (price - (m * 1000)).toString();
   console.log(u);
