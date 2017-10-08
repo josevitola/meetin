@@ -19,8 +19,6 @@ Template.navbar.events({
 $(function () {
   $(document).scroll(function () {
     var $nav = $("#navbar");
-    var $name = $("#logo");
     $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-    $name.toggleClass('inverted', $(this).scrollTop() < $nav.height());
   });
 });

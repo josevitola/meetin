@@ -1,13 +1,19 @@
 <template name="userNavbar">
-  <a href="/workshops/create" style="padding-top:12px; margin-right:30px;">
-    <div class="ui teal button">Crear un evento</div>
+  <a href="/workshops/create">
+    <div class="ui small teal navbar button">Crear una actvidad</div>
   </a>
-  <a class="ui options pointing dropdown item">
-    <img class="ui avatar image" src="https://robohash.org/{{getUserName}}.png?size=50x50">
-    {{getUserName}} <i class="dropdown icon"></i>
+  <a class="ui options top right compact pointing dropdown item">
+    <img class="ui avatar image" src="https://robohash.org/{{getUserName}}.png?size=50x50" id="avatar-image">
+    <b id="profile-name">{{getUserName}}</b> <i class="dropdown yellow icon"></i>
     <div class="menu">
-      <a class="item" href="/users/{{currentUser._id}}">Mi perfil</a>
-      <div class="logout item">Cerrar sesión</div>
+      <a class="item" href="/users/{{currentUser._id}}">
+        <i class="user teal icon"></i>
+        Mi perfil
+      </a>
+      <div class="logout item">
+        <i class="sign out teal icon"></i>
+        Cerrar sesión
+      </div>
     </div>
   </a>
 </template>

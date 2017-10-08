@@ -1,12 +1,12 @@
 <template name="navbar">
   <div id="navbar" class="ui {{profile}} secondary menu">
     <a href="/" class="item">
-      <img class="ui small image" src="/logo.svg" alt="Meet-in">
+      <img class="ui small image" src="/logo.svg" alt="Meet-in" id="logo">
     </a>
     <div class="right menu">
       {{#unless currentUser}}
-      <a href="#" style="margin-right:10px;"><button class="ui login button">Iniciar sesión</button></a>
-      <a href="/signup"><button class="ui teal signup button">Registrarse</button></a>
+      <a href="#"><button class="ui login navbar button">Iniciar sesión</button></a>
+      <a href="/signup"><button class="ui teal signup navbar button">Registrarse</button></a>
       {{else}}
         {{> userNavbar}}
       {{/unless}}

@@ -1,6 +1,5 @@
 <template name="home">
   <div class="main {{profile}} container">
-    <!-- {{#unless currentUser}} -->
     <header class="masthead">
       <div class="overlay"></div>
       <div class="header-content">
@@ -23,15 +22,7 @@
         </div>
       </div>
     </header>
-    <!-- {{/unless}} -->
 
-
-    <!-- {{#if currentUser}}
-    <h1 class="ui centered header">¡Bienvenido a Meetin!</h1>
-    <center>
-      <a href="workshops/create"><div class="ui orange button">Crear un evento</div></a>
-    </center>
-    {{/if}} -->
     <section id="activities">
       {{#if currentUser}}
         {{> userDashboard}}
