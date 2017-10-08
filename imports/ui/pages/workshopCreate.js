@@ -24,10 +24,20 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
       $('#endDate').calendar({
         minDate: date
       });
+    },
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
     }
   });
   $('#endDate').calendar({
-    minDate: new Date(Date.now()+1000*60*60*25)
+    minDate: new Date(Date.now()+1000*60*60*25),
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    }
   });
 })
 

@@ -23,6 +23,11 @@ Template.workshop.onRendered(function workshopOnRendered() {
   }
   $('#initDate').calendar();
   $('#endDate').calendar();
+
+  // var id = Template.instance().workshop.get().owner;
+  // var title = Meteor.users.findOne({_id: id}).profile.name;
+  var item = ".ui.named.avatar.image";
+  $(item).popup();
 })
 
 Template.workshop.helpers({

@@ -25,7 +25,7 @@
     <!-- Attend button -->
     {{#unless isUserAttending}}
       {{#unless isUserOwner workshop.owner}}
-        <button class="ui light-aqua join workshop labeled icon button">
+        <button class="ui teal join workshop labeled icon button">
           <i class="right arrow icon"></i>
           Asistir
         </button>
@@ -147,7 +147,7 @@
           <h5 class="ui header">{{lengthOf workshop.participants}} personas asistirán</h5>
           {{#each participantsSliced workshop.participants}}
             <a href="/users/{{this}}">
-              <img class="ui avatar image" data-tooltip="{{getUserName this}}" data-position="top center" src="https://robohash.org/{{this.email}}.png?size=30x30" alt="">
+              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="https://robohash.org/{{getUserName(this)}}.png?size=30x30" alt="">
             </a>
           {{/each}}
           <!-- Información -->
