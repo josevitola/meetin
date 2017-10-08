@@ -28,6 +28,7 @@ ecmascript@0.8.3
 ecmascript-runtime@0.4.1
 ecmascript-runtime-client@0.4.3
 ecmascript-runtime-server@0.4.1
+edgee:slingshot@0.7.1
 ejson@1.0.14
 email@1.2.3
 es5-shim@4.6.15

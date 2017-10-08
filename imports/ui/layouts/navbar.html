@@ -5,12 +5,8 @@
     </a>
     <div class="right menu">
       {{#unless currentUser}}
-      <a class="ui item">
-        <button class="ui login button">Iniciar sesión</button>
-      </a>
-      <a class="ui item">
-        <a href="/signup"><button class="ui teal signup button">Registrarse</button></a>
-      </a>
+      <a href="#" style="margin-right:10px;"><button class="ui login button">Iniciar sesión</button></a>
+      <a href="/signup"><button class="ui teal signup button">Registrarse</button></a>
       {{else}}
         {{> userNavbar}}
       {{/unless}}
