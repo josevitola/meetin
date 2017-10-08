@@ -19,9 +19,12 @@
             {{/with}}
           </div>
         </div>
+        {{#each user.emails}}
         <div class="four wide column">
-          <img class="ui small right floated rounded image" src="https://robohash.org/{{user.profile.name}}.png?size=150x150&bgset=bg2" alt="">
+          <img class="ui small right floated rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="">
         </div>
+        {{/each}}
+
       </div>
     </div>
 

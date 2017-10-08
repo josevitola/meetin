@@ -15,7 +15,7 @@ Template.userNavbar.helpers({
   },
   getUserEmail() {
     if(Meteor.user()) {
-      return Meteor.user().email;
+      return Meteor.user().emails[0].address;
     }
     else return "";
   }
