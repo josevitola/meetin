@@ -18,7 +18,7 @@ Template.navbar.events({
 
 $(function () {
   $(document).scroll(function () {
-    var $nav = $("#navbar");
+    var $nav = $("#homeNavbar");
     $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
   });
 });

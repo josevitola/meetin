@@ -11,7 +11,7 @@ import '/imports/ui/pages/workshopCreate.js';
 
 FlowRouter.route('/', {
   action: function() {
-    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'home' })
+    BlazeLayout.render('applicationLayout', { top: 'homeNavbar', main: 'home' })
   },
   name: 'home'
 });

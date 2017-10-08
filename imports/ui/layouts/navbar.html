@@ -1,3 +1,23 @@
+<template name="homeNavbar">
+  <div id="homeNavbar" class="ui {{profile}} secondary menu">
+    <a href="/" class="item">
+      <img class="ui small image" src="/logo.svg" alt="Meet-in" id="logo">
+    </a>
+    <div class="right menu">
+      {{#unless currentUser}}
+      <a href="#"><button class="ui login navbar button">Iniciar sesión</button></a>
+      <a href="/signup"><button class="ui teal signup navbar button">Registrarse</button></a>
+      {{else}}
+        {{> userNavbar}}
+      {{/unless}}
+    </div>
+  </div>
+
+  {{#unless currentUser}}
+  {{> loginModal}}
+  {{/unless}}
+</template>
+
 <template name="navbar">
   <div id="navbar" class="ui {{profile}} secondary menu">
     <a href="/" class="item">
