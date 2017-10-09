@@ -1,24 +1,44 @@
 <template name="workshopCreate">
   <div class="ui main workshop-create container">
-    <h1 class="ui centered header">Crear un nuevo taller</h1>
+    <h3 class="ui bottom line header">Crear una nueva Actividad</h3>
 
-    <div class="ui segment">
-      <form class="ui workshop form">
-        <div class="field"> <!-- Nombre -->
-          <label>Nombre</label>
-          <input type="text" name="work-name" placeholder="Nombre">
-        </div>
-        <div class="field"> <!-- Dirección -->
-          <label>Dirección</label>
-          <input type="text" name="work-addr" placeholder="Dirección">
-        </div>
-        <div class="field"> <!-- Precio -->
-          <label>Precio</label>
-          <input type="number" name="work-price" placeholder="Precio">
-        </div>
+    <form class="ui workshop form">
+      <div class="ui segment">
+        <h3 class="ui teal header" style="margin-bottom: 40px;">
+          1. ¿Qué deseas ofertar?
+        </h3>
+
         <div class="ui grid">
-          <div class="field eight wide column">
-            <label>Fecha inicial</label>
+          <div class="field six wide column"> <!-- Nombre -->
+            <h4 class="ui header">Nombre de la Actividad</h4>
+            <input type="text" name="work-name" placeholder="Ej: Caminata por el sendero la Vieja">
+          </div>
+
+          <div class="field six wide column"> <!-- Dirección -->
+            <h4 class="ui header">Lugar de la Actividad</h4>
+            <input type="text" name="work-addr" placeholder="Ingresar ubicación">
+          </div>
+
+          <div class="field four wide column"> <!-- Precio -->
+            <h4 class="ui header">Costo de Inscripción</h4>
+            <input type="number" name="work-price" placeholder="0">
+          </div>
+        </div>
+
+        <div class="field"> <!-- Descripción -->
+          <h4 class="ui header">Descripción de la Actividad</h4>
+          <textarea name="work-desc" rows="8" cols="80" placeholder="¿Qué se hará en tu actitvidad? Anima a las personas a que vayan"></textarea>
+        </div>
+      </div>
+
+      <div class="ui segment">
+        <h3 class="ui teal header" style="margin-bottom: 40px;">
+          2. ¿Cuándo lo ofertarás?
+        </h3>
+
+        <div class="ui grid">
+          <div class="field four wide column">
+            <h4 class="ui header">Fecha de Inicio</h4>
             <div class="ui calendar" id="initDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
@@ -26,8 +46,9 @@
               </div>
             </div>
           </div>
-          <div class="field eight wide column">
-            <label>Fecha final</label>
+
+          <div class="field four wide column">
+            <h4 class="ui header">Fecha de Cierre</h4>
             <div class="ui calendar" id="endDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
@@ -36,52 +57,61 @@
             </div>
           </div>
         </div>
-        <div class="field"> <!-- Descripción -->
-          <label>Añade una descripción de tu evento. ¿Qué van a hacer?</label>
-          <textarea name="work-desc" rows="8" cols="80" placeholder="¿Qué se hará en tu evento?"></textarea>
-        </div>
-        <div class="field">  <!-- Lista de cosas para llevar -->
-          <label>¿Hay que llevar algo? Lista aquí las cosas que los asistentes a tu evento deberían llevar.</label>
-          <div class="ui action input">
-            <input name="work-items" type="text" placeholder='Lista de cosas para llevar...'/>
-            <div class="ui light-aqua add item button">Agregar</div>
+      </div>
+
+      <div class="ui segment">
+        <h3 class="ui teal header" style="margin-bottom: 40px;">
+          3. ¿Qué necesitarás?
+        </h3>
+
+        <div class="ui two column grid">
+          <div class="field column">  <!-- Lista de cosas para llevar -->
+            <h4 class="ui header">Materiales ¿Qué cosas deben llevar a la actividad?</h4>
+            <div class="ui action input">
+              <input name="work-items" type="text" placeholder='Ej: Hojas de papel'/>
+              <div class="ui teal add item button">Agregar</div>
+            </div>
+
+            <div class="ui message">
+              {{#unless items}}
+              <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
+              {{else}}
+              <div class="ui middle aligned relaxed divided list">
+                {{#each items}}
+                <div class="item" data-idx="{{@index}}">
+                  <div class="right floated content">
+                    <a href="#"><i class="item delete icon"></i></a>
+                  </div>
+                  <i class="check icon"></i>
+                  <div class="content">
+                    {{this}}
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+              {{/unless}}
+            </div>
           </div>
 
-          <div class="ui message">
-            {{#unless items}}
-            <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
-            {{else}}
-            <div class="ui middle aligned relaxed divided list">
-              {{#each items}}
-              <div class="item" data-idx="{{@index}}">
-                <div class="right floated content">
-                  <a href="#"><i class="item delete icon"></i></a>
-                </div>
-                <i class="check icon"></i>
-                <div class="content">
-                  {{this}}
-                </div>
-              </div>
-              {{/each}}
+          <div class="field column"> <!-- Tags -->
+            <h4 class="ui header">Palabras Clave (Tags)</h4>
+            <div class="ui action tags input">
+              <input name="work-tags" type="text" placeholder='Ej: caminata'/>
+              <div class="ui teal add tag button">Agregar</div>
             </div>
-            {{/unless}}
-          </div>
-        </div>
-        <div class="field"> <!-- Tags -->
-          <label>Tags</label>
-          <div class="ui action input">
-            <input name="work-tags" type="text" placeholder='Tags...'/>
-            <div class="ui teal add tag button">Agregar</div>
-          </div>
-          {{#each tags}}
+            {{#each tags}}
             <div class="ui label">
               {{this}}
               <i class="tag delete icon"></i>
             </div>
-          {{/each}}
+            {{/each}}
+          </div>
         </div>
-        <div class="ui create workshop button">Crear</div>
-      </form>
-    </div>
+      </div>
+
+      <center>
+        <div class="ui create workshop big teal button">Crear Actividad</div>
+      </center>
+    </form>
   </div>
 </template>

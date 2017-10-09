@@ -19,7 +19,7 @@ Template.workshopCreate.helpers({
 
 Template.workshopCreate.onRendered(function workCreateOnRendered() {
   $('#initDate').calendar({
-    minDate: new Date(Date.now()+1000*60*60*24),
+    minDate: new Date(Date.now()),
     onChange: function (date, text, mode) {
       $('#endDate').calendar({
         minDate: date
@@ -29,15 +29,18 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
       days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
       months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    }
+    },
+    disableMinute: true
   });
+
   $('#endDate').calendar({
-    minDate: new Date(Date.now()+1000*60*60*25),
+    minDate: new Date(Date.now()),
     text: {
       days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
       months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    }
+    },
+    disableMinute: true
   });
 })
 
@@ -45,7 +48,13 @@ Template.workshopCreate.events({
   'change input' (event) {
     console.log(this);
     $('#endDate').calendar({
-      minDate: new Date( $('#initDate').calendar("get date"))
+      minDate: new Date( $('#initDate').calendar("get date")),
+      text: {
+        days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+      },
+      disableMinute: true
     });
   },
 
