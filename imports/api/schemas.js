@@ -20,7 +20,7 @@ export const UserSchema = new SimpleSchema({
 
 export const WorkshopSchema = new SimpleSchema({
   name: { type: String },
-  // photo: { type: String },
+  photo: { type: String },
   owner: { type: String },
   addr: { type: String },
   desc: { type: String, optional: true },
