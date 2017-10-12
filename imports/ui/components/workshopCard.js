@@ -77,9 +77,9 @@ function formatTime(date) {
 
 function formatPrice(price) {
   var m = Math.trunc(price / 1000);
-  // console.log(m);
+  console.log(m);
   var u = (price - (m * 1000)).toString();
-  // console.log(u);
+  console.log(u);
   if(u.length == 2) {
     u = '0' + price;
   }

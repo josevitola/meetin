@@ -7,9 +7,6 @@ import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
-  // if(!Workshops.findOne({_id: FlowRouter.getParam('_id')})) {
-  //   FlowRouter.go('/404');
-  // }
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingInitDate = new ReactiveVar(false);
@@ -84,6 +81,9 @@ Template.workshop.helpers({
   isEditingEndDate() {
     return Template.instance().isEditingEndDate.get();
   },
+  exist() {
+    return Workshops.findOne(FlowRouter.getParam('_id'));
+  }
 });
 
 Template.workshop.events({
