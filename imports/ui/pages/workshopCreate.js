@@ -45,8 +45,7 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
 })
 
 Template.workshopCreate.events({
-  'change input' (event) {
-    console.log(this);
+  'change .ui.calendar' (event) {
     $('#endDate').calendar({
       minDate: new Date( $('#initDate').calendar("get date")),
       text: {
@@ -73,6 +72,7 @@ Template.workshopCreate.events({
     const workshop = {
       name: name,
       addr: addr,
+      photo: '',
       desc: desc,
       price: price,
       initDate: initDate,
@@ -84,8 +84,13 @@ Template.workshopCreate.events({
     }
 
     Meteor.call('workshops.insert', workshop, (error, result) => {
-      let workshopUrl = "/workshops/" + result;
-      FlowRouter.go(workshopUrl);
+      // TODO display error to user properly
+      if(error) {
+        alert(error.message);
+      } else {
+        let workshopUrl = "/workshops/" + result;
+        FlowRouter.go(workshopUrl);
+      }
     });
   },
 
