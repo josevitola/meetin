@@ -1,6 +1,9 @@
+import { Workshops } from '/imports/api/workshops.js';
+
 import '/imports/ui/layouts/navbar.js';
 import '/imports/ui/layouts/footer.html';
 
+import '/imports/ui/pages/404.js';
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/signup.js';
 import '/imports/ui/pages/user.js';
@@ -8,6 +11,12 @@ import '/imports/ui/pages/workshop.js';
 import '/imports/ui/pages/workshopCreate.js';
 
 // BlazeLayout.setRoot('body');
+
+FlowRouter.notFound = {
+  action: function() {
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'notFound' })
+  }
+}
 
 FlowRouter.route('/', {
   action: function() {
@@ -32,7 +41,12 @@ FlowRouter.route('/workshops/create', {
 
 FlowRouter.route('/workshops/:_id', {
   action: function( params, queryParams ) {
-    BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'workshop', footer: 'footer' })
+    if(!Workshops.findOne(params._id)) {
+      // didn't find workshop!
+      FlowRouter.go('/404');
+    } else {
+      BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'workshop', footer: 'footer' });
+    }
   },
   name: 'workshop'
 });

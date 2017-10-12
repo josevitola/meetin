@@ -1,7 +1,5 @@
 <template name="workshop">
-  {{#if exist}}
   <div class="ui main workshop container">
-    <p></p>
     <!-- Name header -->
     {{#unless isEditingName}}
     <h1 class="ui header">{{workshop.name}}
@@ -256,20 +254,6 @@
     </div>
   </div>
   {{> confirmDeleteModal workshopName=workshop.name}}
-  {{else}}
-  <div class="ui main workshop container">
-    <!-- Yelis ponlo bonito :D -->
-    <h1 class="ui header">404 - Este taller no existe =( <br> Intenta con alguno de los siguientes talleres</h1>
-    <section id="activities">
-      {{#if currentUser}}
-        {{> userDashboard}}
-      {{else}}
-        {{> generalDashboard}}
-      {{/if}}
-    </section>
-  </div>
-
-  {{/if}}
 </template>
 
 
