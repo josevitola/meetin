@@ -195,7 +195,7 @@
               {{#unless isEditingInitDate}}
                 <i class="calendar icon"></i>
                 <div class="content initDate">
-                  {{workshop.initDate}}
+                  {{styleDate workshop.initDate}}
                   {{#if isUserOwner workshop.owner}}
                     <a href="#"><i class="small edit initDate icon"></i></a>
                   {{/if}}
@@ -217,7 +217,7 @@
               {{#unless isEditingEndDate}}
                 <i class="calendar icon"></i>
                 <div class="content endDate">
-                  {{workshop.endDate}}
+                  {{styleDate workshop.endDate}}
                   {{#if isUserOwner workshop.owner}}
                     <a href="#"><i class="small edit endDate icon"></i></a>
                   {{/if}}

@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { toggle } from '/imports/lib/datahelpers.js';
+import { styleShortDate, formatTime } from '/imports/lib/stylish.js';
 import { Workshops } from '/imports/api/workshops.js';
 import './workshop.html';
 
@@ -83,6 +84,9 @@ Template.workshop.helpers({
   },
   exist() {
     return Workshops.findOne(FlowRouter.getParam('_id'));
+  },
+  styleDate(date) {
+    return styleShortDate(date) + ' - ' + formatTime(date);
   }
 });
 
