@@ -19,6 +19,7 @@ Template.searchBar.onRendered(function searchBarOnRendered() {
         title: 'name',
         description: 'addr'
       },
+      maxFields: 4,
       searchFields   : [
         'name', 'tags'
       ],
