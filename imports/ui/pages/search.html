@@ -2,13 +2,26 @@
   <div class="ui main container">
     <h1>Resultados de búsqueda: '{{query}}'</h1>
 
+    {{#with workshopsByName}}
     <div class="dashboard">
-      <h3 class="ui bottom line header">Eventos populares</h3>
+      <h3 class="ui bottom line header">Por nombre</h3>
       <div class="ui four link cards">
-        {{#each workshopsByName}}
+        {{#each this}}
           {{> workshopCard workshop=this}}
         {{/each}}
       </div>
     </div>
+    {{/with}}
+
+    {{#with workshopsByTags}}
+    <div class="dashboard">
+      <h3 class="ui bottom line header">Por categoría</h3>
+      <div class="ui four link cards">
+        {{#each this}}
+          {{> workshopCard workshop=this}}
+        {{/each}}
+      </div>
+    </div>
+    {{/with}}
   </div>
 </template>

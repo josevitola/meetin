@@ -12,8 +12,12 @@ Template.search.helpers({
   workshopsByName() {
     const key = FlowRouter.getQueryParam('q');
     const pattern = '.*' + key + '.*';
-    const workshops = Workshops.find({name: {$regex: pattern}}).fetch();
-    console.log(workshops);
+    return Workshops.find({name: {$regex: pattern}}).fetch();
+  },
+
+  workshopsByTags() {
+    const key = FlowRouter.getQueryParam('q');
+    const workshops = Workshops.find({tags: key}).fetch();
     return workshops;
   }
 });
