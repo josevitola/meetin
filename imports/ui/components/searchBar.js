@@ -30,7 +30,7 @@ Template.searchBar.events({
     // enter --> route to search results page
     if(event.keyCode == 13) {
       const search = $(currentTarget).find('input').val();
-      // FlowRouter.go('/search?q=' + search);
+      FlowRouter.go('/search?q=' + search);
     }
   }
 })

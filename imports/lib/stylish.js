@@ -87,7 +87,7 @@ export const getMonthName = function(date) {
 }
 
 export const styleDate = function(date) {
-  return date.getDate() + " de " + getMonthName(date);
+  return date.getDate() + ' ' + getMonthName(date) + ' del ' + date.getFullYear();
 }
 
 export const styleShortDate = function(date) {
@@ -96,4 +96,18 @@ export const styleShortDate = function(date) {
 
 export const formatTime = function(date) {
   return moment(date).format("hh:mma");
+}
+
+export const formatPrice = function(price) {
+  var m = Math.trunc(price / 1000);
+  // console.log(m);
+  var u = (price - (m * 1000)).toString();
+  // console.log(u);
+  if(u.length == 2) {
+    u = '0' + price;
+  }
+  if(u.length == 1) {
+    u = '00' + u;
+  }
+  return '$' + m + '.' + u;
 }

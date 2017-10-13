@@ -1,0 +1,14 @@
+<template name="search">
+  <div class="ui main container">
+    <h1>Resultados de búsqueda: '{{query}}'</h1>
+
+    <div class="dashboard">
+      <h3 class="ui bottom line header">Eventos populares</h3>
+      <div class="ui four link cards">
+        {{#each workshopsByName}}
+          {{> workshopCard workshop=this}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
