@@ -8,6 +8,8 @@ import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
+  Meteor.subscribe('workshops');
+
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingInitDate = new ReactiveVar(false);
@@ -34,6 +36,9 @@ Template.workshop.onRendered(function workshopOnRendered() {
 Template.workshop.helpers({
   // TODO declare subscriptions when autopublish is deleted
   isUserAttending() {
+    if(!Meteor.user()) {
+      return;
+    }
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
   getOwnerName(ownerId) {

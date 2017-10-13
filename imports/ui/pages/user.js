@@ -5,6 +5,11 @@ import { Workshops } from '/imports/api/workshops.js';
 import '../components/workshopCard.js';
 import './user.html';
 
+Template.user.onCreated(function() {
+  Meteor.subscribe('users');
+  Meteor.subscribe('workshops');
+})
+
 Template.user.helpers({
   user() {
     return Meteor.users.findOne(FlowRouter.getParam('_id'));
@@ -14,10 +19,10 @@ Template.user.helpers({
     const userId = FlowRouter.getParam('_id');
     return Workshops.find({owner: userId}).fetch();
   },
-  getAttendsTo() {
+  getAttendsTo(attendsTo) {
     return Workshops.find({
       _id: {
-        $in : Meteor.user().profile.attendsTo
+        $in : attendsTo
       }
     }).fetch();
   }

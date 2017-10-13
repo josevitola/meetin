@@ -7,21 +7,26 @@ import './searchBar.html';
 
 var altContent = [];
 
+Template.searchBar.onCreated(function searchBarOnCreated() {
+  Meteor.subscribe('workshops');
+})
+
 Template.searchBar.onRendered(function searchBarOnRendered() {
-  $('.ui.search').search({
-    source : Workshops.find({}).fetch(),
-    fields: {
-      title: 'name',
-      description: 'addr'
-    },
-    searchFields   : [
-      'name', 'tags'
-    ],
-    searchFullText: false,
-    onSelect: function(result, response) {
-      FlowRouter.go('/workshops/' + result._id);
-    }
-  });
+  this.autorun(() => {
+    $('.ui.search').search({
+      source : Workshops.find({}).fetch(),
+      fields: {
+        title: 'name',
+        description: 'addr'
+      },
+      searchFields   : [
+        'name', 'tags'
+      ],
+      onSelect: function(result, response) {
+        FlowRouter.go('/workshops/' + result._id);
+      }
+    });
+  })
 });
 
 Template.searchBar.events({

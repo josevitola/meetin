@@ -5,6 +5,10 @@ import { Workshops } from '/imports/api/workshops.js';
 import './generalDashboard.js';
 import './userDashboard.html';
 
+Template.userDashboard.onCreated(function userDashboardOnCreated() {
+  Meteor.subscribe('workshops', 8);
+})
+
 Template.userDashboard.helpers({
   workshopsToday() {
     var start = new Date();
