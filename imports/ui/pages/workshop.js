@@ -21,8 +21,29 @@ Template.workshop.onRendered(function workshopOnRendered() {
   if(Meteor.user() || Meteor.loggingIn()) {
     $('.ui.accordion').accordion();
   }
-  $('#initDate').calendar();
-  $('#endDate').calendar();
+  $('#initDate').calendar({
+    minDate: new Date(Date.now()),
+    onChange: function (date, text, mode) {
+      $('#endDate').calendar({
+        minDate: date
+      });
+    },
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    },
+    disableMinute: true
+  });
+  $('#endDate').calendar({
+    minDate: new Date(Date.now()),
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    },
+    disableMinute: true
+  });
 
   // var id = Template.instance().workshop.get().owner;
   // var title = Meteor.users.findOne({_id: id}).profile.name;
