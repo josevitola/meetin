@@ -3,6 +3,7 @@ import '/imports/ui/layouts/footer.html';
 
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/search.js';
+import '/imports/ui/pages/settings.js';
 import '/imports/ui/pages/signup.js';
 import '/imports/ui/pages/user.js';
 import '/imports/ui/pages/workshop.js';
@@ -22,6 +23,16 @@ FlowRouter.route('/search', {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'search', footer: 'footer' })
   },
   name: 'user'
+});
+
+FlowRouter.route('/settings', {
+  action: function( params, queryParams ) {
+    if(!Meteor.user() && !Meteor.loggingIn()) {
+      FlowRouter.go('/');
+    } else {
+      BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'settings', footer: 'footer' })
+    }
+  }
 });
 
 FlowRouter.route('/signup', {

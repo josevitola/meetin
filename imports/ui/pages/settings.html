@@ -1,0 +1,92 @@
+<template name="settings">
+  <div class="ui main settings container">
+      <div class="ui grid">
+        <div class="four wide column">
+          <div class="ui secondary vertical pointing menu">
+            <!-- FIXME item is not shown as active! -->
+            <a class="profile item">
+              Perfil
+            </a>
+            <a class="account item">
+              Cuenta
+            </a>
+          </div>
+        </div>
+        <div class="twelve wide column">
+          {{#if profile}}
+            {{> profileSettings}}
+          {{else if account}}
+            {{> accountSettings}}
+          {{else}}
+            lala
+          {{/if}}
+        </div>
+      </div>
+  </div>
+</template>
+
+<template name="profileSettings">
+  <div class="ui segment">
+    <h2 class="ui header">Configuración del perfil</h2>
+    <div class="ui divider"></div>
+    <div class="ui grid">
+      <div class="twelve wide column">
+        {{#with currentUser}}
+        <form class="ui user update form">
+          <div class="field"> <!-- Nombre -->
+            <label>Nombre</label>
+            <input value="{{profile.name}}" type="text" name="update-name" placeholder="Nombre y Apellido">
+          </div>
+          <div class="field"> <!-- Teléfono -->
+            <label>Teléfono</label>
+            <input value="{{profile.phone}}" type="tel" name="update-phone" placeholder="Teléfono o celular">
+          </div>
+          <div class="field"> <!-- Descripción -->
+            <label>Descripción </label>
+            <textarea value="{{profile.desc}}" name="update-desc" rows="8" cols="80" placeholder="Descríbete como persona!"></textarea>
+          </div>
+          <!-- TODO editar (incluir) tags -->
+          <!-- TODO cambiar contraseña  -->
+          <button class="ui right floated green submit button" type="submit">Guardar cambios</button>
+        </form>
+        {{/with}}
+      </div>
+      <div class="four wide column">
+        <img class="ui small centered rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="" />
+        <!-- <button class="ui centered green button">Cambiar imagen</button> -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="accountSettings">
+  <div class="ui segment">
+    <h2 class="ui header">Cambiar contraseña</h2>
+    <div class="ui divider"></div>
+    <form class="ui update password form">
+      <div class="field">
+        <label>Contraseña anterior</label>
+        <input type="password" class="update pass old">
+      </div>
+      <div class="field">
+        <label>Nueva contraseña</label>
+        <input type="password" class="update pass new">
+      </div>
+      <div class="field">
+        <label>Repetir nueva contraseña</label>
+        <input type="password" class="update pass con">
+      </div>
+      <button class="ui submit button" type="submit">Confirmar</button>
+    </form>
+
+    <h2 class="ui red header">Eliminar cuenta</h2>
+    <div class="ui divider"></div>
+    <div class="ui negative message">
+      <div class="header">
+        ¡Cuidado!
+      </div>
+      <p>Eliminar la cuenta de Meetin es irreversible y perderá todos sus datos. Esté seguro antes de continuar.</p>
+    </div>
+    <div class="ui red inverted delete user button">Eliminar cuenta</div>
+  </div>
+</template>

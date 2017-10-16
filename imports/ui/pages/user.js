@@ -14,6 +14,9 @@ Template.user.helpers({
   user() {
     return Meteor.users.findOne(FlowRouter.getParam('_id'));
   },
+  isUser(user) {
+    return Meteor.userId() === user._id;
+  },
   getOwnedWorkshops() {
     // TODO decide whether to use double reference in database or not
     const userId = FlowRouter.getParam('_id');

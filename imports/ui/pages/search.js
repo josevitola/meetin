@@ -4,6 +4,10 @@ import { Workshops } from '/imports/api/workshops.js';
 
 import './search.html';
 
+Template.search.onCreated(function searchOnCreated() {
+  Meteor.subscribe('workshops');
+})
+
 Template.search.helpers({
   query() {
     return FlowRouter.getQueryParam('q');

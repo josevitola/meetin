@@ -23,6 +23,9 @@
         {{#each emails}}
         <div class="four wide column">
           <img class="ui small right floated rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="">
+          {{#if isUser user}}
+          <button class="ui right floated labeled icon button"><i class="settings icon"></i>Editar</button>
+          {{/if}}
         </div>
         {{/each}}
 
