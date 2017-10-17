@@ -15,11 +15,12 @@ export const UserSchema = new SimpleSchema({
   'profile.phone': { type: Number },
   'profile.desc': { type: String },
   'profile.notifications': { type: Array },
-  'profile.notifications.$': { type: Object }
+  'profile.notifications.$': { type: String }
   // 'profile.tags': { type: Array },
   // 'profile.tags.$': { type: String }
 });
 
+// TODO insert createdAt field
 export const WorkshopSchema = new SimpleSchema({
   name: { type: String },
   photo: { type: String },
@@ -34,12 +35,14 @@ export const WorkshopSchema = new SimpleSchema({
   participants: { type: Array },
   'participants.$': { type: String },
   items: { type: Array },
-  'items.$': { type: String }
+  'items.$': { type: String },
 });
 
 export const NotificationSchema = new SimpleSchema({
   sender: { type: String },
   receiver: { type: String },
   type: { type: String },
-  event: { type: String }
+  event: { type: String },
+  createdAt: { type: Date },
+  read: { type: Boolean }
 });

@@ -67,13 +67,14 @@ Meteor.methods({
     }
   },
 
-  'user.pushNotification'( notification ) {
+  'user.pushNotification'( receiverId, notifId ) {
+    check(notifId, String);
     try {
-      Meteor.users.update(notification.receiver, {
-        $push: { 'profile.notifications': notification }
+      Meteor.users.update(receiverId, {
+        $push: { 'profile.notifications': notifId }
       });
     } catch (e) {
-      throw new Meteor.Error('push-notif', 'Failed to push notification');
+      throw new Meteor.Error('push-notif', e.message);
     }
   }
 })

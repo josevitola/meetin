@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { toggle } from '/imports/lib/datahelpers.js';
 import { WorkshopSchema } from '/imports/api/schemas.js';
 import { Workshops } from './workshops.js';
 import { Notifications } from './notifications.js';
@@ -19,13 +18,16 @@ Workshops.after.remove((userId, workshop) => {
 
 /***** Methods *****/
 Meteor.methods({
+  /* Inserting */
   'workshops.insert'( workshop ) {
     WorkshopSchema.validate(workshop);
     return Workshops.insert( workshop );
   },
 
-  // EDIT METHODS
+  /* Updating */
   'workshops.pushParticipant'( workId ) {
+    check(workId, String);
+
     const workshop = Workshops.findOne(workId);
     if(workshop.participants.indexOf(this.userId) === -1) {
       // push user in workshop
@@ -38,18 +40,15 @@ Meteor.methods({
       Meteor.call('users.pushAttendsTo', this.userId, workId);
 
       // send notification to owner
-      const notification = {
-        sender: this.userId,
-        receiver: Workshops.findOne(workId).owner,
-        type: 'join',
-        event: workId
-      };
-      Meteor.call('notifications.insert', notification);
+      Meteor.call('notifications.insert', this.userId,
+        workshop.owner, 'join', workId);
     } else {
       throw new Meteor.Error(403, 'Workshop already listed user');
     }
   },
   'workshops.pullParticipant'( workId ) {
+    check(workId, String);
+
     const workshop = Workshops.findOne(workId);
     if(workshop.participants.indexOf(this.userId) !== -1) {
       // pull user from workshop
@@ -117,17 +116,6 @@ Meteor.methods({
         $set: { items: newItems }
       });
     }
-  },
-  'workshops.setUserAsParticipant'( workshopId ) {
-    const workshop = Workshops.findOne({_id: workshopId});
-    let participants = workshop.participants;
-    toggle(participants, this.userId);
-
-     Workshops.update(workshopId, {
-      $set: { participants: participants }
-    });
-
-    console.log('updated');
   },
   'workshops.delete'( workshopId ) {
     check(workshopId, String);
