@@ -10,7 +10,6 @@ Notifications.after.insert((userId, notification) => {
 
 Meteor.methods({
   'notifications.insert'( sender, receiver, type, event ) {
-    console.log(sender);
     const notification = {
       sender: sender,
       receiver: receiver,
@@ -21,5 +20,19 @@ Meteor.methods({
     }
     NotificationSchema.validate( notification );
     return Notifications.insert(notification);
+  },
+
+  'notifications.read'( notifIds ) {
+    check(notifIds, [String]);
+
+    try {
+      notifIds.forEach((notif) => {
+        Notifications.update(notif, {
+          $set: { read : true }
+        });
+      });
+    } catch (error) {
+      throw new Meteor.Error('notif-read', 'Error at reading notifications');
+    }
   }
 })
