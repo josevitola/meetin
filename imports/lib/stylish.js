@@ -94,10 +94,6 @@ export const styleShortDate = function(date) {
   return date.getDate() + " " + shortenMonth(date);
 }
 
-export const formatTime = function(date) {
-  return moment(date).format("hh:mma");
-}
-
 export const formatPrice = function(price) {
   var m = Math.trunc(price / 1000);
   // console.log(m);
@@ -110,4 +106,8 @@ export const formatPrice = function(price) {
     u = '00' + u;
   }
   return '$' + m + '.' + u;
+}
+
+export const formatTime = function(date) {
+  return moment(date).format("hh:mma");
 }

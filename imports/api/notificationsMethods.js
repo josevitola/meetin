@@ -4,7 +4,6 @@ import { Notifications } from './notifications.js';
 import { NotificationSchema } from './schemas.js';
 
 Notifications.after.insert((userId, notification) => {
-  console.log('notif insert successful');
   Meteor.call('user.pushNotification', notification.receiver, notification._id);
 });
 

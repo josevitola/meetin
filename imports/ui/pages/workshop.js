@@ -39,7 +39,10 @@ Template.workshop.helpers({
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
   getOwnerName(ownerId) {
-    return Meteor.users.findOne(ownerId).profile.name;
+    const owner = Meteor.users.findOne(ownerId);
+    if(owner) {
+      return owner.profile.name;
+    }
   },
   workshop() {
     return Workshops.findOne(FlowRouter.getParam('_id'));
@@ -233,14 +236,12 @@ Template.workshop.events({
       const workId = FlowRouter.getParam('_id');
 
       if(workshops.indexOf(workId) !== -1) {
-        console.log('already joined workshop');
         Meteor.call('workshops.pullParticipant', workId, (error, result) => {
           if(error) {
             alert(error.message);
           }
         });
       } else {
-        console.log('will join workshop');
         Meteor.call('workshops.pushParticipant', workId, (error, result) => {
           if(error) {
             alert(error.message);

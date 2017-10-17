@@ -3,11 +3,11 @@
   <a class="item">
     <div class="ui small teal create workshop button">Crear actividad</div>
   </a>
-  <a class="item">
-    <i class="large inverted newspaper notif icon"></i>
-    {{#unless unreadNotifs profile.notifications}}
-    <div class="ui bottom right attached circular teal label">{{getNotifNumber profile.notifications}}</div>
-    {{/unless}}
+  <a class="notif item">
+    <i class="large inverted newspaper icon"></i>
+    {{#if unread profile.notifications}}
+    <div class="ui bottom right attached circular teal label">{{countUnreadNotifs profile.notifications}}</div>
+    {{/if}}
   </a>
   <a class="item">
     {{> searchBar}}
@@ -30,5 +30,29 @@
       </div>
     </div>
   </a>
+
+  <div class="ui flowing notif popup bottom right transition hidden">
+    {{#with getNotifs profile.notifications}}
+    <div class="header">Notificaciones</div>
+    <div class="ui divider"></div>
+    <div class="ui feed">
+      {{#each this}}
+      {{#with notification this}}
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+            <a href="/users/{{sender}}">{{getSenderName sender}}</a> asistirá a tu evento <a href="/workshops/{{event}}">{{getWorkshopName event}}</a>.
+            <div class="date">{{getStyledDate createdAt}}</div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+      {{/each}}
+    </div>
+    {{/with}}
+    {{#unless unread profile.notifications}}
+    <a id="allNotifs" href="#"><b>Ver más</b></a>
+    {{/unless}}
+  </div>
   {{/with}}
 </template>

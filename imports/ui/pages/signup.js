@@ -11,7 +11,6 @@ Template.signup.events({
     }
   },
   'click .ui.signup.button'() {
-    console.log('signup click');
     const name = $('input[name=signup-name]').val();
     const mail = $('input[name=signup-email]').val();
     const desc = $('textarea[name=signup-desc]').val();
