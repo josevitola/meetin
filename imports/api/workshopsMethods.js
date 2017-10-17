@@ -38,7 +38,6 @@ Meteor.methods({
     const workshop = Workshops.findOne({_id: workshopId});
 
     if(this.userId === workshop.owner) {
-      console.log(tag);
       let newTags = workshop.tags;
       newTags.push(tag);
       Workshops.update(workshopId, {
@@ -51,7 +50,6 @@ Meteor.methods({
     const workshop = Workshops.findOne({_id: workshopId});
 
     if(this.userId === workshop.owner) {
-      console.log(tagIdx);
       let newTags = workshop.tags;
       newTags.splice(tagIdx, 1);
       Workshops.update(workshopId, {
@@ -62,10 +60,8 @@ Meteor.methods({
   'workshops.createItem'( workshopId, item ) {
     check(item, String);
     const workshop = Workshops.findOne({_id: workshopId});
-    console.log(workshop);
     if(this.userId === workshop.owner) {
       let newItems = workshop.items;
-      console.log(newItems);
       newItems.push(item);
       Workshops.update(workshopId, {
         $set: { items: newItems }

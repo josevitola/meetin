@@ -1,10 +1,12 @@
 <template name="generalDashboard">
   <div class="dashboard">
+    {{#with getWorkshops}}
     <h3 class="ui bottom line header">Eventos populares</h3>
     <div class="ui four link cards">
-      {{#each getWorkshops}}
+      {{#each this}}
         {{> workshopCard workshop=this}}
       {{/each}}
     </div>
+    {{/with}}
   </div>
 </template>

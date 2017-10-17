@@ -3,6 +3,11 @@ import { Template } from 'meteor/templating';
 import './signup.html';
 
 Template.signup.events({
+  'keypress input'(event) {
+    if(event.keyCode == 13) { // if enter key pressed
+      $('.ui.signup.button').click();
+    }
+  },
   'click .ui.signup.button'() {
     const name = $('input[name=signup-name]').val();
     const mail = $('input[name=signup-email]').val();
@@ -13,6 +18,7 @@ Template.signup.events({
 
     const attendsTo = [];
     const owns = [];
+    const notifications = [];
 
     const user = {
       email: mail,
@@ -22,7 +28,8 @@ Template.signup.events({
         phone: phone,
         desc: desc,
         attendsTo: attendsTo,
-        owns: owns
+        owns: owns,
+        notifications: notifications
       }
     }
 

@@ -14,6 +14,8 @@ export const UserSchema = new SimpleSchema({
   'profile.owns.$': { type: String },
   'profile.phone': { type: Number },
   'profile.desc': { type: String },
+  'profile.notifications': { type: Array },
+  'profile.notifications.$': { type: Object }
   // 'profile.tags': { type: Array },
   // 'profile.tags.$': { type: String }
 });
@@ -33,4 +35,11 @@ export const WorkshopSchema = new SimpleSchema({
   'participants.$': { type: String },
   items: { type: Array },
   'items.$': { type: String }
+});
+
+export const NotificationSchema = new SimpleSchema({
+  sends: { type: String },
+  receives: { type: String },
+  type: { type: String },
+  event: { type: String }
 });

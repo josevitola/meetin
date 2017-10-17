@@ -13,6 +13,9 @@ Template.userNavbar.helpers({
       return Meteor.user().emails[0].address;
     }
     else return "";
+  },
+  getNotifNumber() {
+    return Meteor.user().profile.notifications.length;
   }
 });
 
