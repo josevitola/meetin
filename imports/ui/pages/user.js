@@ -8,11 +8,15 @@ import './user.html';
 Template.user.onCreated(function() {
   Meteor.subscribe('users');
   Meteor.subscribe('workshops');
-})
+});
 
 Template.user.helpers({
   user() {
-    return Meteor.users.findOne(FlowRouter.getParam('_id'));
+    const user = Meteor.users.findOne(FlowRouter.getParam('_id'));
+    if(user) {
+      document.title = user.profile.name + " | Meetin";
+    }
+    return user;
   },
   isUser(user) {
     return Meteor.userId() === user._id;

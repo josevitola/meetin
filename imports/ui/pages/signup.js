@@ -2,7 +2,9 @@ import { Template } from 'meteor/templating';
 
 import './signup.html';
 
-Template.signup.on
+Template.signup.onRendered(function() {
+  document.title = 'Registro | Meetin';
+})
 
 Template.signup.events({
   'keypress input'(event) {

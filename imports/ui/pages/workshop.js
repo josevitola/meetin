@@ -44,9 +44,6 @@ Template.workshop.helpers({
       return owner.profile.name;
     }
   },
-  workshop() {
-    return Workshops.findOne(FlowRouter.getParam('_id'));
-  },
   lengthOf(array) {
     return array.length;
   },
@@ -87,12 +84,16 @@ Template.workshop.helpers({
   isEditingEndDate() {
     return Template.instance().isEditingEndDate.get();
   },
-  exist() {
-    return Workshops.findOne(FlowRouter.getParam('_id'));
-  },
   styleDate(date) {
     return styleShortDate(date) + ' - ' + formatTime(date);
-  }
+  },
+  workshop() {
+    const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+    if(workshop) {
+      document.title = workshop.name + " | Meetin";
+    }
+    return workshop;
+  },
 });
 
 Template.workshop.events({

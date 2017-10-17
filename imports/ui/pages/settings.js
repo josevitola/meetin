@@ -6,6 +6,10 @@ Template.settings.onCreated(function settingsOnCreated() {
   this.active = new ReactiveVar('profile');
 });
 
+Template.settings.onRendered(function() {
+  document.title = 'Configuración | Meetin';
+})
+
 Template.settings.helpers({
   profile() {
     return Template.instance().active.get() === 'profile';
