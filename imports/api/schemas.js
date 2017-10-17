@@ -38,8 +38,8 @@ export const WorkshopSchema = new SimpleSchema({
 });
 
 export const NotificationSchema = new SimpleSchema({
-  sends: { type: String },
-  receives: { type: String },
+  sender: { type: String },
+  receiver: { type: String },
   type: { type: String },
   event: { type: String }
 });

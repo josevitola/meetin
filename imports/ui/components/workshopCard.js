@@ -6,16 +6,27 @@ import { Workshops } from '/imports/api/workshops.js';
 
 import './workshopCard.html';
 
+Template.workshopCard.onCreated(function wsCardOnCreated() {
+  this.subscribe('users');
+})
+
 Template.workshopCard.onRendered(function wsCardOnRendered() {
-  var id = this.data.workshop.owner;
-  var title = Meteor.users.findOne({_id: id}).profile.name;
-  var item = ".ui.named.avatar.image";
-  $(item).popup(title: title);
+  this.autorun(() => {
+    var id = this.data.workshop.owner;
+    var user = Meteor.users.findOne(id);
+    if(user) {
+      var item = ".ui.named.avatar.image";
+      $(item).popup(user.profile.name);
+    }
+  });
 });
 
 Template.workshopCard.helpers({
-  getOwnerName(ownerId) {
-    return Meteor.users.findOne({_id: ownerId}).profile.name;
+  getOwnerName() {
+    let ownerId = Template.instance().data.workshop.owner;
+    if(Meteor.users.findOne(ownerId)) {
+      return Meteor.users.findOne({_id: ownerId}).profile.name;
+    }
   },
   getWorkshopDesc() {
     return Template.instance().workshop.get().desc;

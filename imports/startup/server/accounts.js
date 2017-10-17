@@ -36,18 +36,25 @@ Meteor.methods({
     Accounts.createUser( userDraft );
   },
 
-  'users.updateAttendsTo'( userId, workshops ) {
-    check(workshops, [String]);
-    Meteor.users.update(userId, {
-      $set: { 'profile.attendsTo': workshops }
-    });
+  'users.pushAttendsTo'( userId, workId ) {
+    // push only if it's not already in
+    if(Meteor.users.findOne(userId).profile.attendsTo.indexOf(workId) === -1) {
+      Meteor.users.update(userId, {
+        $push: { 'profile.attendsTo': workId }
+      });
+    } else {
+      throw new Meteor.Error(403, 'User is already participating');
+    }
   },
 
-  'user.updateOwnAttendsTo'( workshops ) {
-    check(workshops, [String]);
-    Meteor.users.update(this.userId, {
-      $set: { 'profile.attendsTo': workshops }
-    });
+  'users.pullAttendsTo'( userId, workId ) {
+    if(Meteor.users.findOne(userId).profile.attendsTo.indexOf(workId) !== -1) {
+      Meteor.users.update(this.userId, {
+        $pull: { 'profile.attendsTo': workId }
+      });
+    } else {
+      throw new Meteor.Error(403, 'User is not participating');
+    }
   },
 
   'user.selfDelete'() {
@@ -59,6 +66,16 @@ Meteor.methods({
       throw new Meteor.Error('self-delete', 'Failed to remove yourself');
     }
   },
+
+  'user.pushNotification'( notification ) {
+    try {
+      Meteor.users.update(notification.receiver, {
+        $push: { 'profile.notifications': notification }
+      });
+    } catch (e) {
+      throw new Meteor.Error('push-notif', 'Failed to push notification');
+    }
+  }
 })
 
 // TODO actually do this thing

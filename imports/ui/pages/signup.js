@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 
 import './signup.html';
 
+Template.signup.on
+
 Template.signup.events({
   'keypress input'(event) {
     if(event.keyCode == 13) { // if enter key pressed
@@ -9,6 +11,7 @@ Template.signup.events({
     }
   },
   'click .ui.signup.button'() {
+    console.log('signup click');
     const name = $('input[name=signup-name]').val();
     const mail = $('input[name=signup-email]').val();
     const desc = $('textarea[name=signup-desc]').val();
@@ -38,6 +41,8 @@ Template.signup.events({
         Meteor.loginWithPassword(mail, pass, () => {
           FlowRouter.go('/');
         });
+      } else {
+        alert(error.message);
       }
     });
   }

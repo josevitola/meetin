@@ -3,11 +3,11 @@ import { check } from 'meteor/check';
 import { toggle } from '/imports/lib/datahelpers.js';
 import { WorkshopSchema } from '/imports/api/schemas.js';
 import { Workshops } from './workshops.js';
+import { Notifications } from './notifications.js';
 
+/***** Hooks *****/
 Workshops.after.remove((userId, workshop) => {
   const users = [];
-  console.log(workshop.participants.length);
-  console.log(workshop.participants);
   for(var i = 0; i < workshop.participants.length; i++) {
     const user = Meteor.users.findOne({_id: workshop.participants[i]});
     let attendsTo = user.profile.attendsTo;
@@ -17,6 +17,7 @@ Workshops.after.remove((userId, workshop) => {
   }
 })
 
+/***** Methods *****/
 Meteor.methods({
   'workshops.insert'( workshop ) {
     WorkshopSchema.validate(workshop);
@@ -24,7 +25,44 @@ Meteor.methods({
   },
 
   // EDIT METHODS
-  //esta funcion remplaza a cualquier update que funcione con atributos que no sean arrays
+  'workshops.pushParticipant'( workId ) {
+    const workshop = Workshops.findOne(workId);
+    if(workshop.participants.indexOf(this.userId) === -1) {
+      // push user in workshop
+      Workshops.update(workId, {
+        $push: { participants: this.userId }
+      });
+
+      // TODO maybe this should go in the collections hooks?
+      // push workshop in user
+      Meteor.call('users.pushAttendsTo', this.userId, workId);
+
+      // send notification to owner
+      const notification = {
+        sender: this.userId,
+        receiver: Workshops.findOne(workId).owner,
+        type: 'join',
+        event: workId
+      };
+      Meteor.call('notifications.insert', notification);
+    } else {
+      throw new Meteor.Error(403, 'Workshop already listed user');
+    }
+  },
+  'workshops.pullParticipant'( workId ) {
+    const workshop = Workshops.findOne(workId);
+    if(workshop.participants.indexOf(this.userId) !== -1) {
+      // pull user from workshop
+      Workshops.update(workId, {
+        $pull: { participants: this.userId }
+      });
+
+      // pull workshop from user
+      Meteor.call('users.pullAttendsTo', this.userId, workId);
+    } else {
+      throw new Meteor.Error(403, 'Workshop has not listed user');
+    }
+  },
   'workshops.update'( workshopId, newAttr ) {
     const workshop = Workshops.findOne({_id: workshopId});
     if(this.userId === workshop.owner) {
@@ -88,6 +126,8 @@ Meteor.methods({
      Workshops.update(workshopId, {
       $set: { participants: participants }
     });
+
+    console.log('updated');
   },
   'workshops.delete'( workshopId ) {
     check(workshopId, String);
