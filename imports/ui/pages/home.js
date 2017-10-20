@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 
+import '../components/searchBar.js';
 import '../components/workshopCard.js';
 
 import '../layouts/generalDashboard.js';

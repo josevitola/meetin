@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 
+import './searchBar.js';
 import './userNavbar.html';
 
 Template.userNavbar.onRendered(function userNavbarOnRendered() {
@@ -7,12 +8,6 @@ Template.userNavbar.onRendered(function userNavbarOnRendered() {
 });
 
 Template.userNavbar.helpers({
-  getUserName() {
-    if(Meteor.user()) {
-      return Meteor.user().profile.name;
-    }
-    else return "";
-  },
   getUserEmail() {
     if(Meteor.user()) {
       return Meteor.user().emails[0].address;
@@ -22,6 +17,9 @@ Template.userNavbar.helpers({
 });
 
 Template.userNavbar.events({
+  'click .create.workshop'() {
+    FlowRouter.go('/workshops/create');
+  },
   'click .logout.item'() {
     Meteor.logout(() => {
       FlowRouter.go('/');

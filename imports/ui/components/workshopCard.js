@@ -1,31 +1,21 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+import { formatTime, styleDate, formatPrice } from '/imports/lib/stylish.js';
 import { Workshops } from '/imports/api/workshops.js';
 
 import './workshopCard.html';
 
-Template.workshopCard.onCreated(function wsCardOnCreated() {
-  this.workshop = new ReactiveVar(Workshops.findOne({_id: this.data.id}));
-});
-
 Template.workshopCard.onRendered(function wsCardOnRendered() {
-  var id = Template.instance().workshop.get().owner;
+  var id = this.data.workshop.owner;
   var title = Meteor.users.findOne({_id: id}).profile.name;
   var item = ".ui.named.avatar.image";
   $(item).popup(title: title);
 });
 
 Template.workshopCard.helpers({
-  getWorkshopName() {
-    return Template.instance().workshop.get().name;
-  },
-  getOwnerId() {
-    return Template.instance().workshop.get().owner;
-  },
-  getOwnerName() {
-    const id = Template.instance().workshop.get().owner;
-    return Meteor.users.findOne({_id: id}).profile.name;
+  getOwnerName(ownerId) {
+    return Meteor.users.findOne({_id: ownerId}).profile.name;
   },
   getWorkshopDesc() {
     return Template.instance().workshop.get().desc;
@@ -33,58 +23,13 @@ Template.workshopCard.helpers({
   getWorkshopAddr() {
     return Template.instance().workshop.get().addr;
   },
-  getWorkshopPrice() {
-    return formatPrice(Template.instance().workshop.get().price);
+  formatPrice(price) {
+    return formatPrice(price);
   },
-  getWorkshopInitDate() {
-    return formatDate(Template.instance().workshop.get().initDate);
+  formatDate(date) {
+    return styleDate(date);
   },
-  getWorkshopEndDate() {
-    return formatDate(Template.instance().workshop.get().endDate);
-  },
-  getWorkshopInitTime() {
-    return formatTime(Template.instance().workshop.get().initDate);
-  },
-  getWorkshopEndTime() {
-    return formatTime(Template.instance().workshop.get().endDate);
+  formatTime(date) {
+    return formatTime(date);
   }
 });
-
-function formatDate(date) {
-  var monthNames = [
-    "Enero", "Febrero", "Marzo",
-    "Abril", "Mayo", "Junio", "Julio",
-    "Agosto", "Septiembre", "Octubre",
-    "Noviembre", "Diciembre"
-  ];
-
-  var day = date.getDate();
-  var monthIndex = date.getMonth();
-  var year = date.getFullYear();
-
-  return day + ' ' + monthNames[monthIndex] + ' de ' + year;
-}
-
-function formatTime(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes().toString();
-  if(minutes.length == 1) {
-    minutes = '0' + minutes;
-  }
-
-  return hours + ':' + minutes;
-}
-
-function formatPrice(price) {
-  var m = Math.trunc(price / 1000);
-  console.log(m);
-  var u = (price - (m * 1000)).toString();
-  console.log(u);
-  if(u.length == 2) {
-    u = '0' + price;
-  }
-  if(u.length == 1) {
-    u = '00' + u;
-  }
-  return '$' + m + '.' + u;
-}

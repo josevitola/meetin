@@ -43,3 +43,8 @@ Meteor.methods({
     });
   }
 })
+
+// TODO actually do this thing
+Meteor.publish('users', function() {
+  return Meteor.users.find();
+});

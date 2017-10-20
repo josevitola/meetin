@@ -1,17 +1,18 @@
 <template name="user">
+  {{#with user}}
   <div class="ui main container">
     <div class="ui segment">
       <div class="ui grid">
         <div class="twelve wide column">
-          <h1 class="ui header">{{user.profile.name}}</h1>
-          {{#with user.profile.desc}}
+          <h1 class="ui header">{{profile.name}}</h1>
+          {{#with profile.desc}}
           <h5>Descripción</h5>
             <p>{{this}}</p>
           {{/with}}
 
           <h5>Información</h5>
           <div class="ui list">
-            {{#with user.profile.phone}}
+            {{#with profile.phone}}
             <div class="item">
               <i class="call icon"></i>
               {{this}}
@@ -19,7 +20,7 @@
             {{/with}}
           </div>
         </div>
-        {{#each user.emails}}
+        {{#each emails}}
         <div class="four wide column">
           <img class="ui small right floated rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="">
         </div>
@@ -29,21 +30,22 @@
     </div>
 
     {{#with getOwnedWorkshops}}
-    <h3>Eventos creados por {{user.profile.name}}</h3>
+    <h3>Eventos creados por {{profile.name}}</h3>
     <div class="ui four link cards">
       {{#each this}}
-        {{> workshopCard id=this}}
+        {{> workshopCard workshop=this}}
       {{/each}}
     </div>
     {{/with}}
 
-    {{#with user.profile.attendsTo}}
-    <h3>Eventos a los que {{user.profile.name}} asistirá</h3>
+    {{#with profile.attendsTo}}
+    <h3>Eventos a los que {{profile.name}} asistirá</h3>
     <div class="ui four link cards">
-      {{#each this}}
-        {{> workshopCard id=this}}
+      {{#each getAttendsTo this}}
+        {{> workshopCard workshop=this}}
       {{/each}}
     </div>
     {{/with}}
   </div>
+  {{/with}}
 </template>

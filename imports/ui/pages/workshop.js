@@ -2,11 +2,15 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { toggle } from '/imports/lib/datahelpers.js';
+import { styleShortDate, formatTime } from '/imports/lib/stylish.js';
 import { Workshops } from '/imports/api/workshops.js';
+import { Email } from 'meteor/email';
 import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
+  Meteor.subscribe('workshops');
+
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingInitDate = new ReactiveVar(false);
@@ -54,6 +58,9 @@ Template.workshop.onRendered(function workshopOnRendered() {
 Template.workshop.helpers({
   // TODO declare subscriptions when autopublish is deleted
   isUserAttending() {
+    if(!Meteor.user()) {
+      return;
+    }
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
   getOwnerName(ownerId) {
@@ -104,6 +111,9 @@ Template.workshop.helpers({
   },
   exist() {
     return Workshops.findOne(FlowRouter.getParam('_id'));
+  },
+  styleDate(date) {
+    return styleShortDate(date) + ' - ' + formatTime(date);
   }
 });
 
@@ -243,13 +253,35 @@ Template.workshop.events({
 
 
   'click .ui.join.workshop.button'(event, instance) {
-    if(Meteor.user()){
+    if(Meteor.user()) {
       let workshops = Meteor.user().profile.attendsTo;
       const workId = FlowRouter.getParam('_id');
+      const isUserAttending = Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
 
       Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
       Meteor.call('workshops.setUserAsParticipant', workId);
-    }else{
+
+      if(!isUserAttending) {
+        const workshop = Workshops.findOne(workId);
+        const owner = Meteor.users.findOne(workshop.owner);
+        const participant = Meteor.user();
+
+        const message = {
+          owner: owner.profile.name,
+          email: owner.emails[0].address,
+          message: "Holi",
+        };
+        console.log(message);
+
+        Meteor.call('sendMessage', message, (error) => {
+          if (error) {
+            console.log(error.reason, 'danger');
+          } else {
+            console.log('Message sent!', 'success');
+          }
+        });
+      }
+    } else {
       $("#loginModal").modal('show');
     }
   },

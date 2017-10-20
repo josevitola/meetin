@@ -1,20 +1,22 @@
 <template name="userDashboard">
+  <!-- TODO {{> spiner}} template is available. Use when loading! -->
   <div class="dashboard">
-    {{#with getWorkshopsToday}}
+    {{#with workshopsToday}}
     <h3 class="ui dividing header">Eventos hoy!</h3>
     <div class="ui four link cards">
       {{#each this}}
-        {{> workshopCard id=this}}
+        {{> workshopCard workshop=this}}
       {{/each}}
     </div>
     {{/with}}
   </div>
+
   <div class="dashboard">
     {{#with currentUser.profile.attendsTo}}
     <h3 class="ui bottom line header">Eventos a los que asistirás</h3>
     <div class="ui four link cards">
-      {{#each this}}
-        {{> workshopCard id=this}}
+      {{#each getAttendsTo}}
+        {{> workshopCard workshop=this}}
       {{/each}}
     </div>
     {{/with}}
