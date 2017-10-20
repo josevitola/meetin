@@ -4,6 +4,15 @@ import { Workshops } from '/imports/api/workshops.js';
 
 import './search.html';
 
+Template.search.onCreated(function searchOnCreated() {
+  Meteor.subscribe('workshops');
+});
+
+Template.search.onRendered(function searchOnRendered() {
+  const key = FlowRouter.getQueryParam('q');
+  document.title = 'Búsqueda de ' + key + ' | Meetin';
+});
+
 Template.search.helpers({
   query() {
     return FlowRouter.getQueryParam('q');

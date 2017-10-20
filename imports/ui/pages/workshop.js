@@ -9,7 +9,8 @@ import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
-  Meteor.subscribe('workshops');
+  this.subscribe('users');
+  this.subscribe('workshops');
 
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
@@ -22,33 +23,9 @@ Template.workshop.onCreated(function workshopOnCreated() {
 });
 
 Template.workshop.onRendered(function workshopOnRendered() {
-  if(Meteor.user() || Meteor.loggingIn()) {
-    $('.ui.accordion').accordion();
-  }
-  $('#initDate').calendar({
-    minDate: new Date(Date.now()),
-    onChange: function (date, text, mode) {
-      $('#endDate').calendar({
-        minDate: date
-      });
-    },
-    text: {
-      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    },
-    disableMinute: true
-  });
-  $('#endDate').calendar({
-    minDate: new Date(Date.now()),
-    text: {
-      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    },
-    disableMinute: true
-  });
-
+  $('.ui.accordion').accordion();
+  $('#initDate').calendar();
+  $('#endDate').calendar();
   // var id = Template.instance().workshop.get().owner;
   // var title = Meteor.users.findOne({_id: id}).profile.name;
   var item = ".ui.named.avatar.image";
@@ -56,7 +33,6 @@ Template.workshop.onRendered(function workshopOnRendered() {
 })
 
 Template.workshop.helpers({
-  // TODO declare subscriptions when autopublish is deleted
   isUserAttending() {
     if(!Meteor.user()) {
       return;
@@ -64,10 +40,10 @@ Template.workshop.helpers({
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
   getOwnerName(ownerId) {
-    return Meteor.users.findOne(ownerId).profile.name;
-  },
-  workshop() {
-    return Workshops.findOne(FlowRouter.getParam('_id'));
+    const owner = Meteor.users.findOne(ownerId);
+    if(owner) {
+      return owner.profile.name;
+    }
   },
   lengthOf(array) {
     return array.length;
@@ -109,12 +85,16 @@ Template.workshop.helpers({
   isEditingEndDate() {
     return Template.instance().isEditingEndDate.get();
   },
-  exist() {
-    return Workshops.findOne(FlowRouter.getParam('_id'));
-  },
   styleDate(date) {
     return styleShortDate(date) + ' - ' + formatTime(date);
-  }
+  },
+  workshop() {
+    const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+    if(workshop) {
+      document.title = workshop.name + " | Meetin";
+    }
+    return workshop;
+  },
 });
 
 Template.workshop.events({
@@ -258,6 +238,7 @@ Template.workshop.events({
       const workId = FlowRouter.getParam('_id');
       const isUserAttending = Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
 
+<<<<<<< HEAD
       Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
       Meteor.call('workshops.setUserAsParticipant', workId);
 
@@ -282,6 +263,22 @@ Template.workshop.events({
         });
       }
     } else {
+=======
+      if(workshops.indexOf(workId) !== -1) {
+        Meteor.call('workshops.pullParticipant', workId, (error, result) => {
+          if(error) {
+            alert(error.message);
+          }
+        });
+      } else {
+        Meteor.call('workshops.pushParticipant', workId, (error, result) => {
+          if(error) {
+            alert(error.message);
+          }
+        });
+      }
+    }else{
+>>>>>>> 5f4a009adf2678d7ef2eb9477a92b2b72fe25436
       $("#loginModal").modal('show');
     }
   },

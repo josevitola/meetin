@@ -6,7 +6,7 @@ import './generalDashboard.js';
 import './userDashboard.html';
 
 Template.userDashboard.onCreated(function userDashboardOnCreated() {
-  Meteor.subscribe('workshops', 8);
+  this.subscribe('workshops');
 })
 
 Template.userDashboard.helpers({

@@ -8,6 +8,10 @@ import '../layouts/userDashboard.js';
 
 import './home.html';
 
+Template.home.onRendered(function() {
+  document.title = 'Meetin';
+})
+
 Template.home.helpers({
   profile() {
     return Meteor.user() || Meteor.loggingIn() ? "user" : "guest";
