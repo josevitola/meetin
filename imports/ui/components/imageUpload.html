@@ -5,7 +5,7 @@
   {{else}}
     {{#with previewSrc}}
       <div class="ui small bordered rounded image">
-        <a class="ui right corner label">
+        <a class="ui right corner remove label">
           <i class="remove icon"></i>
         </a>
         <img id="preview" src="{{this}}" alt="">
@@ -13,6 +13,9 @@
     {{/with}}
     <br>
     <input class="fileinput" id="imageInput" type="file" name="image" multiple="multiple"/>
-    <label for="imageInput">{{labelName}}</label>
+    <label for="imageInput">
+      <i class="image icon"></i>
+      {{labelName}}
+    </label>
   {{/with}}
 </template>

@@ -6,6 +6,7 @@ import './imageUpload.html';
 Template.imageUpload.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);
   this.previewSrc = new ReactiveVar('');
+  this.labelName = new ReactiveVar('Adjuntar imagen');
 });
 
 Template.imageUpload.helpers({
@@ -17,13 +18,7 @@ Template.imageUpload.helpers({
 
   },
   labelName() {
-    const files = $('#imageInput').files;
-    console.log(files);
-    if(files && files.length > 0) {
-      return files.length + ' archivos seleccionados';
-    } else {
-      return 'Escoger un archivo';
-    }
+    return Template.instance().labelName.get();
   }
 });
 
@@ -39,6 +34,13 @@ Template.imageUpload.events({
       }
 
       reader.readAsDataURL(files[0]);
+
+      instance.labelName.set(files[0].name);
     }
+  },
+  'click .ui.remove.label'(e, instance) {
+    $('#imageInput').val('');
+    instance.previewSrc.set('');
+    instance.labelName.set('Adjuntar imagen');
   }
 });
