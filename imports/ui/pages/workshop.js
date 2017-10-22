@@ -3,6 +3,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import { toggle } from '/imports/lib/datahelpers.js';
 import { styleShortDate, formatTime } from '/imports/lib/stylish.js';
+
+import { Images } from '/imports/api/files.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 import './workshop.html';
@@ -38,6 +40,9 @@ Template.workshop.helpers({
       return;
     }
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
+  },
+  getImage(imageId) {
+    return Images.findOne(imageId);
   },
   getOwnerName(ownerId) {
     const owner = Meteor.users.findOne(ownerId);

@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+
 import { WorkshopSchema } from '/imports/api/schemas.js';
-import { Workshops } from './workshops.js';
+
+import { Images } from './files';
 import { Notifications } from './notifications.js';
+import { Workshops } from './workshops.js';
 
 /***** Hooks *****/
 Workshops.after.remove((userId, workshop) => {
@@ -25,11 +28,28 @@ Meteor.methods({
   },
 
   /* Updating */
+  'workshops.addPic'( workId, imageId ) {
+    check(imageId, String);
+
+    const image = Images.findOne({_id: imageId});
+    if(!image) {
+      throw new Meteor.Error(404, 'Imagen no encontrada');
+    }
+
+    if(Workshops.findOne(workId).owner !== this.userId) {
+      throw new Meteor.Error(403, 'Usuario no autorizado');
+    }
+
+    Workshops.update(workId, {
+      $push: { pics: imageId }
+    });
+  },
+
   'workshops.pushParticipant'( workId ) {
     check(workId, String);
 
     const workshop = Workshops.findOne(workId);
-    if(workshop.participants.indexOf(this.userId) === -1) {
+    if(workshop && workshop.participants.indexOf(this.userId) === -1) {
       // push user in workshop
       Workshops.update(workId, {
         $push: { participants: this.userId }
