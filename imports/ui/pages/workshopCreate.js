@@ -25,11 +25,27 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
   $('#initDate').calendar({
     type: 'date',
     minDate: new Date(Date.now()),
-    // onChange: function (date, text, mode) {
-    //   $('#endDate').calendar({
-    //     minDate: date
-    //   });
-    // },
+    onChange: function (date, text, mode) {
+      let now = new Date(Date.now());
+      if(date.getMonth() != now.getMonth() || date.getDay() != now.getDay()) {
+        console.log(Date.now());
+        console.log(date.getTime());
+        date.setHours(0,0,0,0);
+      }
+      $('#initTime').calendar({
+        type: 'time',
+        minDate: date,
+        onChange: function (date, text, mode) {
+          console.log('initTime');
+          $('#endTime').calendar({
+            type: 'time',
+            minDate: date,
+            disableMinute: true
+          });
+        },
+        disableMinute: true
+      });
+    },
     text: {
       days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
       months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -41,6 +57,7 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
     type: 'time',
     minDate: new Date(Date.now()),
     onChange: function (date, text, mode) {
+      console.log('initTime');
       $('#endTime').calendar({
         type: 'time',
         minDate: date,
@@ -68,10 +85,20 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
 })
 
 Template.workshopCreate.events({
-  'change .ui.calendar' (event) {
+  'change #initDate' (event) {
+    console.log('initDate');
+    $('#initTime').calendar({
+      type: 'time',
+      minDate: new Date($('#initDate').calendar("get date")),
+      disableMinute: true
+    });
+  },
+
+  'change #initTime' (event) {
+    console.log('initTime');
     $('#endTime').calendar({
       type: 'time',
-      minDate: new Date( $('#initTime').calendar("get date")),
+      minDate: new Date($('#initTime').calendar("get date")),
       disableMinute: true
     });
   },
