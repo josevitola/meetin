@@ -1,0 +1,36 @@
+@import "../base/colors";
+
+.fileinput {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.fileinput + label {
+  border-radius: 5px;
+  border: 1px solid;
+  font-weight: 700;
+  padding: 8px;
+  color: white;
+  background-color: @light-red-orange;
+  display: inline-block;
+}
+
+.fileinput:focus + label,
+.fileinput + label:hover {
+  border: 1px solid @light-red-orange;
+  background-color: white;
+  color: @light-red-orange;
+}
+
+.fileinput + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}

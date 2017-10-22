@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Workshops } from '/imports/api/workshops.js';
+
+import '../components/imageUpload.js';
 import './workshopCreate.html';
 
 Template.workshopCreate.onCreated(function workCreateOnCreated() {
