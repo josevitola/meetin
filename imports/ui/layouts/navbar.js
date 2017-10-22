@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 
 import '../components/loginModal.js';
+import '../components/signupModal.js';
 import '../components/userNavbar.js';
 import './navbar.html';
 
@@ -10,15 +11,18 @@ Template.navbar.helpers({
   }
 });
 
-Template.navbar.events({
-  'click .ui.login.button'() {
-    $("#loginModal").modal('show');
-  },
-});
+// Template.navbar.events({
+//   'click .ui.login.button'() {
+//     $("#loginModal").modal('show');
+//   },
+// });
 
 Template.homeNavbar.events({
   'click .ui.login.button'() {
     $("#loginModal").modal('show');
+  },
+  'click .ui.signup.button'() {
+    $("#signupModal").modal('show');
   },
 });
 

@@ -10,7 +10,6 @@
 
 #navbar {
   margin-bottom: 0;
-  // position: fixed;
   z-index: 1000;
   width: 100.5%;
   padding: 0 15%;
@@ -32,7 +31,6 @@
   background-color: #f1f1f1;
   width: 31px;
   height: auto;
-  margin-right: 10px;
 }
 
 .ui.dropdown .dropdown.yellow.icon {
@@ -71,4 +69,14 @@
 #navbar .ui.add.item {
   color: white;
   background-color: @aqua;
+}
+
+@media (max-width:500px) {
+  #logo {
+    width: 100px;
+  }
+
+  #homeNavbar {
+    padding: 0 5px;
+  }
 }

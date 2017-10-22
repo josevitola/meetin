@@ -229,22 +229,44 @@
               {{/unless}}
             </div>
             <div class="item">
-              {{#unless isEditingEndDate}}
-                <i class="calendar icon"></i>
+              {{#unless isEditingInitTime}}
+                <i class="time icon"></i>
                 <div class="content endDate">
-                  {{styleDate endDate}}
+                  {{formatTime initTime}}
                   {{#if isUserOwner owner}}
-                    <a href="#"><i class="small edit endDate icon"></i></a>
+                    <a href="#"><i class="small edit initTime icon"></i></a>
                   {{/if}}
                 </div>
               {{else}}
                 <!-- Edit input -->
                 <div class="ui edit action input">
                   <!-- <label>Fecha inicial</label> -->
-                  <div class="ui calendar" id="endDate">
+                  <div class="ui calendar" id="initTime">
                     <div class="ui input left icon">
                       <i class="calendar icon"></i>
-                      <input type="text" name="wedit-endDate" value="{{endDate}}">
+                      <input type="text" name="wedit-initTime" value="{{initTime}}">
+                    </div>
+                  </div>
+                </div><br>
+              {{/unless}}
+            </div>
+            <div class="item">
+              {{#unless isEditingEndTime}}
+                <i class="time icon"></i>
+                <div class="content endTime">
+                  {{formatTime endTime}}
+                  {{#if isUserOwner owner}}
+                    <a href="#"><i class="small edit endTime icon"></i></a>
+                  {{/if}}
+                </div>
+              {{else}}
+                <!-- Edit input -->
+                <div class="ui edit action input">
+                  <!-- <label>Fecha inicial</label> -->
+                  <div class="ui calendar" id="endTime">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input type="text" name="wedit-endTime" value="{{endTime}}">
                     </div>
                   </div>
                 </div><br>
@@ -255,7 +277,10 @@
 
           <!-- Eliminar -->
           {{#if isUserOwner owner}}
-          <div class="ui accordion">
+          <i class="red trash icon"></i>
+          <a class="delete event" href="#">Eliminar este evento</a>
+
+          <!-- <div class="ui accordion">
             <div class="title">
               <i class="dropdown icon"></i>
               Más opciones
@@ -264,7 +289,7 @@
               <i class="red trash icon"></i>
               <a class="delete event" href="#">Eliminar este evento</a>
             </div>
-          </div>
+          </div> -->
           {{/if}}
         </div>
       </div>

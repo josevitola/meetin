@@ -3,7 +3,10 @@
   <a class="ui card" href="/workshops/{{_id}}">
     <div class="image">
       <div class="overlay"></div>
-      <img src="https://www.butarque.es/wp-content/uploads/2016/09/taller_de_arte.jpg">
+      {{#with getImage pics.[0]}}
+        <img src="{{this.link}}" alt="{{this.name}}">
+      {{/with}}
+      <!-- <img src="https://www.butarque.es/wp-content/uploads/2016/09/taller_de_arte.jpg"> -->
       <h3 class="workshop price">{{formatPrice price}}</h3>
       <div class="info">
         <a href="/users/{{owner}}">
@@ -25,7 +28,7 @@
           Fecha de la actividad <h5 class="ui teal header">{{formatDate initDate}}</h5>
         </div>
         <div class="seven wide column">
-          Horario <h5 class="ui teal header">{{formatTime initDate}}-{{formatTime endDate}}</h5>
+          Horario <h5 class="ui teal header">{{formatTime initTime}} - {{formatTime endTime}}</h5>
         </div>
       </div>
       <center><div class="ui teal button">Asistir</div></center>

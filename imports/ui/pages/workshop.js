@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { toggle } from '/imports/lib/datahelpers.js';
-import { styleShortDate, formatTime } from '/imports/lib/stylish.js';
+import { styleDate, styleShortDate, formatTime } from '/imports/lib/stylish.js';
 
 import { Images } from '/imports/api/files.js';
 import { Workshops } from '/imports/api/workshops.js';
@@ -17,7 +17,9 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingInitDate = new ReactiveVar(false);
-  this.isEditingEndDate = new ReactiveVar(false);
+  // this.isEditingEndDate = new ReactiveVar(false);
+  this.isEditingInitTime = new ReactiveVar(false);
+  this.isEditingEndTime = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
   this.isEditingItems = new ReactiveVar(false);
   this.isEditingAddr = new ReactiveVar(false);
@@ -97,11 +99,20 @@ Template.workshop.helpers({
   isEditingInitDate() {
     return Template.instance().isEditingInitDate.get();
   },
-  isEditingEndDate() {
-    return Template.instance().isEditingEndDate.get();
+  // isEditingEndDate() {
+  //   return Template.instance().isEditingEndDate.get();
+  // },
+  isEditingInitTime() {
+    return Template.instance().isEditingInitTime.get();
+  },
+  isEditingEndTime() {
+    return Template.instance().isEditingEndTime.get();
   },
   styleDate(date) {
-    return styleShortDate(date) + ' - ' + formatTime(date);
+    return styleDate(date);
+  },
+  formatTime(time) {
+    return formatTime(time);
   },
   workshop() {
     return Template.instance().workshop.get();
@@ -219,17 +230,32 @@ Template.workshop.events({
     }, 100);
   },
 
-
-  /* --- End Date---*/
-  'click .edit.endDate.icon'(event, instance) {
-    instance.isEditingEndDate.set(true);
+  /* --- Init Time---*/
+  'click .edit.initTime.icon'(event, instance) {
+    instance.isEditingInitTime.set(true);
     setTimeout(function () {
-      $('#endDate').calendar({
-        minDate: new Date($('.content.initDate').text()),
+      $('#initTime').calendar({
+        type: 'time',
         onChange: function (date, text, mode) {
           const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { endDate: date});
-          instance.isEditingEndDate.set(false);
+          Meteor.call('workshops.update', workshopId, { initTime: date});
+          instance.isEditingInitTime.set(false);
+        }
+      });
+    }, 100);
+  },
+
+  /* --- End Time---*/
+  'click .edit.endTime.icon'(event, instance) {
+    instance.isEditingEndTime.set(true);
+    setTimeout(function () {
+      $('#endTime').calendar({
+        type: 'time',
+        minDate: new Date($('.content.initTime').text()),
+        onChange: function (date, text, mode) {
+          const workshopId = FlowRouter.getParam('_id');
+          Meteor.call('workshops.update', workshopId, { endTime: date});
+          instance.isEditingEndTime.set(false);
         }
       });
     }, 100);
@@ -261,8 +287,23 @@ Template.workshop.events({
             alert(error.message);
           }
         });
+
+        // const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+        // const owner = Meteor.users.findOne(workshop.owner)
+        // const message = {
+        //   owner: owner.profile.name,
+        //   email: owner.emails[0].address
+        // }
+        //
+        // Meteor.call('sendMessage', message, (error, result) => {
+        //   if(error) {
+        //     console.log(error.message);
+        //   } else {
+        //     console.log('Mensaje enviado');
+        //   }
+        // });
       }
-    }else{
+    } else {
       $("#loginModal").modal('show');
     }
   },
