@@ -1,6 +1,6 @@
 <template name="workshop">
   {{#with workshop}}
-  <div class="main workshop container">
+  <div class="ui main workshop container">
     {{#with getImage pics.[0]}}
     <header style="background-image: url({{this.link}})" class="masthead">
       <div class="overlay"></div>
@@ -32,21 +32,6 @@
       <input type="text" name="wedit-name" value="{{name}}"/>
       <button class="ui teal icon save name button"><i class="check icon"></i></button>
     </div><br>
-    {{/unless}}
-
-    <!-- Attend button -->
-    {{#unless isUserAttending}}
-      {{#unless isUserOwner owner}}
-        <button class="ui teal join workshop labeled icon button">
-          <i class="right arrow icon"></i>
-          Asistir
-        </button>
-      {{/unless}}
-      {{else}}
-      <button class="ui dark-blue join workshop labeled icon button">
-        <i class="check icon"></i>
-        Estás asistiendo
-      </button>
     {{/unless}}
 
     <div class="ui workshop info grid">
@@ -274,23 +259,6 @@
             </div>
 
           </div>
-
-          <!-- Eliminar -->
-          {{#if isUserOwner owner}}
-          <i class="red trash icon"></i>
-          <a class="delete event" href="#">Eliminar este evento</a>
-
-          <!-- <div class="ui accordion">
-            <div class="title">
-              <i class="dropdown icon"></i>
-              Más opciones
-            </div>
-            <div class="content">
-              <i class="red trash icon"></i>
-              <a class="delete event" href="#">Eliminar este evento</a>
-            </div>
-          </div> -->
-          {{/if}}
         </div>
       </div>
     </div>
