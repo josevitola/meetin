@@ -11,6 +11,7 @@ import './workshop.html';
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
+  this.subscribe('files.images.all');
   this.subscribe('users');
   this.subscribe('workshops');
 

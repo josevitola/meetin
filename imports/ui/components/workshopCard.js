@@ -8,6 +8,7 @@ import { Workshops } from '/imports/api/workshops.js';
 import './workshopCard.html';
 
 Template.workshopCard.onCreated(function wsCardOnCreated() {
+  this.subscribe('files.images.all');
   this.subscribe('users');
 })
 

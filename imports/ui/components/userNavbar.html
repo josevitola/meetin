@@ -17,11 +17,12 @@
     <i class="dropdown yellow icon" style="margin:0!important;"></i>
     <div class="menu">
       <a class="notif item" id="allNotifs" href="/notifications">
-        <i class="bell teal icon"></i>
-        Notificaciones
         {{#if unread profile.notifications}}
-        <div class="ui bottom right attached circular red label">{{countUnreadNotifs profile.notifications}}</div>
+        <a class="ui circular red label">{{countUnreadNotifs profile.notifications}}</a>
+        {{else}}
+        <i class="bell teal icon"></i>
         {{/if}}
+        Notificaciones
       </a>
       <a class="item" href="/users/{{_id}}">
         <i class="user teal icon"></i>

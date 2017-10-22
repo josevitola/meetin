@@ -1,9 +1,7 @@
 <template name="notifications">
   <div class="ui main container">
-    <h2 class="ui header">Notificaciones</h2>
-  </div>
-  <div class="ui container">
-    {{#with getNotifs profile.notifications}}
+    {{#with currentUser.profile.notifications}}
+    <h2>Notificaciones</h2>
     <div class="ui divider"></div>
     <div class="ui feed">
       {{#each this}}
@@ -19,6 +17,20 @@
       {{/with}}
       {{/each}}
     </div>
+    {{else}}
+    <center>
+      <h2 class="ui centered icon header">
+        <i class="circular users icon"></i>
+        <div class="content">
+          ¡Todavía no tienes notificaciones!
+          <div class="sub header">
+            Puedes seguir más eventos para estar al tanto de lo que ocurre. <br>
+            ¡Puedes incluso <strong><a href="/workshops/create">crear uno tú mismo!</a></strong>
+          </div>
+        </div>
+      </h2>
+    </center>
     {{/with}}
+
   </div>
 </template>
