@@ -27,6 +27,6 @@ aldeed:simple-schema
 matb33:collection-hooks
 momentjs:moment
 sacha:spin
-email
 meteorhacks:ssr
+email
 ostrio:files
