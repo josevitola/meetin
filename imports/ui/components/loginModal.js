@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { Session } from 'session';
+import { Session } from 'meteor/session';
 import { validateEmail } from '/imports/lib/stylish.js';
 
 import './loginModal.html';
