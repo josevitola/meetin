@@ -95,17 +95,19 @@ export const styleShortDate = function(date) {
 }
 
 export const formatPrice = function(price) {
-  var m = Math.trunc(price / 1000);
-  // console.log(m);
-  var u = (price - (m * 1000)).toString();
-  // console.log(u);
-  if(u.length == 2) {
-    u = '0' + price;
+  if (price == 0) {
+    return 'Gratis'
+  } else {
+    var m = Math.trunc(price / 1000);
+    var u = (price - (m * 1000)).toString();
+    if(u.length == 2) {
+      u = '0' + price;
+    }
+    if(u.length == 1) {
+      u = '00' + u;
+    }
+    return '$' + m + '.' + u;
   }
-  if(u.length == 1) {
-    u = '00' + u;
-  }
-  return '$' + m + '.' + u;
 }
 
 export const formatTime = function(date) {
