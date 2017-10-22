@@ -1,11 +1,20 @@
 <template name="workshop">
   {{#with workshop}}
-  <div class="ui main workshop container">
-    <p></p>
-    <!-- Name header -->
+  <div class="main workshop container">
     {{#with getImage pics.[0]}}
-      <img src="{{this.link}}" alt="{{this.name}}" class="ui fluid bordered rounded image">
+    <header style="background-image: url({{this.link}})" class="masthead">
+      <div class="overlay"></div>
+      <div class="header-content">
+        <div class="header-content-inner">
+          <h2 class="ui inverted header" id="tagline">
+            {{workshop.name}}
+          </h2>
+          <div class="ui inverted horizontal divider"></div>
+        </div>
+      </div>
+    </header>
     {{/with}}
+
     {{#unless isEditingName}}
     <h1 class="ui header">{{name}}
       {{#if isUserOwner owner}}

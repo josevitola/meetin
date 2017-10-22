@@ -22,17 +22,24 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingItems = new ReactiveVar(false);
   this.isEditingAddr = new ReactiveVar(false);
   this.isEditingPrice = new ReactiveVar(false);
+
+  this.workshop = new ReactiveVar({});
+  this.getWorkshop = () => {
+    return Workshops.findOne(FlowRouter.getParam('_id'));
+  }
+
+  this.autorun(() => {
+    this.workshop.set(this.getWorkshop());
+  })
 });
 
 Template.workshop.onRendered(function workshopOnRendered() {
+  // initialize SemanticUI components
   $('.ui.accordion').accordion();
   $('#initDate').calendar();
   $('#endDate').calendar();
-  // var id = Template.instance().workshop.get().owner;
-  // var title = Meteor.users.findOne({_id: id}).profile.name;
-  var item = ".ui.named.avatar.image";
-  $(item).popup();
-})
+  $('.ui.named.avatar.image').popup();
+});
 
 Template.workshop.helpers({
   isUserAttending() {
@@ -59,6 +66,9 @@ Template.workshop.helpers({
     } else {
       return participants;
     }
+  },
+  getImageLink() {
+
   },
   getUserName( id ) {
     return Meteor.users.findOne(id).profile.name;
@@ -94,11 +104,7 @@ Template.workshop.helpers({
     return styleShortDate(date) + ' - ' + formatTime(date);
   },
   workshop() {
-    const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
-    if(workshop) {
-      document.title = workshop.name + " | Meetin";
-    }
-    return workshop;
+    return Template.instance().workshop.get();
   },
 });
 
