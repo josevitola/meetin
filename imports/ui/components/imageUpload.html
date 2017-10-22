@@ -3,7 +3,16 @@
     Uploading <b>{{file.name}}</b>:
     <span id="progress">{{progress.get}}%</span>
   {{else}}
-      <input class="fileinput" id="workImage" type="file" name="work-image" />
-      <label for="workImage">{{labelName}}</label>
+    {{#with previewSrc}}
+      <div class="ui small bordered rounded image">
+        <a class="ui right corner label">
+          <i class="remove icon"></i>
+        </a>
+        <img id="preview" src="{{this}}" alt="">
+      </div>
+    {{/with}}
+    <br>
+    <input class="fileinput" id="workImage" type="file" name="work-image" multiple="multiple"/>
+    <label for="workImage">{{labelName}}</label>
   {{/with}}
 </template>

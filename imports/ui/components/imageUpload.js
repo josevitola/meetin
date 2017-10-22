@@ -5,11 +5,16 @@ import './imageUpload.html';
 
 Template.imageUpload.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);
+  this.previewSrc = new ReactiveVar('');
 });
 
 Template.imageUpload.helpers({
   currentUpload() {
     return Template.instance().currentUpload.get();
+  },
+  previewSrc() {
+    return Template.instance().previewSrc.get();
+
   },
   labelName() {
     const files = $('#workImage').files;
@@ -23,8 +28,19 @@ Template.imageUpload.helpers({
 });
 
 Template.imageUpload.events({
-  'change #workImage'(e, template) {
-    if (e.currentTarget.files && e.currentTarget.files[0]) {
+  'change #workImage'(e, instance) {
+    const files = e.currentTarget.files;
+    console.log(files.length);
+    if (files && files[0]) {
+      // change preview image
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        instance.previewSrc.set(e.target.result);
+      }
+
+      reader.readAsDataURL(files[0]);
+
       // We upload only one file, in case
       // multiple files were selected
 
@@ -35,7 +51,7 @@ Template.imageUpload.events({
       // }, false);
       //
       // upload.on('start', function () {
-      //   template.currentUpload.set(this);
+      //   instance.currentUpload.set(this);
       // });
       //
       // upload.on('end', function (error, fileObj) {
@@ -44,7 +60,7 @@ Template.imageUpload.events({
       //   } else {
       //     alert('File "' + fileObj.name + '" successfully uploaded');
       //   }
-      //   template.currentUpload.set(false);
+      //   instance.currentUpload.set(false);
       // });
       //
       // upload.start();
