@@ -2,7 +2,7 @@
   <div class="dashboard">
     {{#with getWorkshops}}
     <h3 class="ui bottom line header">Actividades recientes</h3>
-    <div class="ui three link cards">
+    <div class="ui three link stackable cards">
       {{#each this}}
         {{> workshopCard workshop=this}}
       {{/each}}
