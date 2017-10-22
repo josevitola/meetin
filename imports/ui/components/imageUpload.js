@@ -17,7 +17,7 @@ Template.imageUpload.helpers({
 
   },
   labelName() {
-    const files = $('#workImage').files;
+    const files = $('#imageInput').files;
     console.log(files);
     if(files && files.length > 0) {
       return files.length + ' archivos seleccionados';
@@ -28,9 +28,8 @@ Template.imageUpload.helpers({
 });
 
 Template.imageUpload.events({
-  'change #workImage'(e, instance) {
+  'change #imageInput'(e, instance) {
     const files = e.currentTarget.files;
-    console.log(files.length);
     if (files && files[0]) {
       // change preview image
       var reader = new FileReader();

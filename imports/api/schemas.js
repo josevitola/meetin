@@ -36,6 +36,8 @@ export const WorkshopSchema = new SimpleSchema({
   'participants.$': { type: String },
   items: { type: Array },
   'items.$': { type: String },
+  pics: { type: Array, optional: true },
+  'pics.$': { type: String }
 });
 
 export const NotificationSchema = new SimpleSchema({
