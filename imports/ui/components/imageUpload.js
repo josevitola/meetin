@@ -39,30 +39,6 @@ Template.imageUpload.events({
       }
 
       reader.readAsDataURL(files[0]);
-
-      // We upload only one file, in case
-      // multiple files were selected
-
-      // const upload = Images.insert({
-      //   file: e.currentTarget.files[0],
-      //   streams: 'dynamic',
-      //   chunkSize: 'dynamic'
-      // }, false);
-      //
-      // upload.on('start', function () {
-      //   instance.currentUpload.set(this);
-      // });
-      //
-      // upload.on('end', function (error, fileObj) {
-      //   if (error) {
-      //     alert('Error during upload: ' + error);
-      //   } else {
-      //     alert('File "' + fileObj.name + '" successfully uploaded');
-      //   }
-      //   instance.currentUpload.set(false);
-      // });
-      //
-      // upload.start();
     }
   }
 });
