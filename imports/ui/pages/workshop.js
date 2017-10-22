@@ -71,10 +71,14 @@ Template.workshop.helpers({
     }
   },
   getImageLink() {
-
+    let imageId = Template.instance().workshop.get().pics[0];
+    return Images.findOne({_id: imageId}).link();
   },
   getUserName( id ) {
-    return Meteor.users.findOne(id).profile.name;
+    let user = Meteor.users.findOne(id);
+    if(user) {
+      return user.profile.name;
+    }
   },
   isUserOwner(ownerId) {
     return Meteor.userId() === ownerId;
