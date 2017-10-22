@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Workshops } from '/imports/api/workshops.js';
+import { Images } from '/imports/api/files.js';
 
 import '../components/imageUpload.js';
 import './workshopCreate.html';
@@ -8,6 +9,7 @@ import './workshopCreate.html';
 Template.workshopCreate.onCreated(function workCreateOnCreated() {
   this.items = new ReactiveVar([]);
   this.tags = new ReactiveVar([]);
+  this.currentUpload = new ReactiveVar(false);
 });
 
 Template.workshopCreate.helpers({
@@ -69,6 +71,7 @@ Template.workshopCreate.events({
     const endDate =  $('#endDate').calendar("get date");
     const tags = instance.tags.get();
     const items = instance.items.get();
+    const pics = '';
     const participants = [];
 
     const workshop = {
@@ -85,18 +88,45 @@ Template.workshopCreate.events({
       participants: participants
     }
 
-    Meteor.call('workshops.insert', workshop, (error, result) => {
+    Meteor.call('workshops.insert', workshop, (error, workId) => {
       // TODO display error to user properly
       if(error) {
         alert(error.message);
       } else {
-        let workshopUrl = "/workshops/" + result;
+        // upload Images
+        let images = $('#imageInput')[0].files;
+        if(images && images[0]) {
+          const upload = Images.insert({
+            file: images[0],
+            streams: 'dynamic',
+            chunkSize: 'dynamic'
+          }, false);
+
+          upload.on('start', function () {
+            instance.currentUpload.set(this);
+          });
+
+          upload.on('end', function (error, fileObj) {
+            if (error) {
+              alert('Error during upload: ' + error);
+            } else {
+              console.log('File "' + fileObj.name + '" successfully uploaded');
+              console.log(fileObj._id);
+              Meteor.call('workshops.addPic', workId, fileObj._id);
+            }
+            instance.currentUpload.set(false);
+          });
+
+          upload.start();
+        }
+
+        // Finally go to newly created workshop
+        let workshopUrl = "/workshops/" + workId;
         FlowRouter.go(workshopUrl);
       }
     });
   },
 
-  // TODO generalize these functions into ToggleInput template
   'click .ui.add.tag.button'(event, instance) {
     const tag = $('input[name=work-tags]').val();
     if(tag.trim().length !== 0) {

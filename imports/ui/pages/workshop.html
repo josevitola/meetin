@@ -3,6 +3,9 @@
   <div class="ui main workshop container">
     <p></p>
     <!-- Name header -->
+    {{#with getImage pics.[0]}}
+      <img src="{{this.link}}" alt="{{this.name}}" class="ui fluid bordered rounded image">
+    {{/with}}
     {{#unless isEditingName}}
     <h1 class="ui header">{{name}}
       {{#if isUserOwner owner}}

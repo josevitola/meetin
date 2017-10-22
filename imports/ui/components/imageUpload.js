@@ -17,7 +17,7 @@ Template.imageUpload.helpers({
 
   },
   labelName() {
-    const files = $('#workImage').files;
+    const files = $('#imageInput').files;
     console.log(files);
     if(files && files.length > 0) {
       return files.length + ' archivos seleccionados';
@@ -28,9 +28,8 @@ Template.imageUpload.helpers({
 });
 
 Template.imageUpload.events({
-  'change #workImage'(e, instance) {
+  'change #imageInput'(e, instance) {
     const files = e.currentTarget.files;
-    console.log(files.length);
     if (files && files[0]) {
       // change preview image
       var reader = new FileReader();
@@ -40,30 +39,6 @@ Template.imageUpload.events({
       }
 
       reader.readAsDataURL(files[0]);
-
-      // We upload only one file, in case
-      // multiple files were selected
-
-      // const upload = Images.insert({
-      //   file: e.currentTarget.files[0],
-      //   streams: 'dynamic',
-      //   chunkSize: 'dynamic'
-      // }, false);
-      //
-      // upload.on('start', function () {
-      //   instance.currentUpload.set(this);
-      // });
-      //
-      // upload.on('end', function (error, fileObj) {
-      //   if (error) {
-      //     alert('Error during upload: ' + error);
-      //   } else {
-      //     alert('File "' + fileObj.name + '" successfully uploaded');
-      //   }
-      //   instance.currentUpload.set(false);
-      // });
-      //
-      // upload.start();
     }
   }
 });
