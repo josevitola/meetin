@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { formatTime, styleDate, formatPrice } from '/imports/lib/stylish.js';
+import { Images } from '/imports/api/files.js';
 import { Workshops } from '/imports/api/workshops.js';
 
 import './workshopCard.html';
@@ -33,6 +34,9 @@ Template.workshopCard.helpers({
   },
   getWorkshopAddr() {
     return Template.instance().workshop.get().addr;
+  },
+  getImage(imageId) {
+    return Images.findOne(imageId);
   },
   formatPrice(price) {
     return formatPrice(price);
