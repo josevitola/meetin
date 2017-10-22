@@ -27,7 +27,6 @@ ecmascript@0.8.3
 ecmascript-runtime@0.4.1
 ecmascript-runtime-client@0.4.3
 ecmascript-runtime-server@0.4.1
-edgee:slingshot@0.7.1
 ejson@1.0.14
 email@1.2.3
 es5-shim@4.6.15
@@ -68,6 +67,8 @@ npm-bcrypt@0.9.3
 npm-mongo@2.2.30
 observe-sequence@1.0.16
 ordered-dict@1.0.9
+ostrio:cookies@2.2.3
+ostrio:files@1.9.0
 promise@0.9.0
 random@1.0.10
 rate-limit@1.0.8

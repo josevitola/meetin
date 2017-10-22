@@ -238,32 +238,6 @@ Template.workshop.events({
       const workId = FlowRouter.getParam('_id');
       const isUserAttending = Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
 
-<<<<<<< HEAD
-      Meteor.call('user.updateOwnAttendsTo', toggle(workshops, workId));
-      Meteor.call('workshops.setUserAsParticipant', workId);
-
-      if(!isUserAttending) {
-        const workshop = Workshops.findOne(workId);
-        const owner = Meteor.users.findOne(workshop.owner);
-        const participant = Meteor.user();
-
-        const message = {
-          owner: owner.profile.name,
-          email: owner.emails[0].address,
-          message: "Holi",
-        };
-        console.log(message);
-
-        Meteor.call('sendMessage', message, (error) => {
-          if (error) {
-            console.log(error.reason, 'danger');
-          } else {
-            console.log('Message sent!', 'success');
-          }
-        });
-      }
-    } else {
-=======
       if(workshops.indexOf(workId) !== -1) {
         Meteor.call('workshops.pullParticipant', workId, (error, result) => {
           if(error) {
@@ -278,7 +252,6 @@ Template.workshop.events({
         });
       }
     }else{
->>>>>>> 5f4a009adf2678d7ef2eb9477a92b2b72fe25436
       $("#loginModal").modal('show');
     }
   },

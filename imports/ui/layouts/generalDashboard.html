@@ -1,8 +1,8 @@
 <template name="generalDashboard">
   <div class="dashboard">
     {{#with getWorkshops}}
-    <h3 class="ui bottom line header">Eventos populares</h3>
-    <div class="ui four link cards">
+    <h3 class="ui bottom line header">Actividades recientes</h3>
+    <div class="ui three link cards">
       {{#each this}}
         {{> workshopCard workshop=this}}
       {{/each}}

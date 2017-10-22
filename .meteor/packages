@@ -25,8 +25,8 @@ kadira:blaze-layout
 msavin:mongol
 aldeed:simple-schema
 matb33:collection-hooks
-edgee:slingshot
 momentjs:moment
 sacha:spin
 email
 meteorhacks:ssr
+ostrio:files

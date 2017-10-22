@@ -1,21 +1,28 @@
 <template name="userNavbar">
   {{#with currentUser}}
-  <a class="item">
+  <!-- <a class="item">
     <div class="ui small teal create workshop button">Crear actividad</div>
-  </a>
-  <a class="notif item">
-    <i class="large inverted newspaper icon"></i>
-    {{#if unread profile.notifications}}
-    <div class="ui bottom right attached circular teal label">{{countUnreadNotifs profile.notifications}}</div>
-    {{/if}}
-  </a>
-  <a class="item">
+  </a> -->
+  <!-- <a class="item">
     {{> searchBar}}
-  </a>
+  </a> -->
   <a class="ui options top right compact pointing dropdown item">
     <img class="ui avatar image" src="https://robohash.org/{{getUserEmail}}.png?size=50x50" id="avatar-image">
-    <b id="profile-name">{{profile.name}}</b> <i class="dropdown yellow icon"></i>
+    <div class="item">
+      <b id="profile-name" style="margin-right:5px;">{{profile.name}}</b>
+      {{#if unread profile.notifications}}
+      <div class="ui bottom right attached circular teal label">{{countUnreadNotifs profile.notifications}}</div>
+      {{/if}}
+    </div>
+    <i class="dropdown yellow icon" style="margin:0!important;"></i>
     <div class="menu">
+      <a class="notif item" id="allNotifs" href="/notifications">
+        <i class="bell teal icon"></i>
+        Notificaciones
+        {{#if unread profile.notifications}}
+        <div class="ui bottom right attached circular red label">{{countUnreadNotifs profile.notifications}}</div>
+        {{/if}}
+      </a>
       <a class="item" href="/users/{{_id}}">
         <i class="user teal icon"></i>
         Mi perfil
@@ -50,9 +57,6 @@
       {{/each}}
     </div>
     {{/with}}
-    {{#unless unread profile.notifications}}
-    <a id="allNotifs" href="/notifications"><b>Ver más</b></a>
-    {{/unless}}
   </div>
   {{/with}}
 </template>

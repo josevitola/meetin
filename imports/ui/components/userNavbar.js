@@ -13,10 +13,10 @@ Template.userNavbar.onCreated(function userNavbarOnCreated() {
 })
 
 Template.userNavbar.onRendered(function userNavbarOnRendered() {
-  $('.notif.item').popup({
-    popup: '.popup',
-    on: 'click'
-  });
+  // $('.notif.item').popup({
+  //   popup: '.popup',
+  //   on: 'click'
+  // });
   $('.ui.options.dropdown').dropdown();
 });
 
