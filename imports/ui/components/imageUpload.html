@@ -1,0 +1,9 @@
+<template name="imageUpload">
+  {{#with currentUpload}}
+    Uploading <b>{{file.name}}</b>:
+    <span id="progress">{{progress.get}}%</span>
+  {{else}}
+      <input class="fileinput" id="workImage" type="file" name="work-image" />
+      <label for="workImage">{{labelName}}</label>
+  {{/with}}
+</template>
