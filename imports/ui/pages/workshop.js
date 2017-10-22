@@ -249,9 +249,24 @@ Template.workshop.events({
           if(error) {
             alert(error.message);
           }
+
+          const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+          const owner = Meteor.users.findOne(workshop.owner)
+          const message = {
+            owner: owner.profile.name,
+            email: owner.emails[0].address
+          }
+
+          Meteor.call('sendMessage', message, (error, result) => {
+            if(error) {
+              console.log(error.message);
+            } else {
+              console.log('Mensaje enviado');
+            }
+          });
         });
       }
-    }else{
+    } else {
       $("#loginModal").modal('show');
     }
   },
