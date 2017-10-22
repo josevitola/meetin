@@ -38,7 +38,7 @@
 
         <div class="ui grid">
           <div class="field four wide column">
-            <h4 class="ui header">Fecha de Inicio</h4>
+            <h4 class="ui header">Fecha</h4>
             <div class="ui calendar" id="initDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
@@ -48,11 +48,21 @@
           </div>
 
           <div class="field four wide column">
-            <h4 class="ui header">Fecha de Cierre</h4>
-            <div class="ui calendar" id="endDate">
+            <h4 class="ui header">Hora de Cierre</h4>
+            <div class="ui calendar" id="initTime">
               <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" name="work-endDate" placeholder="Fecha final de tu evento">
+                <i class="time icon"></i>
+                <input type="text" name="work-initTime" placeholder="Hora inicial de tu evento">
+              </div>
+            </div>
+          </div>
+
+          <div class="field four wide column">
+            <h4 class="ui header">Hora de Cierre</h4>
+            <div class="ui calendar" id="endTime">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="work-endTime" placeholder="Hora final de tu evento">
               </div>
             </div>
           </div>

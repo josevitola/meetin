@@ -23,40 +23,55 @@ Template.workshopCreate.helpers({
 
 Template.workshopCreate.onRendered(function workCreateOnRendered() {
   $('#initDate').calendar({
+    type: 'date',
     minDate: new Date(Date.now()),
-    onChange: function (date, text, mode) {
-      $('#endDate').calendar({
-        minDate: date
-      });
-    },
+    // onChange: function (date, text, mode) {
+    //   $('#endDate').calendar({
+    //     minDate: date
+    //   });
+    // },
     text: {
       days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
       months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    }
+  });
+
+  $('#initTime').calendar({
+    type: 'time',
+    minDate: new Date(Date.now()),
+    onChange: function (date, text, mode) {
+      $('#endTime').calendar({
+        type: 'time',
+        minDate: date,
+        disableMinute: true
+      });
     },
     disableMinute: true
   });
 
-  $('#endDate').calendar({
+  $('#endTime').calendar({
+    type: 'time',
     minDate: new Date(Date.now()),
-    text: {
-      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    },
     disableMinute: true
   });
+
+  // $('#endDate').calendar({
+  //   minDate: new Date(Date.now()),
+  //   text: {
+  //     days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+  //     months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  //     monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  //   },
+  //   disableMinute: true
+  // });
 })
 
 Template.workshopCreate.events({
   'change .ui.calendar' (event) {
-    $('#endDate').calendar({
-      minDate: new Date( $('#initDate').calendar("get date")),
-      text: {
-        days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-      },
+    $('#endTime').calendar({
+      type: 'time',
+      minDate: new Date( $('#initTime').calendar("get date")),
       disableMinute: true
     });
   },
@@ -68,7 +83,9 @@ Template.workshopCreate.events({
     const desc = $('textarea[name=work-desc]').val();
     const price = parseInt($('input[name=work-price]').val());
     const initDate =  $('#initDate').calendar("get date");
-    const endDate =  $('#endDate').calendar("get date");
+    // const endDate =  $('#endDate').calendar("get date");
+    const initTime =  $('#initTime').calendar("get date");
+    const endTime =  $('#endTime').calendar("get date");
     const tags = instance.tags.get();
     const items = instance.items.get();
     const pics = '';
@@ -81,7 +98,9 @@ Template.workshopCreate.events({
       desc: desc,
       price: price,
       initDate: initDate,
-      endDate: endDate,
+      // endDate: endDate,
+      initTime: initTime,
+      endTime: endTime,
       tags: tags,
       items: items,
       owner: Meteor.userId(),
