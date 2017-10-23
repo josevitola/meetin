@@ -16,13 +16,15 @@
       </div>
     </div>
 
+    {{#with desc}}
     <div class="content">
       <div class="description" style="margin-bottom:10px;">
-        {{desc}}
+        {{this}}
       </div>
     </div>
+    {{/with}}
 
-    <div class="dates content">
+    <div class="extra content">
       <div class="ui grid">
         <div class="nine wide column">
           Fecha de la actividad <h5 class="ui teal header">{{formatDate initDate}}</h5>

@@ -51,9 +51,6 @@ Template.workshop.helpers({
     }
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
-  getImage(imageId) {
-    return Images.findOne(imageId);
-  },
   getOwnerName(ownerId) {
     const owner = Meteor.users.findOne(ownerId);
     if(owner) {
@@ -71,8 +68,14 @@ Template.workshop.helpers({
     }
   },
   getImageLink() {
-    let imageId = Template.instance().workshop.get().pics[0];
-    return Images.findOne({_id: imageId}).link();
+    let pics = Template.instance().workshop.get().pics;
+    if(pics) {
+      let image = Images.findOne({_id: pics[0]});
+      if(image) {
+        return image.link();
+      }
+    }
+    return '/default.jpg';
   },
   getUserName( id ) {
     let user = Meteor.users.findOne(id);

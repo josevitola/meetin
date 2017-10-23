@@ -1,36 +1,37 @@
 <template name="notifications">
-  <div class="ui main container">
-    {{#with currentUser.profile.notifications}}
-    <h2>Notificaciones</h2>
-    <div class="ui divider"></div>
-    <div class="ui feed">
-      {{#each this}}
-      {{#with notification this}}
-      <div class="event">
-        <div class="content">
-          <div class="summary">
-            <a href="/users/{{sender}}">{{getSenderName sender}}</a> asistirá a tu evento <a href="/workshops/{{event}}">{{getWorkshopName event}}</a>.
-            <div class="date">{{getStyledDate createdAt}}</div>
+  <div class="ui main notifications container">
+    <div class="ui segment">
+      {{#with currentUser.profile.notifications}}
+      <h2>Notificaciones</h2>
+      <div class="ui divider"></div>
+      <div class="ui feed">
+        {{#each this}}
+        {{#with notification this}}
+        <div class="event">
+          <div class="content">
+            <div class="summary">
+              <a href="/users/{{sender}}">{{getSenderName sender}}</a> asistirá a tu evento <a href="/workshops/{{event}}">{{getWorkshopName event}}</a>.
+              <div class="date">{{getStyledDate createdAt}}</div>
+            </div>
           </div>
         </div>
+        {{/with}}
+        {{/each}}
       </div>
-      {{/with}}
-      {{/each}}
-    </div>
-    {{else}}
-    <center>
-      <h2 class="ui centered icon header">
-        <i class="circular users icon"></i>
-        <div class="content">
-          ¡Todavía no tienes notificaciones!
-          <div class="sub header">
-            Puedes seguir más eventos para estar al tanto de lo que ocurre. <br>
-            ¡Puedes incluso <strong><a href="/workshops/create">crear uno tú mismo!</a></strong>
+      {{else}}
+      <center>
+        <h2 class="ui centered icon header">
+          <i class="circular users icon"></i>
+          <div class="content">
+            ¡Todavía no tienes notificaciones!
+            <div class="sub header">
+              Puedes seguir más eventos para estar al tanto de lo que ocurre. <br>
+              ¡Puedes incluso <strong><a href="/workshops/create">crear uno tú mismo!</a></strong>
+            </div>
           </div>
-        </div>
-      </h2>
-    </center>
-    {{/with}}
-
+        </h2>
+      </center>
+      {{/with}}
+    </div>
   </div>
 </template>

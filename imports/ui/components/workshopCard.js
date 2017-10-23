@@ -37,7 +37,16 @@ Template.workshopCard.helpers({
     return Template.instance().workshop.get().addr;
   },
   getImage(imageId) {
-    return Images.findOne(imageId);
+    if(imageId) {
+      let image = Images.findOne(imageId);
+      if(image) {
+        return image;
+      }
+    }
+    return {
+      link: '/default.jpg',
+      name: 'Default image'
+    };
   },
   formatPrice(price) {
     return formatPrice(price);
