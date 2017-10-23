@@ -8,7 +8,7 @@ export const UserSchema = new SimpleSchema({
   createdAt: { type: Date },
   profile: { type: Object },
   'profile.name': { type: String },
-  'profile.photo': { type: String },
+  'profile.photo': { type: String, optional: true },
   'profile.attendsTo': { type: Array },
   'profile.attendsTo.$': { type: String },
   'profile.owns': { type: Array },
