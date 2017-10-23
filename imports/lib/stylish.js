@@ -91,6 +91,7 @@ export const styleDate = function(date) {
 }
 
 export const styleShortDate = function(date) {
+  if(typeof date === "number")  date = new Date(date);
   return date.getDate() + " " + shortenMonth(date);
 }
 

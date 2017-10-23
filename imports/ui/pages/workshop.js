@@ -2,12 +2,14 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { toggle } from '/imports/lib/datahelpers.js';
-import { styleDate, styleShortDate, formatTime } from '/imports/lib/stylish.js';
+import { styleDate, formatTime } from '/imports/lib/stylish.js';
 
 import { Images } from '/imports/api/files.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 import './workshop.html';
+
+const pLimit = 6;
 
 // TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
@@ -60,9 +62,12 @@ Template.workshop.helpers({
   lengthOf(array) {
     return array.length;
   },
-  participantsSliced(participants) {
-    if(participants.length >= 7) {
-      return participants.slice(7, participants.length);
+  remain(participants) {
+    return participants.length > pLimit;
+  },
+  firstParticipants(participants) {
+    if(participants.length > pLimit) {
+      return participants.slice(0, pLimit);
     } else {
       return participants;
     }
@@ -320,7 +325,11 @@ Template.workshop.events({
   /* === DELETE === */
   'click a.delete.event'(event, instance) {
     $('#confirmDeleteModal').modal('show');
-  }
+  },
+
+  'click .watch.participants'() {
+    $('#participantsModal').modal('show');
+  },
 });
 
 Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
@@ -343,4 +352,23 @@ Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
       });
     }
   });
+});
+
+Template.participantsModal.onDestroyed(function() {
+  $('#participantsModal').modal('hide');
 })
+
+Template.participantsModal.helpers({
+  getUserName( id ) {
+    let user = Meteor.users.findOne(id);
+    if(user) {
+      return user.profile.name;
+    }
+  },
+});
+
+Template.participantsModal.events({
+  'click img'() {
+    console.log('lala');
+  }
+});

@@ -157,11 +157,14 @@
           <!-- Participantes -->
           <div class="ui segment">
             <h5 class="ui header">{{lengthOf participants}} personas asistirán</h5>
-            {{#each participantsSliced participants}}
-              <a href="/users/{{this}}">
-                <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="https://robohash.org/{{getUserName(this)}}.png?size=30x30" alt="">
-              </a>
+            {{#each firstParticipants participants}}
+            <a href="/users/{{this}}">
+              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="https://robohash.org/{{getUserName(this)}}.png?size=30x30" alt="">
+            </a>
             {{/each}}
+            {{#if remain participants}}
+            <a class="watch participants" href="#">Ver más...</a>
+            {{/if}}
             <!-- Información -->
             <h5 class="ui header">Información</h5>
             <div class="ui items">
@@ -295,6 +298,7 @@
   </div>
 
   {{> confirmDeleteModal workshopName=name}}
+  {{> participantsModal list=participants}}
   {{else}}
   <div class="ui main workshop container">
     <!-- Yelis ponlo bonito :D -->
@@ -311,6 +315,25 @@
   {{/with}}
 </template>
 
+<template name="participantsModal">
+  <div id="participantsModal" class="ui modal">
+    <div class="content">
+      <h2 class="ui centered header">Lista de participantes</h2>
+      <div class="ui middle aligned relaxed divided list">
+        {{#each list}}
+        <div class="item">
+        <img class="ui avatar image" data-position="bottom center" src="https://robohash.org/{{getUserName this}}.png?size=40x40">
+          <div class="content">
+            <b><a href="/users/{{this}}">
+              {{getUserName this}}
+            </a></b>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
 
 <template name="confirmDeleteModal">
   <div id="confirmDeleteModal" class="ui compact modal">
