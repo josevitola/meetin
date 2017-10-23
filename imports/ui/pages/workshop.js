@@ -331,13 +331,14 @@ Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {
     },
     onApprove: function() {
       const id = FlowRouter.getParam('_id');
-      $("#confirmDeleteModal").modal('hide');
 
       // TODO smoothen page refreshing when event is deleted
-      FlowRouter.go('/');
       Meteor.call('workshops.delete', id, (error, result) => {
-        if(!error) {
+        if(error) {
+          alert(error.message);
+        } else {
           FlowRouter.go('/');
+          $("#confirmDeleteModal").modal('hide');
         }
       });
     }

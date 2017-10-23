@@ -89,4 +89,23 @@
     </div>
     <div class="ui red inverted delete user button">Eliminar cuenta</div>
   </div>
+
+  {{> confirmUserDeleteModal}}
+</template>
+
+<template name="confirmUserDeleteModal">
+  <div id="confirmUserDeleteModal" class="ui compact modal">
+    <div class="content">
+      <h2 class="ui centered header">¿Estás seguro que deseas eliminar tu cuenta?</h2>
+      <center>
+        <p>
+          ¡No podrás recuperar tus datos ni asistir a eventos con ellos si eliminas tu cuenta! ¿Deseas continuar?
+        </p>
+      </center>
+    </div>
+    <div class="actions">
+      <div class="ui left floated button cancel">Cancelar</div>
+      <div class="ui red button ok">Eliminar</div>
+    </div>
+  </div>
 </template>

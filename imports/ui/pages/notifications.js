@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import { styleShortDate } from '/imports/lib/stylish.js';
+import { styleShortDate, formatTime } from '/imports/lib/stylish.js';
 import { isToday } from '/imports/lib/clock.js';
 
 import { Workshops } from '/imports/api/workshops.js';
@@ -19,15 +19,9 @@ Template.notifications.onCreated(function notificationsOnCreated() {
 })
 
 Template.notifications.helpers({
-  unread(notifIds) {
-    return Notifications.find({_id: {$in: notifIds}, read: false}).count() != 0;
-  },
-  countUnreadNotifs(notifIds) {
-    return Notifications.find({_id: {$in: notifIds}, read: false}).count();
-  },
-  getNotifs(notifIds) {
-    console.log(notifIds);
-    return Notifications.find({_id: {$in: notifIds}}, {limit: 6, sort: {createdAt: -1}}).fetch();
+  sort(notifs) {
+    if(notifs)
+      return notifs.reverse();
   },
   notification(notifId) {
     return Notifications.findOne(notifId);
@@ -46,7 +40,7 @@ Template.notifications.helpers({
   },
   getStyledDate(date) {
     if(isToday(date)) {
-      return 'Hoy';
+      return 'Hoy a las ' + formatTime(date);
     }
     return styleShortDate(date);
   }

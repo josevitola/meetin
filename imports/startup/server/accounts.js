@@ -1,5 +1,6 @@
 import { check } from 'meteor/check';
 import { UserSchema } from '/imports/api/schemas.js';
+import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
 
 const validateEmail = function(email) {
@@ -15,8 +16,19 @@ Accounts.validateNewUser((user) => {
 });
 
 /**** HOOKS ****/
-Meteor.users.after.remove((id, user) => {
-  let workshops = Workshops.remove({owner: user._id});
+Meteor.users.before.remove((id, user) => {
+  const userId = user._id;
+  // remove owned workshops
+  Workshops.remove({owner: userId});
+
+  // remove participation from workshops
+  const participating = Workshops.find({participants: userId});
+  participating.forEach((workshop) => {
+    Meteor.call('workshops.pullParticipant', workshop._id );
+  });
+
+  // remove sent notifications
+  const notifications = Notifications.remove({sender: userId});
 });
 
 /**** METHODS ****/
@@ -63,11 +75,12 @@ Meteor.methods({
     try {
       Meteor.users.remove(this.userId);
     } catch (e) {
-      throw new Meteor.Error('self-delete', 'Failed to remove yourself');
+      throw new Meteor.Error('self-delete', e.message);
     }
   },
 
   'user.pushNotification'( receiverId, notifId ) {
+    check(receiverId, String);
     check(notifId, String);
     try {
       Meteor.users.update(receiverId, {
@@ -75,6 +88,18 @@ Meteor.methods({
       });
     } catch (e) {
       throw new Meteor.Error('push-notif', e.message);
+    }
+  },
+
+  'user.pullNotification'( receiverId, notifId ) {
+    check(receiverId, String);
+    check(notifId, String);
+    try {
+      Meteor.users.update(receiverId, {
+        $pull: { 'profile.notifications': notifId }
+      });
+    } catch (e) {
+      throw new Meteor.Error('pull-notif', e.message);
     }
   }
 })

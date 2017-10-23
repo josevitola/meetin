@@ -7,6 +7,10 @@ Notifications.after.insert((userId, notification) => {
   Meteor.call('user.pushNotification', notification.receiver, notification._id);
 });
 
+Notifications.before.remove((userId, notification) => {
+  Meteor.call('user.pullNotification', notification.receiver, notification._id);
+});
+
 Meteor.methods({
   'notifications.insert'( sender, receiver, type, event ) {
     const notification = {
@@ -14,7 +18,7 @@ Meteor.methods({
       receiver: receiver,
       type: type,
       event: event,
-      createdAt: new Date(),
+      createdAt: Date.parse(new Date()),
       read: false
     }
     NotificationSchema.validate( notification );

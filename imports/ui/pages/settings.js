@@ -36,10 +36,24 @@ Template.profileSettings.events({
 
 Template.accountSettings.events({
   'click .ui.delete.user.button'() {
-    Meteor.call('user.selfDelete', (error, result) => {
-      if(!error) {
-        FlowRouter.go('/');
-      }
-    });
+    $('#confirmUserDeleteModal').modal('show');
   }
+});
+
+Template.confirmUserDeleteModal.onRendered(function() {
+  $('#confirmUserDeleteModal').modal({
+    onDeny: function(){
+      $('#confirmUserDeleteModal').modal('hide');
+      return false;
+    },
+    onApprove: function() {
+      Meteor.call('user.selfDelete', (error, result) => {
+        if(!error) {
+          FlowRouter.go('/');
+        } else {
+          alert(error.message);
+        }
+      });
+    }
+  });
 });

@@ -8,15 +8,20 @@ import { Notifications } from './notifications.js';
 import { Workshops } from './workshops.js';
 
 /***** Hooks *****/
-Workshops.after.remove((userId, workshop) => {
-  const users = [];
+Workshops.before.remove((userId, workshop) => {
+  // delete attendsTo from users
   for(var i = 0; i < workshop.participants.length; i++) {
     const user = Meteor.users.findOne({_id: workshop.participants[i]});
-    let attendsTo = user.profile.attendsTo;
-    let idx = attendsTo.indexOf(workshop._id);
-    attendsTo.splice(idx, 1);
-    Meteor.call('users.updateAttendsTo', user._id, attendsTo);
+    user.profile.attendsTo.forEach((workId) => {
+      Meteor.call('users.pullAttendsTo', user._id, workId);
+    });
   }
+
+  // delete related notifications
+  const notifications = Notifications.find({event: workshop._id}).fetch();
+  notifications.forEach((notif, index, arr) => {
+    Notifications.remove(notif._id);
+  });
 })
 
 /***** Methods *****/

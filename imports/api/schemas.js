@@ -48,6 +48,6 @@ export const NotificationSchema = new SimpleSchema({
   receiver: { type: String },
   type: { type: String },
   event: { type: String },
-  createdAt: { type: Date },
+  createdAt: { type: Number },
   read: { type: Boolean }
 });

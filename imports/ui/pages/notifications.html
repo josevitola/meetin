@@ -1,7 +1,7 @@
 <template name="notifications">
   <div class="ui main notifications container">
     <div class="ui segment">
-      {{#with currentUser.profile.notifications}}
+      {{#with sort currentUser.profile.notifications}}
       <h2>Notificaciones</h2>
       <div class="ui divider"></div>
       <div class="ui feed">
