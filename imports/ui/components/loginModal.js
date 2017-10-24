@@ -4,11 +4,11 @@ import { validateEmail } from '/imports/lib/stylish.js';
 
 import './loginModal.html';
 
-Template.loginModal.onCreated(function loginModalOnCreated() {
+Template.loginModalContent.onCreated(function loginModalOnCreated() {
   Session.set('notMail', false);
   Session.set('notPass', false);
   Session.set('mailValid', true);
-})
+});
 
 Template.loginModal.onRendered(function loginModalOnRendered() {
   $("#loginModal").modal({
@@ -40,7 +40,7 @@ Template.loginModal.onRendered(function loginModalOnRendered() {
   });
 });
 
-Template.loginModal.helpers({
+Template.loginModalContent.helpers({
   notMail() {
     return Session.get('notMail');
   },
@@ -51,3 +51,11 @@ Template.loginModal.helpers({
     return Session.get('mailValid');
   }
 });
+
+Template.loginModalContent.events({
+  'keypress input'(e, instance) {
+    if(e.keyCode === 13) {  // if enter
+      $('.ui.login.button.ok').click();
+    }
+  }
+})
