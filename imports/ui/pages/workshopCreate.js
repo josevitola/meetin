@@ -72,16 +72,6 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
     minDate: new Date(Date.now()),
     disableMinute: true
   });
-
-  // $('#endDate').calendar({
-  //   minDate: new Date(Date.now()),
-  //   text: {
-  //     days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-  //     months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  //     monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-  //   },
-  //   disableMinute: true
-  // });
 })
 
 Template.workshopCreate.events({
