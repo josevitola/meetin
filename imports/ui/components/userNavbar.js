@@ -11,6 +11,7 @@ import './searchBar.js';
 import './userNavbar.html';
 
 Template.userNavbar.onCreated(function userNavbarOnCreated() {
+  this.subscribe('files.images.all');
   this.subscribe('notifications');
   this.subscribe('workshops');
 })
@@ -36,9 +37,11 @@ Template.userNavbar.helpers({
   picSrc(picId) {
     if(picId) {
       const image = Images.findOne(picId);
-      return image ? image.link() : '/default.jpg';
+      if(image) {
+        return image.link();
+      }
     }
-    return 'https://robohash.org/' + Meteor.user().emails[0].address + '.png?size=50x50';
+    return 'https://robohash.org/default.png?size=50x50';
   },
   notification(notifId) {
     return Notifications.findOne(notifId);

@@ -31,6 +31,8 @@ Template.settings.events({
 
 /***** profileSettings ******/
 Template.profileSettings.onCreated(function profileSettingsOnCreated() {
+  this.subscribe('files.images.all');
+
   this.currentUpload = new ReactiveVar(false);
   this.previewSrc = new ReactiveVar('');
   this.labelName = new ReactiveVar('');
@@ -47,12 +49,17 @@ Template.profileSettings.helpers({
     return Template.instance().labelName.get();
   },
   picSrc(picId) {
-    if(picId) {
-      const image = Images.findOne(picId);
-      return image ? image.link() : '/default.jpg';
-    }
     const src = Template.instance().previewSrc.get();
-    return src === '' ? 'https://robohash.org/' + Meteor.user().emails[0].address + '.png?size=50x50' : src;
+    if(src === '') {
+      if(picId) {
+        const image = Images.findOne(picId);
+        if(image) {
+          return image.link();
+        } else return 'https://robohash.org/default.png?size=300x300';
+      }
+    }
+
+    return src;
   }
 });
 
@@ -62,11 +69,13 @@ Template.profileSettings.events({
   },
   'change #imageInput'(e, instance) {
     const files = e.currentTarget.files;
+    console.log(files);
     if (files && files[0]) {
       // change preview image
       var reader = new FileReader();
 
       reader.onload = function(e) {
+        console.log(e);
         instance.previewSrc.set(e.target.result);
       }
 
