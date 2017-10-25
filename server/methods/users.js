@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { validateEmail } from '/imports/lib/stylish.js';
 import { UserSchema } from '/imports/api/schemas.js';
 import { Notifications } from '/imports/api/notifications.js';
 
@@ -38,6 +39,12 @@ Meteor.methods({
     check(newDesc, String);
     Meteor.users.update(this.userId, {
       $set: { 'profile.desc': newDesc }
+    });
+  },
+  'user.updatePhoto'( photoId ) { 
+    check(photoId, String);
+    Meteor.users.update(this.userId, {
+      $set: { 'profile.photo': photoId }
     });
   },
   'users.pushAttendsTo'( userId, workId ) {

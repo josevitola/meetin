@@ -130,7 +130,7 @@ Template.profileSettings.events({
         } else {
           // console.log('File "' + fileObj.name + '" successfully uploaded');
           // console.log(fileObj._id);
-          Meteor.call('users.updatePhoto', fileObj._id);
+          Meteor.call('user.updatePhoto', fileObj._id);
         }
         instance.currentUpload.set(false);
       });
