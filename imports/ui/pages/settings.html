@@ -31,6 +31,11 @@
     <div class="ui divider"></div>
     <div class="ui grid">
       <div class="twelve wide column">
+        <div class="ui success update message hidden">
+          <i class="close icon"></i>
+          <div class="header">Cambios guardados</div>
+          <p>Tus datos han sido actualizados exitosamente. Haz clic <a href="/users/{{currentUser._id}}">aquí</a> para acceder a tu perfil.</p>
+        </div>
         {{#with currentUser}}
         <form class="ui user update form">
           <div class="field"> <!-- Nombre -->

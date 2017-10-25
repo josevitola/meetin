@@ -66,6 +66,34 @@ Template.profileSettings.helpers({
 Template.profileSettings.events({
   'submit form.user.update'(event) {
     event.preventDefault();
+
+    const newName = $('input[name=update-name]').val();
+    const newPhone = parseInt($('input[name=update-phone]').val().trim());
+    const newDesc = $('textarea[name=update-desc]').val();
+
+    if(Meteor.user().profile.name !== newName) {
+      Meteor.call('user.updateName', newName, (error, result) => {
+        if(error) {
+          alert(error.message);
+        }
+      });
+    }
+    if(Meteor.user().profile.phone !== newPhone) {
+      Meteor.call('user.updatePhone', newPhone, (error, result) => {
+        if(error) {
+          alert(error.message);
+        }
+      });
+    }
+    if(Meteor.user().profile.desc !== newDesc) {
+      Meteor.call('user.updateDesc', newDesc, (error, result) => {
+        if(error) {
+          alert(error.message);
+        }
+      });
+    }
+
+    $('.ui.success.update.message').removeClass('hidden');
   },
   'change #imageInput'(e, instance) {
     const files = e.currentTarget.files;

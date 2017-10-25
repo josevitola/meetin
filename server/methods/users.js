@@ -19,10 +19,25 @@ Meteor.methods({
   },
 
   /*** update methods ***/
-  'users.updatePhoto'( photoId ) {
-    check(photoId, String);
+  'user.updateName'( newName ) {
+    check(newName, String);
+    if(newName.length == 0) {
+      throw new Meteor.Error(403, 'Name may not be empty');
+    }
     Meteor.users.update(this.userId, {
-      $set: { 'profile.photo': photoId }
+      $set: { 'profile.name': newName }
+    });
+  },
+  'user.updatePhone'( newPhone ) {
+    check(newPhone, Number);
+    Meteor.users.update(this.userId, {
+      $set: { 'profile.phone': newPhone }
+    });
+  },
+  'user.updateDesc'( newDesc ) {
+    check(newDesc, String);
+    Meteor.users.update(this.userId, {
+      $set: { 'profile.desc': newDesc }
     });
   },
   'users.pushAttendsTo'( userId, workId ) {
