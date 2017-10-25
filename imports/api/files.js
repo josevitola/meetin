@@ -3,7 +3,6 @@ import { FilesCollection } from 'meteor/ostrio:files';
 var Dropbox, Request, bound, client, fs;
 
 if (Meteor.isServer) {
-  console.log('Hola desde files.js');
   Dropbox = Npm.require('dropbox');
   Request = Npm.require('request');
   fs = Npm.require('fs');
