@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Notifications } from './notifications.js';
-import { NotificationSchema } from './schemas.js';
+import { Notifications } from '/imports/api/notifications.js';
+import { NotificationSchema } from '/imports/api/schemas.js';
 
 Notifications.after.insert((userId, notification) => {
   Meteor.call('user.pushNotification', notification.receiver, notification._id);

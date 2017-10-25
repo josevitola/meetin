@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+import { Images } from '/imports/api/files.js';
 import { Workshops } from '/imports/api/workshops.js';
 import '../components/workshopCard.js';
 import './user.html';
@@ -20,6 +21,15 @@ Template.user.helpers({
   },
   isUser(user) {
     return Meteor.userId() === user._id;
+  },
+  picSrc(picId) {
+    if(picId) {
+      const image = Images.findOne(picId);
+      if(image) {
+        return image.link();
+      }
+    }
+    return 'https://robohash.org/default.png?size=300x300';
   },
   getOwnedWorkshops() {
     // TODO decide whether to use double reference in database or not

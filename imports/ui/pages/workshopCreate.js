@@ -28,15 +28,14 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
     onChange: function (date, text, mode) {
       let now = new Date(Date.now());
       if(date.getMonth() != now.getMonth() || date.getDay() != now.getDay()) {
-        console.log(Date.now());
-        console.log(date.getTime());
+        // console.log(Date.now());
+        // console.log(date.getTime());
         date.setHours(0,0,0,0);
       }
       $('#initTime').calendar({
         type: 'time',
         minDate: date,
         onChange: function (date, text, mode) {
-          console.log('initTime');
           $('#endTime').calendar({
             type: 'time',
             minDate: date,
@@ -57,7 +56,6 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
     type: 'time',
     minDate: new Date(Date.now()),
     onChange: function (date, text, mode) {
-      console.log('initTime');
       $('#endTime').calendar({
         type: 'time',
         minDate: date,
@@ -86,7 +84,6 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
 
 Template.workshopCreate.events({
   'change #initDate' (event) {
-    console.log('initDate');
     $('#initTime').calendar({
       type: 'time',
       minDate: new Date($('#initDate').calendar("get date")),
@@ -95,7 +92,6 @@ Template.workshopCreate.events({
   },
 
   'change #initTime' (event) {
-    console.log('initTime');
     $('#endTime').calendar({
       type: 'time',
       minDate: new Date($('#initTime').calendar("get date")),
@@ -156,8 +152,8 @@ Template.workshopCreate.events({
             if (error) {
               alert('Error during upload: ' + error);
             } else {
-              console.log('File "' + fileObj.name + '" successfully uploaded');
-              console.log(fileObj._id);
+              // console.log('File "' + fileObj.name + '" successfully uploaded');
+              // console.log(fileObj._id);
               Meteor.call('workshops.addPic', workId, fileObj._id);
             }
             instance.currentUpload.set(false);

@@ -1,9 +1,12 @@
 import { Template } from 'meteor/templating';
 
-import { styleShortDate } from '/imports/lib/stylish.js';
 import { isToday } from '/imports/lib/clock.js';
+import { styleShortDate } from '/imports/lib/stylish.js';
+
+import { Images } from '/imports/api/files.js';
 import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
+
 import './searchBar.js';
 import './userNavbar.html';
 
@@ -21,12 +24,6 @@ Template.userNavbar.onRendered(function userNavbarOnRendered() {
 });
 
 Template.userNavbar.helpers({
-  getUserEmail() {
-    if(Meteor.user()) {
-      return Meteor.user().emails[0].address;
-    }
-    else return "";
-  },
   unread(notifIds) {
     return Notifications.find({_id: {$in: notifIds}, read: false}).count() != 0;
   },
@@ -35,6 +32,13 @@ Template.userNavbar.helpers({
   },
   getNotifs(notifIds) {
     return Notifications.find({_id: {$in: notifIds}}, {limit: 6, sort: {createdAt: -1}}).fetch();
+  },
+  picSrc(picId) {
+    if(picId) {
+      const image = Images.findOne(picId);
+      return image ? image.link() : '/default.jpg';
+    }
+    return 'https://robohash.org/' + Meteor.user().emails[0].address + '.png?size=50x50';
   },
   notification(notifId) {
     return Notifications.findOne(notifId);

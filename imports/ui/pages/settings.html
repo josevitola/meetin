@@ -46,14 +46,30 @@
             <textarea value="{{profile.desc}}" name="update-desc" rows="8" cols="80" placeholder="Descríbete como persona!"></textarea>
           </div>
           <!-- TODO editar (incluir) tags -->
-          <!-- TODO cambiar contraseña  -->
           <button class="ui right floated green submit button" type="submit">Guardar cambios</button>
         </form>
         {{/with}}
       </div>
       <div class="four wide column">
-        <img class="ui small centered rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="" />
-        <!-- <button class="ui centered green button">Cambiar imagen</button> -->
+        <br>
+        {{#with currentUpload}}
+          Uploading <b>{{file.name}}</b>:
+          <span id="progress">{{progress.get}}%</span>
+        {{else}}
+          <img class="ui small centered rounded profile pic image" src="{{picSrc currentUser.profile.photo}}" alt="" />
+
+          <input class="fileinput" id="imageInput" type="file" name="image" multiple="multiple"/>
+          {{#unless label}}
+          <label id="imageLabel" for="imageInput"></label>
+          <button class="ui file fluid green icon button">
+            <i class="edit icon"></i>
+            Cambiar foto
+          </button>
+          {{else}}
+          <button class="ui fluid green button ok">Guardar foto</button>
+          <button class="ui fluid cancel button">Cancelar</button>
+          {{/unless}}
+        {{/with}}
       </div>
     </div>
   </div>

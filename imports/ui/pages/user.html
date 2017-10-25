@@ -22,9 +22,12 @@
         </div>
         {{#each emails}}
         <div class="four wide column">
-          <img class="ui small right floated rounded image" src="https://robohash.org/{{this.address}}.png?size=150x150&bgset=bg2" alt="">
+          <img class="ui small right floated rounded image" src="{{picSrc user.profile.photo}}" alt="">
           {{#if isUser user}}
-          <button class="ui right floated labeled icon button"><i class="settings icon"></i>Editar</button>
+          <br>
+          <a style="float: right;" href="/settings">
+            <div class="ui blue settings icon label"><i class="edit icon"></i>Editar perfil</div>
+          </a>
           {{/if}}
         </div>
         {{/each}}

@@ -3,9 +3,9 @@ import { check } from 'meteor/check';
 
 import { WorkshopSchema } from '/imports/api/schemas.js';
 
-import { Images } from './files';
-import { Notifications } from './notifications.js';
-import { Workshops } from './workshops.js';
+import { Images } from '/imports/api/files';
+import { Notifications } from '/imports/api/notifications.js';
+import { Workshops } from '/imports/api/workshops.js';
 
 /***** Hooks *****/
 Workshops.before.remove((userId, workshop) => {
