@@ -72,6 +72,18 @@ Template.workshop.helpers({
       return participants;
     }
   },
+  profilePicSrc(userId) {
+    if(userId) {
+      const user = Meteor.users.findOne(userId);
+      if(user) {
+        const image = Images.findOne(user.profile.photo);
+        if(image) {
+          return image.link();
+        }
+      }
+    }
+    return 'https://robohash.org/default.png?size=300x300';
+  },
   getImageLink() {
     let pics = Template.instance().workshop.get().pics;
     if(pics) {
@@ -365,10 +377,16 @@ Template.participantsModal.helpers({
       return user.profile.name;
     }
   },
-});
-
-Template.participantsModal.events({
-  'click img'() {
-    console.log('lala');
-  }
+  profilePicSrc(userId) {
+    if(userId) {
+      const user = Meteor.users.findOne(userId);
+      if(user) {
+        const image = Images.findOne(user.profile.photo);
+        if(image) {
+          return image.link();
+        }
+      }
+    }
+    return 'https://robohash.org/default.png?size=300x300';
+  },
 });

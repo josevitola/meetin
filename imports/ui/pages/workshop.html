@@ -159,7 +159,7 @@
             <h5 class="ui header">{{lengthOf participants}} personas asistirán</h5>
             {{#each firstParticipants participants}}
             <a href="/users/{{this}}">
-              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="https://robohash.org/{{getUserName(this)}}.png?size=30x30" alt="">
+              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
             </a>
             {{/each}}
             {{#if remain participants}}
@@ -322,7 +322,7 @@
       <div class="ui middle aligned relaxed divided list">
         {{#each list}}
         <div class="item">
-        <img class="ui avatar image" data-position="bottom center" src="https://robohash.org/{{getUserName this}}.png?size=40x40">
+        <img class="ui avatar image" data-position="bottom center" src="{{profilePicSrc this}}">
           <div class="content">
             <b><a href="/users/{{this}}">
               {{getUserName this}}

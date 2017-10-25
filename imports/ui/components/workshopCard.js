@@ -59,13 +59,14 @@ Template.workshopCard.helpers({
   },
   ownerPicSrc(ownerId) {
     if(ownerId) {
-      const owner = Meteor.users.findOne(ownerId);
-      const image = Images.findOne(owner.profile.photo);
-      if(image) {
-        return image.link();
+      const user = Meteor.users.findOne(ownerId);
+      if(user) {
+        const image = Images.findOne(user.profile.photo);
+        if(image) {
+          return image.link();
+        }
       }
     }
-
-    return 'https://robohash.org/default.png?size=300x300'
+    return 'https://robohash.org/default.png?size=300x300';
   }
 });
