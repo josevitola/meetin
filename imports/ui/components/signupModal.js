@@ -61,14 +61,6 @@ Template.signupModal.onRendered(function signupModalOnRendered() {
   });
 });
 
-Template.signupModal.events({
-  'click .ui.login.button'() {
-    console.log('signup!!');
-    $("#signupModal").modal('hide');
-    $("#loginModal").modal('show');
-  },
-});
-
 Template.signupModal.helpers({
   notName() {
     return Session.get('notName');

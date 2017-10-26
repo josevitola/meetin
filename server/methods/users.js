@@ -4,19 +4,38 @@ import { UserSchema } from '/imports/api/schemas.js';
 import { Notifications } from '/imports/api/notifications.js';
 
 Meteor.methods({
-  'users.insert'( userDraft ) {
-    if (!userDraft.password || userDraft.password.length < 4) {
+  'users.insert'( name, mail, pass ) {
+    if (!pass || pass.length < 4) {
       throw new Meteor.Error(403, 'Password must be longer than 3 ');
     }
 
-    if (!validateEmail(userDraft.email)) {
+    if (!validateEmail(mail)) {
       throw new Meteor.Error(403, 'Email is not validated');
     }
-    if (!userDraft.profile.name) {
+    if (!name) {
       throw new Meteor.Error(403, 'Name may not be empty')
     }
 
-    Accounts.createUser( userDraft );
+    const phone = 0;
+    const desc = "Edita este campo para hacer una descripción en tu perfil";
+    const attendsTo = [];
+    const owns = [];
+    const notifications = [];
+
+    const user = {
+      email: mail,
+      password: pass,
+      profile: {
+        name: name,
+        phone: phone,
+        desc: desc,
+        attendsTo: attendsTo,
+        owns: owns,
+        notifications: notifications
+      }
+    }
+
+    Accounts.createUser( user );
   },
 
   /*** update methods ***/
@@ -41,7 +60,7 @@ Meteor.methods({
       $set: { 'profile.desc': newDesc }
     });
   },
-  'user.updatePhoto'( photoId ) { 
+  'user.updatePhoto'( photoId ) {
     check(photoId, String);
     Meteor.users.update(this.userId, {
       $set: { 'profile.photo': photoId }

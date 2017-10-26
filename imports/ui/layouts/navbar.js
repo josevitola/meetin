@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
+import '../components/accountsModal.js';
 import '../components/loginModal.js';
 import '../components/signupModal.js';
 import '../components/userNavbar.js';
@@ -11,18 +13,21 @@ Template.navbar.helpers({
   }
 });
 
-// Template.navbar.events({
-//   'click .ui.login.button'() {
-//     $("#loginModal").modal('show');
-//   },
-// });
+Template.navbar.events({
+  'click .ui.login.button'() {
+    Session.set('accountsModal', 'login');
+    $("#accountsModal").modal('show');
+  },
+});
 
 Template.homeNavbar.events({
   'click .ui.login.button'() {
-    $("#loginModal").modal('show');
+    Session.set('accountsModal', 'login');
+    $("#accountsModal").modal('show');
   },
   'click .ui.signup.button'() {
-    $("#signupModal").modal('show');
+    Session.set('accountsModal', 'signup');
+    $("#accountsModal").modal('show');
   },
 });
 
