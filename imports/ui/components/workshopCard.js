@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { formatTime, styleDate, formatPrice } from '/imports/lib/stylish.js';
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 import { Workshops } from '/imports/api/workshops.js';
 
 import './workshopCard.html';
@@ -38,7 +38,7 @@ Template.workshopCard.helpers({
   },
   getImage(imageId) {
     if(imageId) {
-      let image = Images.findOne(imageId);
+      let image = Files.Images.findOne(imageId);
       if(image) {
         return image;
       }
@@ -61,7 +61,7 @@ Template.workshopCard.helpers({
     if(ownerId) {
       const user = Meteor.users.findOne(ownerId);
       if(user) {
-        const image = Images.findOne(user.profile.photo);
+        const image = Files.Images.findOne(user.profile.photo);
         if(image) {
           return image.link();
         }

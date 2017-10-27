@@ -3,7 +3,7 @@ import { check } from 'meteor/check';
 
 import { WorkshopSchema } from '/imports/api/schemas.js';
 
-import { Images } from '/imports/api/files';
+import { Files } from '/imports/api/server/files';
 import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
 
