@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { toggle } from '/imports/lib/datahelpers.js';
 import { styleDate, formatTime } from '/imports/lib/stylish.js';
 
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 import './workshop.html';
@@ -76,7 +76,7 @@ Template.workshop.helpers({
     if(userId) {
       const user = Meteor.users.findOne(userId);
       if(user) {
-        const image = Images.findOne(user.profile.photo);
+        const image = Files.Images.findOne(user.profile.photo);
         if(image) {
           return image.link();
         }
@@ -87,7 +87,7 @@ Template.workshop.helpers({
   getImageLink() {
     let pics = Template.instance().workshop.get().pics;
     if(pics) {
-      let image = Images.findOne({_id: pics[0]});
+      let image = Files.Images.findOne({_id: pics[0]});
       if(image) {
         return image.link();
       }
@@ -381,7 +381,7 @@ Template.participantsModal.helpers({
     if(userId) {
       const user = Meteor.users.findOne(userId);
       if(user) {
-        const image = Images.findOne(user.profile.photo);
+        const image = Files.Images.findOne(user.profile.photo);
         if(image) {
           return image.link();
         }

@@ -20,6 +20,11 @@ Template.home.helpers({
 
 Template.home.events({
   'click .ui.signup.button'() {
-    $("#signupModal").modal('show');
+    if(Meteor.user() && Meteor.loggingIn()) {
+      FlowRouter.go('/workshops/create');
+    } else {
+      Session.set('accountsModal', 'signup');
+      $("#accountsModal").modal('show');      
+    }
   }
 })

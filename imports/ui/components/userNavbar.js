@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { isToday } from '/imports/lib/clock.js';
 import { styleShortDate } from '/imports/lib/stylish.js';
 
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
 
@@ -36,7 +36,7 @@ Template.userNavbar.helpers({
   },
   picSrc(picId) {
     if(picId) {
-      const image = Images.findOne(picId);
+      const image = Files.Images.findOne(picId);
       if(image) {
         return image.link();
       }

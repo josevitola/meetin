@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { Images } from '/imports/api/files.js';
 
 import './imageUpload.html';
 
