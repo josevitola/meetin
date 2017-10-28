@@ -7,11 +7,11 @@ Meteor.methods({
     check(message, Object);
 
     Meteor.defer(() => {
-      SSR.compileTemplate('htmlEmail', Assets.getText('newAttendant.html'));
+      SSR.compileTemplate('htmlEmail', Assets.getText('attend.html'));
       Email.send({
-        to: `${message.owner} ${message.email}`,
-        from: 'info@meetin.com.co',
-        subject: `Hola ${message.owner}!`,
+        to: `${message.attendantName} ${message.attendantEmail}`,
+        from: 'info@meetin.com.co Meet In',
+        subject: `Disfruta la actividad - Meet In`,
         html: SSR.render('htmlEmail', message)
       });
     });
