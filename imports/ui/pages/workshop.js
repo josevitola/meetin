@@ -45,7 +45,7 @@ Template.workshop.onRendered(function workshopOnRendered() {
   $('#endDate').calendar();
   $('.ui.named.avatar.image').popup();
 
-  $('.ui.form').hide();
+  $('.ui.email.form').hide();
 });
 
 Template.workshop.helpers({
@@ -351,7 +351,7 @@ Template.workshop.events({
 
   // toggle email message field
   'click .ui.email.organizer.button'() {
-    $('.ui.form').transition('slide down');
+    $('.ui.email.form').transition('slide down');
   },
 
   // send email to workshop organizer
