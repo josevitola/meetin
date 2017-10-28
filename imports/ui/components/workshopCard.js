@@ -31,7 +31,9 @@ Template.workshopCard.helpers({
     }
   },
   getWorkshopDesc() {
-    return Template.instance().workshop.get().desc;
+    var desc = Template.instance().data.workshop.desc;
+    desc = desc.substring(0, 140).concat(" ...");
+    return desc;
   },
   getWorkshopAddr() {
     return Template.instance().workshop.get().addr;
