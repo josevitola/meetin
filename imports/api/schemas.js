@@ -24,7 +24,7 @@ export const UserSchema = new SimpleSchema({
 // TODO insert createdAt field
 export const WorkshopSchema = new SimpleSchema({
   name: { type: String },
-  photo: { type: String },
+  photo: { type: String, optional: true },
   owner: { type: String },
   addr: { type: String },
   desc: { type: String, optional: true },
@@ -32,11 +32,11 @@ export const WorkshopSchema = new SimpleSchema({
   initTime: { type: Date },
   endTime: { type: Date },
   price: { type: Number },
-  tags: { type: Array },
+  tags: { type: Array, optional: true },
   'tags.$': { type: String },
   participants: { type: Array },
   'participants.$': { type: String },
-  items: { type: Array },
+  items: { type: Array, optional: true },
   'items.$': { type: String },
   pics: { type: Array, optional: true },
   'pics.$': { type: String },

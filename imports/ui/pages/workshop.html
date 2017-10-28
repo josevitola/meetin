@@ -10,7 +10,7 @@
           <h2 class="ui inverted header" id="tagline">
             <strong>{{name}}</strong>
             <!-- Edit icon -->
-            {{#if isUserOwner owner}}
+            {{#if isCurrentUserOwner}}
             <a href="#"><i class="small edit name icon"></i></a>
             {{/if}}
             <div class="sub header">creado por
@@ -29,7 +29,7 @@
           <div class="ui inverted horizontal divider"></div>
           <!-- Attend button -->
           {{#unless isUserAttending}}
-            {{#unless isUserOwner owner}}
+            {{#unless isCurrentUserOwner}}
               <button class="ui teal join workshop labeled icon button">
                 <i class="right arrow icon"></i>
                 Asistir
@@ -54,11 +54,11 @@
             {{#each tags}}
               <a data-idx="{{@index}}" class="ui label">
                 {{this}}
-                {{#if isUserOwner owner}} <i class="delete tag icon"></i> {{/if}}
+                {{#if isCurrentUserOwner}} <i class="delete tag icon"></i> {{/if}}
               </a>
             {{/each}}
 
-            {{#if isUserOwner owner}}
+            {{#if isCurrentUserOwner}}
 
               {{#unless isEditingTag}}
                 <button class="circular ui teal create tag icon mini button">
@@ -81,7 +81,7 @@
             {{#with desc}}
             <h5 class="ui header">
               ¿Qué se hace en este taller?
-              {{#if isUserOwner owner}}
+              {{#if isCurrentUserOwner}}
               <a href="#"><i class="small edit desc icon"></i></a>
               {{/if}}
             </h5>
@@ -102,7 +102,7 @@
             <div class="ui divider"></div>
             <h5 class="ui header">
               ¿Qué hay que traer?
-              {{#if isUserOwner owner}}
+              {{#if isCurrentUserOwner}}
               <a href="#"><i class="small edit items icon"></i></a>
               {{/if}}
             </h5>
@@ -156,6 +156,22 @@
         <div class="six wide column">
           <!-- Participantes -->
           <div class="ui segment">
+            {{#unless isCurrentUserOwner}}
+            <center>
+              <button class="ui email organizer olive button">Contacta al organizador</button>
+              <br><br>
+              <form action="" class="ui email form">
+                <div class="field">
+                  <label>Envía tus preguntas y comentarios al organizador de este evento</label>
+                  <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
+                </div>
+                <div class="ui send email button">Enviar</div>
+              </form>
+            </center>
+            <div class="ui fluid success hidden message">
+              Tu mensaje fue enviado con éxito.
+            </div>
+            {{/unless}}
             <h5 class="ui header">{{lengthOf participants}} personas asistirán</h5>
             {{#each firstParticipants participants}}
             <a href="/users/{{this}}">
@@ -174,7 +190,7 @@
                     <i class="home icon"></i>
                     <div class="content">
                       {{addr}}
-                      {{#if isUserOwner owner}}
+                      {{#if isCurrentUserOwner}}
                       <a href="#"><i class="small edit addr icon"></i></a>
                       {{/if}}
                     </div>
@@ -193,7 +209,7 @@
                   <i class="dollar icon"></i>
                   <div class="content">
                     {{price}}
-                    {{#if isUserOwner owner}}
+                    {{#if isCurrentUserOwner}}
                     <a href="#"><i class="small edit price icon"></i></a>
                     {{/if}}
                   </div>
@@ -211,7 +227,7 @@
                   <i class="calendar icon"></i>
                   <div class="content initDate">
                     {{styleDate initDate}}
-                    {{#if isUserOwner owner}}
+                    {{#if isCurrentUserOwner}}
                       <a href="#"><i class="small edit initDate icon"></i></a>
                     {{/if}}
                   </div>
@@ -233,7 +249,7 @@
                   <i class="time icon"></i>
                   <div class="content endDate">
                     {{formatTime initTime}}
-                    {{#if isUserOwner owner}}
+                    {{#if isCurrentUserOwner}}
                       <a href="#"><i class="small edit initTime icon"></i></a>
                     {{/if}}
                   </div>
@@ -255,7 +271,7 @@
                   <i class="time icon"></i>
                   <div class="content endTime">
                     {{formatTime endTime}}
-                    {{#if isUserOwner owner}}
+                    {{#if isCurrentUserOwner}}
                       <a href="#"><i class="small edit endTime icon"></i></a>
                     {{/if}}
                   </div>
@@ -276,7 +292,7 @@
             </div>
 
             <!-- Eliminar -->
-            {{#if isUserOwner owner}}
+            {{#if isCurrentUserOwner}}
             <i class="red trash icon"></i>
             <a class="delete event" href="#">Eliminar este evento</a>
 
