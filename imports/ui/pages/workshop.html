@@ -30,10 +30,17 @@
           <!-- Attend button -->
           {{#unless isUserAttending}}
             {{#unless isCurrentUserOwner}}
+              {{#if capacityAvailable}}
               <button class="ui teal join workshop labeled icon button">
                 <i class="right arrow icon"></i>
                 Asistir
               </button>
+              {{else}}
+              <button class="ui orange labeled icon button">
+                <i class="right arrow icon"></i>
+                No hay cupos
+              </button>
+              {{/if}}
             {{/unless}}
             {{else}}
             <button class="ui dark-blue join workshop labeled icon button">
@@ -210,7 +217,6 @@
               </div>
               <!-- Precio -->
               <div class="item">
-
                 {{#unless isEditingPrice}}
                   <i class="dollar icon"></i>
                   <div class="content">
@@ -222,12 +228,30 @@
                 {{else}}
                   <!-- Edit input -->
                   <div class="ui edit action input">
-                    <input type="text" name="wedit-price" value="{{price}}"/>
+                    <input type="number" name="wedit-price" value="{{price}}" min="0" step="100"/>
                     <button class="ui teal icon save price button"><i class="check icon"></i></button>
                   </div><br>
                 {{/unless}}
               </div>
-
+              <!-- Cupos -->
+              <div class="item">
+                {{#unless isEditingCapacity}}
+                  <i class="users icon"></i>
+                  <div class="content">
+                    {{capacity}}
+                    {{#if isUserOwner owner}}
+                    <a href="#"><i class="small edit capacity icon"></i></a>
+                    {{/if}}
+                  </div>
+                {{else}}
+                  <!-- Edit input -->
+                  <div class="ui edit action input">
+                    <input type="number" name="wedit-capacity" value="{{capacity}}" min="1" max="50"/>
+                    <button class="ui teal icon save capacity button"><i class="check icon"></i></button>
+                  </div><br>
+                {{/unless}}
+              </div>
+              <!-- Fecha -->
               <div class="item">
                 {{#unless isEditingInitDate}}
                   <i class="calendar icon"></i>
