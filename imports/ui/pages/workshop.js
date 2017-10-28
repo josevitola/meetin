@@ -44,6 +44,8 @@ Template.workshop.onRendered(function workshopOnRendered() {
   $('#initDate').calendar();
   $('#endDate').calendar();
   $('.ui.named.avatar.image').popup();
+
+  $('.ui.form').hide();
 });
 
 Template.workshop.helpers({
@@ -100,8 +102,8 @@ Template.workshop.helpers({
       return user.profile.name;
     }
   },
-  isUserOwner(ownerId) {
-    return Meteor.userId() === ownerId;
+  isCurrentUserOwner() {
+    return Template.instance().workshop.get().owner === Meteor.userId();
   },
   isEditingName() {
     return Template.instance().isEditingName.get();
@@ -335,13 +337,35 @@ Template.workshop.events({
 
 
   /* === DELETE === */
-  'click a.delete.event'(event, instance) {
+  'click a.delete.event'() {
     $('#confirmDeleteModal').modal('show');
   },
 
   'click .watch.participants'() {
     $('#participantsModal').modal('show');
   },
+
+  // toggle email message field
+  'click .ui.email.organizer.button'() {
+    $('.ui.form').transition('slide down');
+  },
+
+  // send email to workshop organizer
+  'click .ui.send.email.button'(e, instance) {
+    console.log(instance.workshop.get());
+    console.log($('#emailToOwner').val());
+    const message = $('#emailToOwner').val();
+    if(Meteor.user()) {
+      Meteor.call('email.toWorkshopOrganizer', instance.workshop.get(), message, (error, result) => {
+        if(error) {
+          alert(error.message);
+        } else {
+          $('.ui.form').transition('slide down');
+          $('ui.email.organizer.button').html('Gracias!');
+        }
+      });
+    }
+  }
 });
 
 Template.confirmDeleteModal.onRendered(function cdModalOnRendered() {

@@ -5,14 +5,6 @@ import '../components/accountsModal.js';
 import '../components/userNavbar.js';
 import './navbar.html';
 
-Template.navbar.onCreated(function() {
-  this.test = () => FlowRouter.current();
-
-  this.autorun(() => {
-    console.log(this.test());
-  });
-})
-
 Template.navbar.helpers({
   profile() {
     return Meteor.user() || Meteor.loggingIn() ? "user" : "guest";
