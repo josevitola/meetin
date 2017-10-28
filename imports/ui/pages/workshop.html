@@ -29,7 +29,7 @@
           <div class="ui inverted horizontal divider"></div>
           <!-- Attend button -->
           {{#unless isUserAttending}}
-            {{#unless isUserOwner owner}}
+            {{#unless isCurrentUserOwner}}
               {{#if capacityAvailable}}
               <button class="ui teal join workshop labeled icon button">
                 <i class="right arrow icon"></i>
