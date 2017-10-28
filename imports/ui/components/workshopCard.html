@@ -31,7 +31,11 @@
           Horario <h5 class="ui teal header">{{formatTime initTime}} - {{formatTime endTime}}</h5>
         </div>
       </div>
-      <center><div class="ui teal button">Asistir</div></center>
+      {{#if capacityAvailable this}}
+        <center><div class="ui teal button">Asistir </div></center>
+      {{else}}
+        <center><div class="ui orange button">No hay cupos </div></center>
+      {{/if}}
     </div>
   </a>
   {{/with}}

@@ -30,10 +30,17 @@
           <!-- Attend button -->
           {{#unless isUserAttending}}
             {{#unless isCurrentUserOwner}}
+              {{#if capacityAvailable}}
               <button class="ui teal join workshop labeled icon button">
                 <i class="right arrow icon"></i>
                 Asistir
               </button>
+              {{else}}
+              <button class="ui orange labeled icon button">
+                <i class="right arrow icon"></i>
+                No hay cupos
+              </button>
+              {{/if}}
             {{/unless}}
             {{else}}
             <button class="ui dark-blue join workshop labeled icon button">
@@ -187,17 +194,23 @@
         <!-- Menú de información del evento -->
         <div class="six wide column">
           <!-- Participantes -->
-          <div class="ui segment">
+          <div class="ui segment" style="padding:30px;">
             {{#unless isCurrentUserOwner}}
             <center>
-              <button class="ui email organizer olive button">Contacta al organizador</button>
+              <button class="ui email organizer light-red-orange icon labeled button">
+                <i class="comment icon"></i>
+                Escríbele al organizador
+              </button>
               <br><br>
-              <form action="" class="ui email form">
+              <form action="" class="ui email form segment" style="display:none;background-color: #f2f2f2;">
                 <div class="field">
-                  <label>Envía tus preguntas y comentarios al organizador de este evento</label>
+                  Envía tus preguntas y comentarios al organizador de este evento
                   <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
                 </div>
-                <div class="ui send email button">Enviar</div>
+                <div class="ui send email button">
+                  <i class="send icon"></i>
+                  Enviar
+                </div>
               </form>
             </center>
             <div class="ui fluid success hidden message">
@@ -236,7 +249,6 @@
               </div>
               <!-- Precio -->
               <div class="item">
-
                 {{#unless isEditingPrice}}
                   <i class="dollar icon"></i>
                   <div class="content">
@@ -248,12 +260,30 @@
                 {{else}}
                   <!-- Edit input -->
                   <div class="ui edit action input">
-                    <input type="text" name="wedit-price" value="{{price}}"/>
+                    <input type="number" name="wedit-price" value="{{price}}" min="0" step="100"/>
                     <button class="ui teal icon save price button"><i class="check icon"></i></button>
                   </div><br>
                 {{/unless}}
               </div>
-
+              <!-- Cupos -->
+              <div class="item">
+                {{#unless isEditingCapacity}}
+                  <i class="users icon"></i>
+                  <div class="content">
+                    {{capacity}}
+                    {{#if isCurrentUserOwner}}
+                    <a href="#"><i class="small edit capacity icon"></i></a>
+                    {{/if}}
+                  </div>
+                {{else}}
+                  <!-- Edit input -->
+                  <div class="ui edit action input">
+                    <input type="number" name="wedit-capacity" value="{{capacity}}" min="1" max="50"/>
+                    <button class="ui teal icon save capacity button"><i class="check icon"></i></button>
+                  </div><br>
+                {{/unless}}
+              </div>
+              <!-- Fecha -->
               <div class="item">
                 {{#unless isEditingInitDate}}
                   <i class="calendar icon"></i>

@@ -20,8 +20,8 @@ Template.workshop.onCreated(function workshopOnCreated() {
 
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
+  this.isEditingCapacity = new ReactiveVar(false);
   this.isEditingInitDate = new ReactiveVar(false);
-  // this.isEditingEndDate = new ReactiveVar(false);
   this.isEditingInitTime = new ReactiveVar(false);
   this.isEditingEndTime = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
@@ -128,12 +128,12 @@ Template.workshop.helpers({
   isEditingPrice() {
     return Template.instance().isEditingPrice.get();
   },
+  isEditingCapacity() {
+    return Template.instance().isEditingCapacity.get();
+  },
   isEditingInitDate() {
     return Template.instance().isEditingInitDate.get();
   },
-  // isEditingEndDate() {
-  //   return Template.instance().isEditingEndDate.get();
-  // },
   isEditingInitTime() {
     return Template.instance().isEditingInitTime.get();
   },
@@ -158,6 +158,10 @@ Template.workshop.helpers({
   workshop() {
     return Template.instance().workshop.get();
   },
+  capacityAvailable() {
+    let workshop = Template.instance().workshop.get();
+    return workshop.capacity - workshop.participants.length > 0;
+  }
 });
 
 Template.workshop.events({
@@ -257,6 +261,19 @@ Template.workshop.events({
       instance.isEditingPrice.set(false);
     }
   },
+  /* --- Capacity --- */
+  'click .edit.capacity.icon'(event, instance) {
+    instance.isEditingCapacity.set(true);
+  },
+
+  'click .ui.save.capacity.button'(event, instance) {
+    const newCapacity = $('input[name=wedit-capacity]').val();
+    if(+newCapacity){
+      const workshopId = FlowRouter.getParam('_id');
+      Meteor.call('workshops.update', workshopId, { capacity: newCapacity});
+      instance.isEditingCapacity.set(false);
+    }
+  },
   /* --- Init Date---*/
   'click .edit.initDate.icon'(event, instance) {
     instance.isEditingInitDate.set(true);
@@ -286,28 +303,6 @@ Template.workshop.events({
     }, 100);
   },
 
-  /* --- End Time---*/
-  'click .edit.endTime.icon'(event, instance) {
-    instance.isEditingEndTime.set(true);
-    setTimeout(function () {
-      $('#endTime').calendar({
-        type: 'time',
-        minDate: new Date($('.content.initTime').text()),
-        onChange: function (date, text, mode) {
-          const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { endTime: date});
-          instance.isEditingEndTime.set(false);
-        }
-      });
-    }, 100);
-  },
-
-  'click .ui.save.addr.button'(event, instance) {
-    const newEndDate = $('input[name=wedit-endDate]').calendar("get date");
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.update', workshopId, { endDate: newEndDate});
-    instance.isEditingEndDate.set(false);
-  },
 
 
   'click .ui.join.workshop.button'(event, instance) {
@@ -330,6 +325,8 @@ Template.workshop.events({
         });
 
         const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+        workshop.initDate = styleDate(workshop.initDate);
+        workshop.initTime = formatTime(workshop.initTime);
         const owner = Meteor.users.findOne(workshop.owner)
         const message = {
           ownerName: owner.profile.name,
