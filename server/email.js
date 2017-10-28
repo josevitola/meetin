@@ -4,31 +4,8 @@ import { Match } from 'meteor/check';
 import { Email } from 'meteor/email';
 
 import { WorkshopSchema } from '/imports/api/schemas.js';
-
-function applyTextTemplate(userId, steps) {
-  var username;
-  if(userId == null) username = "usuario";
-  else username = Meteor.users.find({_id: userId}).fetch().profile.name;
-  var message = "¡Hola, " + username +
-    "! Recientemente usaste el servicio de Puerta Bogotá " +
-    "y creaste un itinerario para tu día de turista. Te lo enviamos de forma " +
-    "simplificada aquí: \n\n";
-
-  for(let i = 0; i < steps.length; i++) {
-    message += steps[i].name;
-    message += "\n";
-  }
-
-  message += "\n";
-  message += "El total de este presupuesto fue de " + getPriceFromSteps(steps) + ".\n";
-  message += "Para más funcionalidades, poder guardar tus itinerarios y compartirlos " +
-    "regístrate en Puerta Bogotá.\n¡Gracias por usar nuestra aplicación!"
-
-  return message;
-}
-
 Meteor.methods({
-  sendMessage(message) {
+  'email.notifyAttendant'(message) {
     check(message, Object);
 
     Meteor.defer(() => {
@@ -43,9 +20,7 @@ Meteor.methods({
   },
 
   'email.toWorkshopOrganizer'(workshop, message) {
-    console.log(
-      process.env.MAIL_URL
-    );
+    console.log(message);
     check(workshop._id, String);
     check(workshop.name, String);
     check(workshop.owner, String);
@@ -66,16 +41,23 @@ Meteor.methods({
     }
 
     const to = organizer.emails[0].address;
-    const from = sender.emails[0].address;
+    const from = 'info@meetin.com.co Meet In';
     console.log(to, from);
     const subject = sender.profile.name + " tiene una pregunta para ti sobre tu evento " + workshop.name;
 
     Meteor.defer(() => {
+      SSR.compileTemplate('questionHtmlEmail', Assets.getText('question.html'));
       Email.send({
-        to,
-        from,
-        subject,
-        message
+        to: to,
+        from: from,
+        subject: subject,
+        html: SSR.render('questionHtmlEmail', {
+          organizer: organizer,
+          participant: sender,
+          message: message,
+          workshop: workshop,
+          participantEmail: sender.emails[0].address,
+        })
       });
     });
   }

@@ -5,6 +5,3 @@ const port = 587;
 const url = "smtp://" + user + ":" + pass + "@" + host + ":" + port;
 
 process.env.MAIL_URL = url;
-  console.log(
-    process.env.MAIL_URL
-  );

@@ -326,7 +326,7 @@ Template.workshop.events({
           workshop: workshop
         }
 
-        Meteor.call('sendMessage', message, (error, result) => {
+        Meteor.call('email.notifyAttendant', message, (error, result) => {
           if(error) {
             console.log(error.message);
           } else {
@@ -356,8 +356,6 @@ Template.workshop.events({
 
   // send email to workshop organizer
   'click .ui.send.email.button'(e, instance) {
-    console.log(instance.workshop.get());
-    console.log($('#emailToOwner').val());
     const message = $('#emailToOwner').val();
     if(Meteor.user()) {
       Meteor.call('email.toWorkshopOrganizer', instance.workshop.get(), message, (error, result) => {
@@ -365,7 +363,7 @@ Template.workshop.events({
           alert(error.message);
         } else {
           $('.ui.form').transition('slide down');
-          $('ui.email.organizer.button').html('Gracias!');
+          $('.ui.success.message').transition('slide down');
         }
       });
     }

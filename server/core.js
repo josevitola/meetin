@@ -12,7 +12,3 @@ import '/imports/api/server/files.js';
 import '/imports/api/server/users.js';
 import '/imports/api/server/notifications.js';
 import '/imports/api/server/workshops.js';
-
-console.log(
-  process.env.MAIL_URL
-);
