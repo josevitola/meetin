@@ -1,10 +1,11 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { toggle } from '/imports/lib/datahelpers.js';
-import { styleDate, formatTime } from '/imports/lib/stylish.js';
+import { styleDate, styleShortDate, formatTime } from '/imports/lib/stylish.js';
+import { isToday } from '/imports/lib/clock.js';
 
 import { Files } from '/imports/lib/core.js';
+import { Comments } from '/imports/api/comments.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 import './workshop.html';
@@ -29,12 +30,13 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.isEditingPrice = new ReactiveVar(false);
 
   this.workshop = new ReactiveVar({});
-  this.getWorkshop = () => {
-    return Workshops.findOne(FlowRouter.getParam('_id'));
-  }
+
+  this.getParam = () => FlowRouter.getParam('_id');
 
   this.autorun(() => {
-    this.workshop.set(this.getWorkshop());
+    var param = this.getParam();
+    this.subscribe('comments', param);
+    this.workshop.set(Workshops.findOne(param));
   })
 });
 
@@ -55,14 +57,13 @@ Template.workshop.helpers({
     }
     return Meteor.user().profile.attendsTo.indexOf(FlowRouter.getParam('_id')) > -1;
   },
-  getOwnerName(ownerId) {
+  getUserName(ownerId) {
     const owner = Meteor.users.findOne(ownerId);
     if(owner) {
       return owner.profile.name;
     }
   },
   lengthOf(array) {
-
     return array.length;
   },
   remain(participants) {
@@ -85,7 +86,7 @@ Template.workshop.helpers({
         }
       }
     }
-    return 'https://robohash.org/default.png?size=300x300';
+    return 'https://robohash.org/default.png?size=150x150';
   },
   getImageLink() {
     let pics = Template.instance().workshop.get().pics;
@@ -102,6 +103,9 @@ Template.workshop.helpers({
     if(user) {
       return user.profile.name;
     }
+  },
+  comments() {
+    return Comments.find().fetch();
   },
   isCurrentUserOwner() {
     return Template.instance().workshop.get().owner === Meteor.userId();
@@ -141,6 +145,15 @@ Template.workshop.helpers({
   },
   formatTime(time) {
     return formatTime(time);
+  },
+  datetime(date) {
+    var day = '';
+    if(isToday(date)) {
+      day = 'Hoy';
+    } else {
+      day = styleShortDate(date);
+    }
+    return day + " a las " + formatTime(date);
   },
   workshop() {
     return Template.instance().workshop.get();
@@ -378,6 +391,7 @@ Template.workshop.events({
         alert(error.message);
       } else {
         $('textarea[name=new-comment]').val('');
+        instance.subscribe('comments', 7);
       }
     });
   }

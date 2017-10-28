@@ -15,7 +15,7 @@
             {{/if}}
             <div class="sub header">creado por
               <a href="/users/{{owner}}">
-                {{getOwnerName owner}}
+                {{getUserName owner}}
               </a>
             </div>
           </h2>
@@ -162,23 +162,25 @@
                   <i class="comment icon"></i> Añadir un comentario
                 </div>
               </form>
+              {{#each comments}}
               <div class="comment">
                 <a class="avatar">
                   <img src="https://robohash.org/default.png?size=300x300'">
                 </a>
                 <div class="content">
-                  <a class="author">Lolo</a>
+                  <a class="author">{{getUserName user}}</a>
                   <div class="metadata">
-                    <span class="date">Hoy a las 00:00</span>
+                    <span class="date">{{datetime createdAt}}</span>
                   </div>
                   <div class="text">
-                    Qué putas
+                    {{content}}
                   </div>
-                  <div class="actions">
+                  <!-- <div class="actions">
                     <a class="reply">Reply</a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
+              {{/each}}
             </div>
           </div>
         </div>
