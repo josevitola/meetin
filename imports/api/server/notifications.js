@@ -3,6 +3,10 @@ import { check } from 'meteor/check';
 import { Notifications } from '/imports/api/notifications.js';
 import { NotificationSchema } from '/imports/api/schemas.js';
 
+Meteor.publish('notifications', function () {
+  return Notifications.find({});
+});
+
 Notifications.after.insert((userId, notification) => {
   Meteor.call('user.pushNotification', notification.receiver, notification._id);
 });

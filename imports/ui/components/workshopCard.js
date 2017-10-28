@@ -32,7 +32,7 @@ Template.workshopCard.helpers({
   },
   getWorkshopDesc() {
     var desc = Template.instance().data.workshop.desc;
-    if(desc.length > 140){
+    if(desc && desc.length > 140){
         desc = desc.substring(0, 140).concat(" ...");
     }
     return desc;
@@ -74,8 +74,6 @@ Template.workshopCard.helpers({
     return 'https://robohash.org/default.png?size=300x300';
   },
   capacityAvailable(workshop) {
-    //let workshop = Template.instance().data.workshop.get();
-    console.log(workshop);
     if(typeof workshop.capacity === 'undefined'){
       return true;
     }

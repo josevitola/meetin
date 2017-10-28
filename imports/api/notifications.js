@@ -1,9 +1,7 @@
 import { Mongo } from 'meteor/mongo';
+import { NotificationSchema } from './schemas.js';
 
-export const Notifications = new Mongo.Collection('notifications');
+var Notification = new Mongo.Collection('notifications');
+Notification.attachSchema(NotificationSchema);
 
-if(Meteor.isServer) {
-  Meteor.publish('notifications', function () {
-    return Notifications.find({});
-  })
-}
+export const Notifications = Notification;

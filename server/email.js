@@ -60,5 +60,38 @@ Meteor.methods({
         })
       });
     });
+  },
+
+  'email.toUser'( userId, message ) {
+    check(userId, String);
+    check(message, String);
+
+    const user = Meteor.users.findOne(userId);
+    if(!user) {
+      throw new Meteor.Error(404, 'User not found');
+    }
+
+    const sender = Meteor.users.findOne(this.userId);
+    if(!sender) {
+      throw new Meteor.Error(404, 'User not found');
+    }
+
+    const to = user.emails[0].address;
+    const from = 'info@meetin.com.co Meet In';
+    const subject = sender.profile.name + " te ha enviado un mensaje.";
+
+    Meteor.defer(() => {
+      SSR.compileTemplate('messageHtmlEmail', Assets.getText('message.html'));
+      Email.send({
+        to: to,
+        from: from,
+        subject: subject,
+        html: SSR.render('messageHtmlEmail', {
+          user: user,
+          sender: sender,
+          message: message,
+        })
+      });
+    });
   }
 });
