@@ -8,7 +8,7 @@
           1. ¿Qué deseas ofertar?
         </h3>
 
-        <div class="ui grid">
+        <div class="ui stackable grid">
           <div class="field five wide column"> <!-- Nombre -->
             <h4 class="ui header">Nombre de la Actividad</h4>
             <input type="text" name="work-name" placeholder="Ej: Caminata por el sendero la Vieja">
@@ -20,12 +20,12 @@
           </div>
 
           <div class="field three wide column"> <!-- Precio -->
-            <h4 class="ui header">Costo de Inscripción</h4>
+            <h4 class="ui header">Costo por persona (COP)</h4>
             <input type="number" name="work-price" placeholder="0" min="0" step="100">
           </div>
 
           <div class="field three wide column"> <!-- capacity -->
-            <h4 class="ui header">Cupos</h4>
+            <h4 class="ui header">Cupo máx de personas</h4>
             <input type="number" name="work-capacity" placeholder="50" min="1" max="50">
           </div>
         </div>
@@ -35,18 +35,18 @@
           <textarea name="work-desc" rows="8" cols="80" placeholder="¿Qué se hará en tu actitvidad? Anima a las personas a que vayan"></textarea>
         </div>
 
-        <h4>¡Añade algunas imágenes mostrar tu evento a los demás!</h4>
+        <h4>¡Añade una imagen para mostrar tu evento a los demás!</h4>
         {{> imageUpload}}
       </div>
 
       <div class="ui segment">
         <h3 class="ui teal header" style="margin-bottom: 40px;">
-          2. ¿Cuándo lo ofertarás?
+          2. ¿Cuándo harás la actividad?
         </h3>
 
         <div class="ui grid">
           <div class="field four wide column">
-            <h4 class="ui header">Fecha</h4>
+            <h4 class="ui header">Fecha de la actividad</h4>
             <div class="ui calendar" id="initDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>

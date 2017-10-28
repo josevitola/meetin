@@ -3,18 +3,18 @@
     Uploading <b>{{file.name}}</b>:
     <span id="progress">{{progress.get}}%</span>
   {{else}}
-    <!-- {{#with previewSrc}}
+    {{#with previewSrc}}
       <div class="ui small bordered rounded image">
         <a class="ui right corner remove label">
           <i class="remove icon"></i>
         </a>
         <img id="preview" src="{{this}}" alt="">
       </div>
-    {{/with}} -->
+    {{/with}}
     <br>
     <input class="fileinput" id="imageInput" type="file" name="image" multiple="multiple"/>
-    <label for="imageInput">
-      <i class="edit icon"></i>
+    <label for="imageInput" class="ui dark-blue button">
+      <i class="camera icon"></i>
       {{#with label}}
       {{this}}
       {{else}}
