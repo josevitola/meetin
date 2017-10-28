@@ -93,7 +93,7 @@ Template.workshop.helpers({
         return image.link();
       }
     }
-    return '/default.jpg';
+    return '/default.png';
   },
   getUserName( id ) {
     let user = Meteor.users.findOne(id);

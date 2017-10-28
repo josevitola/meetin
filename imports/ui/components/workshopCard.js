@@ -46,7 +46,7 @@ Template.workshopCard.helpers({
       }
     }
     return {
-      link: '/default.jpg',
+      link: '/default.png',
       name: 'Default image'
     };
   },
