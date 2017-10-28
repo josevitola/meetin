@@ -317,6 +317,8 @@ Template.workshop.events({
         });
 
         const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+        workshop.initDate = styleDate(workshop.initDate);
+        workshop.initTime = formatTime(workshop.initTime);
         const owner = Meteor.users.findOne(workshop.owner)
         const message = {
           ownerName: owner.profile.name,
