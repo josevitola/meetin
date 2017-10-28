@@ -32,7 +32,9 @@ Template.workshopCard.helpers({
   },
   getWorkshopDesc() {
     var desc = Template.instance().data.workshop.desc;
-    desc = desc.substring(0, 140).concat(" ...");
+    if(desc.length > 140){
+        desc = desc.substring(0, 140).concat(" ...");
+    }
     return desc;
   },
   getWorkshopAddr() {
@@ -70,5 +72,13 @@ Template.workshopCard.helpers({
       }
     }
     return 'https://robohash.org/default.png?size=300x300';
+  },
+  capacityAvailable(workshop) {
+    //let workshop = Template.instance().data.workshop.get();
+    console.log(workshop);
+    if(typeof workshop.capacity === 'undefined'){
+      return true;
+    }
+    return workshop.capacity - workshop.participants.length > 0;
   }
 });
