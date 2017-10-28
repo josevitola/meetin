@@ -1,129 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <style media="screen">
-    body, html {
-      width: 100%;
-      height: 100%;
-      background: #f2f2f2;
-      margin: 0;
-      font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-      font-size: 14px;
-      line-height: 1.33;
-      color: rgba(0,0,0,.8);
-    }
-    footer {
-      position: inherit;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: 0px;
-      padding: 1.5rem 10%;
-      width: 100%;
-      /*height: 65px;*/
-      color: white;
-      background-color: #031727;
-    }
-    header.masthead {
-      margin-left: 0px;
-      position: relative;
-      width: 100%;
-      text-align: center;
-      color: #fff;
-    }
-    header.masthead .header-content {
-      position: relative;
-      width: 100%;
-      padding: 150px 15px 100px;
-      text-align: center;
-      z-index: 2;
-    }
-    .overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      cursor: pointer;
-      z-index: 1;
-      margin: 0;
-    }
-    .ui.small.image {
-      width: 150px;
-      height: auto;
-      font-size: .92857143rem;
-    }
-    .ui.tiny.image, .ui.tiny.images .image, .ui.tiny.images img, .ui.tiny.images svg {
-      width: 80px;
-      height: auto;
-      font-size: .85714286rem;
-    }
-    .ui.header {
-        border: none;
-        margin: -webkit-calc(2rem - .165em)0 1rem;
-        margin: calc(2rem - .165em)0 1rem;
-        padding: 0;
-        font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-        font-weight: 700;
-        line-height: 1.33em;
-        text-transform: none;
-        color: rgba(0,0,0,.8);
-    }
-    .ui.inverted.header {
-      color: #fff;
-    }
-    .ui.segment {
-      position: relative;
-      background-color: #fff;
-      box-shadow: 0 0 0 1px rgba(39,41,43,.15), 0 1px 2px 0 rgba(0,0,0,.05);
-      margin: 1rem 0;
-      padding: 1em;
-      border-radius: .2857rem;
-      border: none;
-    }
-    .ui.avatar.image, .ui.avatar.image img, .ui.avatar.image svg, .ui.avatar.images .image, .ui.avatar.images img, .ui.avatar.images svg {
-      margin-right: .25em;
-      display: inline-block;
-      width: 2.5em;
-      height: 2.5em;
-      border-radius: 500rem;
-    }
-    .ui.green.button {
-      background-color: #5bbd72;
-      color: #fff;
-      text-shadow: none;
-      background-image: none;
-    }
-    .ui.button {
-      cursor: pointer;
-      display: inline-block;
-      min-height: 1em;
-      outline: 0;
-      border: none;
-      vertical-align: baseline;
-      background-color: #e0e0e0;
-      color: rgba(0,0,0,.6);
-      font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-      margin: 0 .25em 0 0;
-      padding: .78571em 1.5em;
-      text-transform: none;
-      text-shadow: none;
-      font-weight: 700;
-      line-height: 1;
-      font-style: normal;
-      text-align: center;
-      text-decoration: none;
-      background-image: none;
-      border-radius: .2857rem;
-      box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(39,41,43,.15)inset;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
-      transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
-      will-change: '';
-      -webkit-tap-highlight-color: transparent;
-    }
-  </style>
   <meta name="viewport" content="width=device-width" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>HTML email test</title>
@@ -135,25 +11,13 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/EmailMessage">
-  <header class="masthead" style="
-         background:url(http://meetinco.herokuapp.com/header.jpeg);
-         height:250px !important;
-         min-height: 250px;
-         background-position: bottom;
-         background-size: cover;
-       ">
-    <div class="overlay" style="height:250px;"></div>
-    <div class="header-content" style="padding:80px 10%; z-index:2">
-      <center>
-        <img class="ui small image" src="http://meetinco.herokuapp.com/logo.svg" alt="Meetin">
-      </center>
-      <h3 class="ui inverted header">El lugar donde encuentras lo que te gusta hacer</h3>
-    </div>
+  <header class="masthead" style="">
+    <img src="http://meetinco.herokuapp.com/email-header.jpg" alt="Meetin" width="100%" height="auto">
   </header>
 
   <div class="ui segment" style="margin:30px 10%; text-align:center; padding:30px;">
     <center style="font-size:15px;">
-      <img class="ui avatar image" src="https://robohash.org/Yeliana Torres.png?size=50x50" alt="avatar-photo">
+      <!-- <img class="ui avatar image" src="https://robohash.org/Yeliana Torres.png?size=50x50" alt="avatar-photo"> -->
       ¡Hola <b>{{organizer.profile.name}}</b>!<br><br>
       <a href="http://meetin.com.co/users/{{participant._id}}">{{participant.profile.name}}</a> tiene una pregunta para
       ti sobre tu taller <a href="http://meetin.com.co/workshops/{{workshop._id}}">{{workshop.name}}</a>:<br><br>
@@ -161,14 +25,30 @@
 
     <div class="ui divider header"></div>
 
-    <q>{{message}}</q>
+    <div style="margin:20px 0;
+                position: relative;
+                background: #ffffff;
+                box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+                margin: 1rem 0em;
+                padding: 1em 1em;
+                border-radius: 0.28571429rem;
+                border: 1px solid rgba(34, 36, 38, 0.15);">
+      <q>{{message}}</q>
+    </div>
 
     <p>Puedes responderle al correo: <a href="mailto:{{participantEmail}}">{{participantEmail}}</a></p>
   </div>
-  <footer>
+
+  <div style="padding: 1.5rem 10%; background-color: #031727;">
     <center>
       <a href="http://meetin.com.co/">
-        <img class="ui tiny left image" style="display:inline; margin-right:20px;" src="http://meetinco.herokuapp.com/logo.svg" alt="Meetin">
+        <img class="ui tiny left image" style="
+                    display:inline;
+                    margin-right:20px;
+                    width: 80px;
+                    height: auto;
+                    font-size: .85714286rem;"
+            src="http://meetinco.herokuapp.com/logo.svg" alt="Meetin">
       </a>
       <a href="https://www.facebook.com/Meet-In-310085396137581" target="_blank">
         <!-- <i class="blue circular inverted facebook icon" style="margin-right:20px;"></i> -->
@@ -178,9 +58,7 @@
         <!-- <i class="teal circular inverted twitter icon"></i> -->
         <img src="http://icons.iconarchive.com/icons/limav/flat-gradient-social/256/Twitter-icon.png" alt="Twitter" width="30px" height="30px">
       </a>
-      <!-- <i class="red circular inverted instagram icon"></i> -->
     </center>
-    <!-- <h3 class="ui inverted header" style="display:inline;">meetin.com.co</h3> -->
-  </footer>
+  </div>
 </body>
 </html>
