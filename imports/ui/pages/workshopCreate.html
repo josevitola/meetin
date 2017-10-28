@@ -9,19 +9,24 @@
         </h3>
 
         <div class="ui grid">
-          <div class="field six wide column"> <!-- Nombre -->
+          <div class="field five wide column"> <!-- Nombre -->
             <h4 class="ui header">Nombre de la Actividad</h4>
             <input type="text" name="work-name" placeholder="Ej: Caminata por el sendero la Vieja">
           </div>
 
-          <div class="field six wide column"> <!-- Dirección -->
+          <div class="field five wide column"> <!-- Dirección -->
             <h4 class="ui header">Lugar de la Actividad</h4>
             <input type="text" name="work-addr" placeholder="Ingresar ubicación">
           </div>
 
-          <div class="field four wide column"> <!-- Precio -->
+          <div class="field three wide column"> <!-- Precio -->
             <h4 class="ui header">Costo de Inscripción</h4>
-            <input type="number" name="work-price" placeholder="0">
+            <input type="number" name="work-price" placeholder="0" min="0" step="100">
+          </div>
+
+          <div class="field three wide column"> <!-- Precio -->
+            <h4 class="ui header">Cupos</h4>
+            <input type="number" name="work-capacity" placeholder="50" min="1" max="50">
           </div>
         </div>
 

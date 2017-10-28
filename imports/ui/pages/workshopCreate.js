@@ -25,6 +25,11 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
   $('#initDate').calendar({
     type: 'date',
     minDate: new Date(Date.now()),
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    },
     onChange: function (date, text, mode) {
       let now = new Date(Date.now());
       if(date.getMonth() != now.getMonth() || date.getDay() != now.getDay()) {
@@ -44,11 +49,6 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
         },
         disableMinute: true
       });
-    },
-    text: {
-      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
     }
   });
 
@@ -95,8 +95,8 @@ Template.workshopCreate.events({
     const addr = $('input[name=work-addr]').val();
     const desc = $('textarea[name=work-desc]').val();
     const price = parseInt($('input[name=work-price]').val());
+    const capacity = parseInt($('input[name=work-capacity]').val());
     const initDate =  $('#initDate').calendar("get date");
-    // const endDate =  $('#endDate').calendar("get date");
     const initTime =  $('#initTime').calendar("get date");
     const endTime =  $('#endTime').calendar("get date");
     const tags = instance.tags.get();
@@ -109,9 +109,9 @@ Template.workshopCreate.events({
       addr: addr,
       photo: '',
       desc: desc,
-      price: price,
+      price: isNaN(price) || price < 1 ? 50 : price,
+      capacity: capacity,
       initDate: initDate,
-      // endDate: endDate,
       initTime: initTime,
       endTime: endTime,
       tags: tags,
