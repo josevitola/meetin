@@ -49,7 +49,7 @@ Template.workshopCard.helpers({
     };
   },
   formatPrice(price) {
-    return formatPrice(price);
+     return formatPrice(price);
   },
   formatDate(date) {
     return styleDate(date);
