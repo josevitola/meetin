@@ -4,7 +4,7 @@
     <div class="image">
       <div class="overlay"></div>
       {{#with getImage pics.[0]}}
-        <img src="{{this.link}}" alt="{{this.name}}">
+        <div class="background" style="background-image:url({{this.link}})"></div>
       {{/with}}
       <!-- <img src="https://www.butarque.es/wp-content/uploads/2016/09/taller_de_arte.jpg"> -->
       <h3 class="workshop price">{{formatPrice price}}</h3>
@@ -18,7 +18,7 @@
 
     <div class="content">
       <div class="description" style="margin-bottom:10px;">
-        {{desc}}
+        {{getWorkshopDesc}}
       </div>
     </div>
 

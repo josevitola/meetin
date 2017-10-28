@@ -29,7 +29,6 @@ export const WorkshopSchema = new SimpleSchema({
   addr: { type: String },
   desc: { type: String, optional: true },
   initDate: { type: Date },
-  // endDate: { type: Date },
   initTime: { type: Date },
   endTime: { type: Date },
   price: { type: Number },
@@ -40,7 +39,8 @@ export const WorkshopSchema = new SimpleSchema({
   items: { type: Array, optional: true },
   'items.$': { type: String },
   pics: { type: Array, optional: true },
-  'pics.$': { type: String }
+  'pics.$': { type: String },
+  capacity: {type : Number}
 });
 
 export const NotificationSchema = new SimpleSchema({

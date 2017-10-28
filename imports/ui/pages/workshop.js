@@ -62,6 +62,7 @@ Template.workshop.helpers({
     }
   },
   lengthOf(array) {
+
     return array.length;
   },
   remain(participants) {
@@ -315,20 +316,23 @@ Template.workshop.events({
           }
         });
 
-        // const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
-        // const owner = Meteor.users.findOne(workshop.owner)
-        // const message = {
-        //   owner: owner.profile.name,
-        //   email: owner.emails[0].address
-        // }
-        //
-        // Meteor.call('sendMessage', message, (error, result) => {
-        //   if(error) {
-        //     console.log(error.message);
-        //   } else {
-        //     console.log('Mensaje enviado');
-        //   }
-        // });
+        const workshop = Workshops.findOne(FlowRouter.getParam('_id'));
+        const owner = Meteor.users.findOne(workshop.owner)
+        const message = {
+          ownerName: owner.profile.name,
+          attendantEmail: Meteor.user().emails[0].address,
+          attendantName: Meteor.user().profile.name,
+          attendantPhoto: Meteor.user().profile.photo,
+          workshop: workshop
+        }
+
+        Meteor.call('sendMessage', message, (error, result) => {
+          if(error) {
+            console.log(error.message);
+          } else {
+            console.log('Mensaje enviado');
+          }
+        });
       }
     } else {
       $("#loginModal").modal('show');
