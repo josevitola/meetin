@@ -51,3 +51,10 @@ export const NotificationSchema = new SimpleSchema({
   createdAt: { type: Number },
   read: { type: Boolean }
 });
+
+export const CommentSchema = new SimpleSchema({
+  user: { type: String },
+  content: { type: String },
+  createdAt: { type: Date },
+  event: { type: String }
+});

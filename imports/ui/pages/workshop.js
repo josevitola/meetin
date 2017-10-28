@@ -367,6 +367,19 @@ Template.workshop.events({
         }
       });
     }
+  },
+
+  'click .ui.submit.button'(e, instance) {
+    var content = $('textarea[name=new-comment]').val();
+    // TODO shouldn't post an empty comment (client)
+
+    Meteor.call('comments.insert', content, instance.workshop.get()._id, (error, result) => {
+      if(error) {
+        alert(error.message);
+      } else {
+        $('textarea[name=new-comment]').val('');
+      }
+    });
   }
 });
 
