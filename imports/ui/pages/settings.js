@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 import './settings.html';
 
 Template.settings.onCreated(function settingsOnCreated() {
@@ -36,6 +36,8 @@ Template.profileSettings.onCreated(function profileSettingsOnCreated() {
   this.currentUpload = new ReactiveVar(false);
   this.previewSrc = new ReactiveVar('');
   this.labelName = new ReactiveVar('');
+
+  console.log(Files);
 });
 
 Template.profileSettings.helpers({
@@ -52,7 +54,8 @@ Template.profileSettings.helpers({
     const src = Template.instance().previewSrc.get();
     if(src === '') {
       if(picId) {
-        const image = Images.findOne(picId);
+        const image = Files.Images.findOne(picId);
+        console.log(Files.Images.find({_id: 'tREBxDPFLA7xYYc2C'}).fetch());
         if(image) {
           return image.link();
         } else return 'https://robohash.org/default.png?size=300x300';
@@ -114,7 +117,7 @@ Template.profileSettings.events({
   'click .ui.button.ok'(event, instance) {
     let images = $('#imageInput')[0].files;
     if(images && images[0]) {
-      const upload = Images.insert({
+      const upload = Files.Images.insert({
         file: images[0],
         streams: 'dynamic',
         chunkSize: 'dynamic'
@@ -128,8 +131,8 @@ Template.profileSettings.events({
         if (error) {
           alert('Error during upload: ' + error);
         } else {
-          // console.log('File "' + fileObj.name + '" successfully uploaded');
-          // console.log(fileObj._id);
+          console.log('File "' + fileObj.name + '" successfully uploaded');
+          console.log(fileObj._id);
           Meteor.call('user.updatePhoto', fileObj._id);
         }
         instance.currentUpload.set(false);

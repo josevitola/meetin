@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 import { Workshops } from '/imports/api/workshops.js';
 import '../components/workshopCard.js';
 import './user.html';
@@ -24,7 +24,7 @@ Template.user.helpers({
   },
   picSrc(picId) {
     if(picId) {
-      const image = Images.findOne(picId);
+      const image = Files.Images.findOne(picId);
       if(image) {
         return image.link();
       }

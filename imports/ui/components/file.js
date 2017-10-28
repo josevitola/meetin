@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating';
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 
 import './file.html';
 
 Template.file.helpers({
   imageFile() {
-    return Images.findOne();
+    return Files.Images.findOne();
   },
 });

@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Workshops } from '/imports/api/workshops.js';
-import { Images } from '/imports/api/files.js';
+import { Files } from '/imports/lib/core.js';
 
 import '../components/imageUpload.js';
 import './workshopCreate.html';
@@ -125,10 +125,10 @@ Template.workshopCreate.events({
       if(error) {
         alert(error.message);
       } else {
-        // upload Images
+        // upload Files.Images
         let images = $('#imageInput')[0].files;
         if(images && images[0]) {
-          const upload = Images.insert({
+          const upload = Files.Images.insert({
             file: images[0],
             streams: 'dynamic',
             chunkSize: 'dynamic'
