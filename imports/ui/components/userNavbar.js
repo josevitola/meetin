@@ -41,7 +41,7 @@ Template.userNavbar.helpers({
         return image.link();
       }
     }
-    return 'https://robohash.org/default.png?size=50x50';
+    return '/userDefault.gif';
   },
   notification(notifId) {
     return Notifications.findOne(notifId);

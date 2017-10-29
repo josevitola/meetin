@@ -16,7 +16,6 @@
             {{/if}}
             <div class="sub header">creado por
               <a href="/users/{{owner}}">
-                <img class="ui named avatar image" data-content="{{getOwnerName}}" src="{{ownerPicSrc owner}}">
                 {{getUserName owner}}
               </a>
             </div>
@@ -382,7 +381,7 @@
   {{else}}
   <div class="ui main workshop container">
     <!-- Yelis ponlo bonito :D -->
-    <h1 class="ui header">404 - Este taller no existe =( <br> Intenta con alguno de los siguientes talleres</h1>
+    <h1 class="ui bottom line header">Actividades Recientes</h1>
     <section id="activities">
       {{#if currentUser}}
         {{> userDashboard}}
