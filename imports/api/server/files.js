@@ -4,19 +4,84 @@ import { FilesCollection } from 'meteor/ostrio:files';
 
 var Dropbox, Request, bound, client, fs;
 
-Dropbox = Npm.require('dropbox');
+Dropbox = require('dropbox');
 Request = Npm.require('request');
 fs = Npm.require('fs');
 bound = Meteor.bindEnvironment(function(callback) {
   return callback();
 });
 
-client = new Dropbox.Client({
+/*client2 = new Dropbox.Client({
   key: 'hknteuv24yzbjq2',
   secret: 'wnt7ebl7egstkv7',
   token: 'IeUrRPCx4UAAAAAAAAAAleZyHgAgesSWEjIrHiHGlgLEFNWICq0AEygw8aRumV3V'
 });
 
+var client = new Dropbox.Client({
+  key: 'tovkj5hv1hwzwzu',
+  secret: 'liotaeqx4ff6rln',
+  token: 'M2IBUck_S1AAAAAAAAAAqzAh6oexM8Dt6otd8_pqJjVVQZ6aCuE7jcBsAkpn6t7B'
+});*/
+
+var dbx = new Dropbox({ accessToken: "M2IBUck_S1AAAAAAAAAAqzAh6oexM8Dt6otd8_pqJjVVQZ6aCuE7jcBsAkpn6t7B" });
+
+Files.Images = new FilesCollection({
+  // debug: true,
+  storagePath: 'assets/uploads/images',
+  collectionName: 'images',
+  allowClientCode: true,
+  // disableUpload: true,
+  // disableDownload: true,
+  protected(fileObj) {
+    if (fileObj) {
+      if (!(fileObj.meta && fileObj.meta.secured)) {
+        return true;
+      } else if ((fileObj.meta && fileObj.meta.secured === true) && this.userId === fileObj.userId) {
+        return true;
+      }
+    }
+    return false;
+  },
+  onBeforeRemove(cursor) {
+    const res = cursor.map((file) => {
+      if (file && file.userId && _.isString(file.userId)) {
+        return file.userId === this.userId;
+      }
+      return false;
+    });
+    return !~res.indexOf(false);
+  },
+  onBeforeUpload(file) {
+    // Allow upload files under 10MB, and only in png/jpg/jpeg formats
+    if (file.size <= 10485760 && /png|jpg|jpeg/i.test(file.extension)) {
+      return true;
+    } else {
+      return 'Por favor sube una imagen con tamaño menor o igual a 10MB';
+    }
+  },
+  onAfterUpload(fileRef){
+    console.log("hola Archivo");
+    console.log(fileRef);
+    var self = this;
+    fs.readFile(fileRef.path, Meteor.bindEnvironment(function(error, data) {
+      if(error){
+        console.error(error);
+      }else{
+        return dbx.filesUpload({path: '/' + fileRef.path , contents: data})
+          .then(function(response) {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log("error");
+            console.error(error);
+          });
+      }
+      //self.unlink(self.collection.findOne(fileRef._id));
+      //self.collection.remove(fileRef._id)
+    }))
+  }
+});
+/*
 Files.Images = new FilesCollection({
   // debug: true,
   storagePath: 'assets/app/uploads/images',
@@ -183,7 +248,7 @@ Files.Images.remove = function(search) {
   // Call original method
   _origRemove.call(this, search);
 };
-
+*/
 Meteor.publish('files.images.all', function () {
   return Files.Images.find().cursor;
 });

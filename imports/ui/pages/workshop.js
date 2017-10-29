@@ -93,10 +93,35 @@ Template.workshop.helpers({
     if(pics) {
       let image = Files.Images.findOne({_id: pics[0]});
       if(image) {
+        console.log(image.link());
         return image.link();
       }
+    }else {
+       return '/default.png';
     }
-    return '/default.png';
+    // console.log(pics);
+    // var path;
+    // if(pics){
+    //   path = pics[0]
+    // }else {
+    //   return '/default.png';
+    // }
+    //
+    // var image = dbx.filesDownload({path: path})
+    //   .then(function (response) {
+    //       console.log(response);
+    //       var reader = new FileReader();
+    //       var tmp;
+    //       reader.addEventListener("load", function () {
+    //          tmp = reader.result;
+    //       }, false);
+    //       reader.readAsDataURL(response.fileBlob);
+    //       return tmp;
+    //   })
+    //   .catch(function (error) {
+    //       return '/default.png';
+    //   })
+    // return image;
   },
   getUserName( id ) {
     let user = Meteor.users.findOne(id);

@@ -145,6 +145,8 @@ Template.workshopCreate.events({
               } else {
                 // console.log('File "' + fileObj.name + '" successfully uploaded');
                 // console.log(fileObj._id);
+                console.log("asdad");
+                console.log(fileObj);
                 Meteor.call('workshops.addPic', workId, fileObj._id);
               }
               instance.currentUpload.set(false);
