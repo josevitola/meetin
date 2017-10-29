@@ -127,29 +127,31 @@ Template.workshopCreate.events({
       } else {
         // upload Files.Images
         let images = $('#imageInput')[0].files;
-        if(images && images[0]) {
-          const upload = Files.Images.insert({
-            file: images[0],
-            streams: 'dynamic',
-            chunkSize: 'dynamic'
-          }, false);
+        if(images) {
+          for (let i = 0; i < images.length; i++) {
+            const upload = Files.Images.insert({
+              file: images[i],
+              streams: 'dynamic',
+              chunkSize: 'dynamic'
+            }, false);
 
-          upload.on('start', function () {
-            instance.currentUpload.set(this);
-          });
+            upload.on('start', function () {
+              instance.currentUpload.set(this);
+            });
 
-          upload.on('end', function (error, fileObj) {
-            if (error) {
-              alert('Error during upload: ' + error);
-            } else {
-              // console.log('File "' + fileObj.name + '" successfully uploaded');
-              // console.log(fileObj._id);
-              Meteor.call('workshops.addPic', workId, fileObj._id);
-            }
-            instance.currentUpload.set(false);
-          });
+            upload.on('end', function (error, fileObj) {
+              if (error) {
+                alert('Error during upload: ' + error);
+              } else {
+                // console.log('File "' + fileObj.name + '" successfully uploaded');
+                // console.log(fileObj._id);
+                Meteor.call('workshops.addPic', workId, fileObj._id);
+              }
+              instance.currentUpload.set(false);
+            });
 
-          upload.start();
+            upload.start();
+          }
         }
 
         // Finally go to newly created workshop
