@@ -3,7 +3,8 @@ import { check } from 'meteor/check';
 
 import { WorkshopSchema } from '/imports/api/schemas.js';
 
-import { Files } from '/imports/api/server/files';
+//import { Files } from '/imports/api/server/files';
+import { Files } from '/imports/lib/core.js';
 import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
 
@@ -36,7 +37,7 @@ Meteor.methods({
   'workshops.addPic'( workId, imageId ) {
     check(imageId, String);
 
-    const image = Images.findOne({_id: imageId});
+    const image = Files.Images.findOne({_id: imageId});
     if(!image) {
       throw new Meteor.Error(404, 'Imagen no encontrada');
     }
