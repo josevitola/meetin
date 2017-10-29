@@ -96,7 +96,7 @@ Template.workshop.helpers({
         console.log(image.link());
         return image.link();
       }
-    }else {
+    } else {
        return '/default.png';
     }
     // console.log(pics);
