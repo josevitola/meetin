@@ -2,7 +2,7 @@
   {{#with user}}
   <div style="margin-top: 47px;" class="ui main container">
     <div class="ui segment">
-      <div class="ui grid">
+      <div class="ui stackable grid">
         <div class="twelve wide column">
           <h1 class="ui header">{{profile.name}}</h1>
           {{#with profile.desc}}
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="ui grid">
+    <div class="ui stackable grid">
       <div class="ten wide column">
         <div class="ui segment">
           <h4>Actividad</h4>
@@ -72,18 +72,22 @@
       </div>
     </div>
 
+    {{#if getOwnedWorkshops}}
+    <h3 class="ui bottom line header">Eventos creados por {{profile.name}}</h3>
+    {{/if}}
     {{#with getOwnedWorkshops}}
-    <h3>Eventos creados por {{profile.name}}</h3>
-    <div class="ui four link cards">
+    <div class="ui three link stackable cards">
       {{#each this}}
         {{> workshopCard workshop=this}}
       {{/each}}
     </div>
     {{/with}}
 
+    {{#if getOwnedWorkshops}}
+    <h3 class="ui bottom line header">Eventos a los que {{profile.name}} asistirá</h3>
+    {{/if}}
     {{#with profile.attendsTo}}
-    <h3>Eventos a los que {{profile.name}} asistirá</h3>
-    <div class="ui four link cards">
+    <div class="ui three link stackable cards">
       {{#each getAttendsTo this}}
         {{> workshopCard workshop=this}}
       {{/each}}

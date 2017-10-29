@@ -86,7 +86,7 @@ Template.workshop.helpers({
         }
       }
     }
-    return 'https://robohash.org/default.png?size=150x150';
+    return '/userDefault.gif';
   },
   getImageLink() {
     let pics = Template.instance().workshop.get().pics;
