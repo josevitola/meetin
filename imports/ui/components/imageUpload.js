@@ -27,6 +27,8 @@ Template.imageUpload.events({
       // change preview image
       instance.previewSrc.clear();
       for(let i=0; i<files.length; i++){
+        console.log("file-"+i);
+        console.log(files[i]);
         var reader = new FileReader();
         reader.onload = function(e) {
           instance.previewSrc.push(e.target.result);
