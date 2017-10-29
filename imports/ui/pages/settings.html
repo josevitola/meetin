@@ -1,5 +1,5 @@
 <template name="settings">
-  <div class="ui main settings container">
+  <div class="ui main settings container" style="padding-top: 50px;">
       <div class="ui grid">
         <div class="four wide column">
           <div class="ui secondary vertical pointing menu">
@@ -66,8 +66,8 @@
           <input class="fileinput" id="imageInput" type="file" name="image" multiple="multiple"/>
           {{#unless label}}
           <label id="imageLabel" for="imageInput"></label>
-          <button class="ui file fluid green icon button">
-            <i class="edit icon"></i>
+          <button class="ui file fluid green icon button" style="margin-top:20px">
+            <i class="camera icon"></i>
             Cambiar foto
           </button>
           {{else}}

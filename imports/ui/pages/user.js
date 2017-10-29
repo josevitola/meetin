@@ -38,7 +38,7 @@ Template.user.helpers({
         return image.link();
       }
     }
-    return 'https://robohash.org/default.png?size=300x300';
+    return '/userDefault.gif';
   },
   getOwnedWorkshops() {
     // TODO decide whether to use double reference in database or not

@@ -14,7 +14,7 @@
   <div class="dashboard">
     {{#with currentUser.profile.attendsTo}}
     <h3 class="ui bottom line header">Eventos a los que asistirás</h3>
-    <div class="ui four link cards">
+    <div class="ui four link stackable cards">
       {{#each getAttendsTo}}
         {{> workshopCard workshop=this}}
       {{/each}}

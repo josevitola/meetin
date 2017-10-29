@@ -71,7 +71,7 @@ Template.workshopCard.helpers({
         }
       }
     }
-    return 'https://robohash.org/default.png?size=300x300';
+    return '/userDefault.gif';
   },
   capacityAvailable(workshop) {
     if(typeof workshop.capacity === 'undefined'){
