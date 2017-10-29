@@ -7,8 +7,7 @@
     {{> searchBar}}
   </a> -->
   <a class="ui options top right compact pointing dropdown item">
-    <img class="ui avatar image" src="{{profile.photo}}" id="avatar-image">
-    <!-- <img class="ui avatar image" src="{{picSrc profile.photo}}" id="avatar-image"> -->
+    <img class="ui avatar image" src="{{picSrc profile.photo}}" id="avatar-image">
     <div class="item">
       <b id="profile-name" style="margin-right:5px;">{{profile.name}}</b>
       {{#if unread profile.notifications}}
