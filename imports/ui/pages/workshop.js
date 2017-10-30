@@ -8,6 +8,9 @@ import { Files } from '/imports/lib/core.js';
 import { Comments } from '/imports/api/comments.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
+
+import '../components/accountsModal.js';
+
 import './workshop.html';
 
 const pLimit = 6;
@@ -328,8 +331,6 @@ Template.workshop.events({
     }, 100);
   },
 
-
-
   'click .ui.join.workshop.button'(event, instance) {
     if(Meteor.user()) {
       let workshops = Meteor.user().profile.attendsTo;
@@ -408,14 +409,19 @@ Template.workshop.events({
     var content = $('textarea[name=new-comment]').val();
     // TODO shouldn't post an empty comment (client)
 
-    Meteor.call('comments.insert', content, instance.workshop.get()._id, (error, result) => {
-      if(error) {
-        alert(error.message);
-      } else {
-        $('textarea[name=new-comment]').val('');
-        instance.subscribe('comments', 7);
-      }
-    });
+    if(Meteor.user()) {
+      Meteor.call('comments.insert', content, instance.workshop.get()._id, (error, result) => {
+        if(error) {
+          alert(error.message);
+        } else {
+          $('textarea[name=new-comment]').val('');
+          instance.subscribe('comments', 7);
+        }
+      });
+    } else {
+      Session.set('accountsModal', 'login');
+      $('#accountsModal').modal('show');
+    }
   }
 });
 
