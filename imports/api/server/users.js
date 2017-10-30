@@ -17,7 +17,7 @@ Meteor.methods({
     }
 
     const phone = 0;
-    const desc = "Edita este campo para hacer una descripción en tu perfil";
+    const desc = "";
     const attendsTo = [];
     const owns = [];
     const notifications = [];
