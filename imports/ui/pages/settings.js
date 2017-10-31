@@ -50,19 +50,12 @@ Template.profileSettings.helpers({
   label() {
     return Template.instance().labelName.get();
   },
-  picSrc(picId) {
-    const src = Template.instance().previewSrc.get();
-    if(src === '') {
-      if(picId) {
-        const image = Files.Images.findOne(picId);
-        console.log(Files.Images.find({_id: 'tREBxDPFLA7xYYc2C'}).fetch());
-        if(image) {
-          return image.link();
-        } else return 'https://robohash.org/default.png?size=300x300';
-      }
+  picSrc(profile) {
+    if(profile.photo){
+      return profile.photo;
+    }else {
+      return 'https://robohash.org/'+ profile.name + '.png?size=300x300';
     }
-
-    return src;
   }
 });
 
@@ -101,13 +94,14 @@ Template.profileSettings.events({
   'change #imageInput'(e, instance) {
     const files = e.currentTarget.files;
     console.log(files);
-    if (files && files[0]) {
+    if (files.length > 0) {
       // change preview image
       var reader = new FileReader();
 
       reader.onload = function(e) {
         console.log(e);
-        instance.previewSrc.set(e.target.result);
+        console.log(instance);
+        $('.profile.pic.image')[0].src = reader.result;
       }
 
       reader.readAsDataURL(files[0]);
@@ -116,32 +110,15 @@ Template.profileSettings.events({
   },
   'click .ui.button.ok'(event, instance) {
     let images = $('#imageInput')[0].files;
-    if(images && images[0]) {
-      const upload = Files.Images.insert({
-        file: images[0],
-        streams: 'dynamic',
-        chunkSize: 'dynamic'
-      }, false);
-
-      upload.on('start', function () {
-        instance.currentUpload.set(this);
-      });
-
-      upload.on('end', function (error, fileObj) {
-        if (error) {
-          alert('Error during upload: ' + error);
-        } else {
-          console.log('File "' + fileObj.name + '" successfully uploaded');
-          console.log(fileObj._id);
-          Meteor.call('user.updatePhoto', fileObj._id);
-        }
-        instance.currentUpload.set(false);
-      });
-
-      upload.start();
+    if(images.length > 0) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        Meteor.call('user.updatePhoto', reader.result, images[0].type);
+      };
+      reader.readAsBinaryString(images[0]);
     }
 
-    $('#imageInput').val('');
+    //$('#imageInput').val('');
     instance.previewSrc.set('');
     instance.labelName.set('');
   },

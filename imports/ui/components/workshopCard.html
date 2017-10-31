@@ -1,12 +1,9 @@
 <template name="workshopCard">
   {{#with workshop}}
-  <a class="ui card" href="/workshops/{{_id}}">
+  <a class="ui card" id="{{_id}}" href="/workshops/{{_id}}">
     <div class="image">
       <div class="overlay"></div>
-      <div class="background" style="background-image:url({{photo}})"></div>
-      {{#with getImage pics.[0]}}
-      <!-- <div class="background" style="background-image:url({{this.link}})"></div> -->
-      {{/with}}
+        <div class="background" style="background-image:url({{getImageLink}})"></div>
       <h3 class="workshop price">{{formatPrice price}}</h3>
       <div class="info">
         <a href="/users/{{owner}}">

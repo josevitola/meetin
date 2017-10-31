@@ -40,6 +40,14 @@ Template.workshopCard.helpers({
   getWorkshopAddr() {
     return Template.instance().workshop.get().addr;
   },
+  getImageLink() {
+    let workshop = Template.instance().data.workshop;
+    if(workshop.pics.length > 0){
+      return workshop.pics[0];
+    }else {
+      return '/default.png';
+    }
+  },
   getImage(imageId) {
     if(imageId) {
       let image = Files.Images.findOne(imageId);
@@ -65,10 +73,7 @@ Template.workshopCard.helpers({
     if(ownerId) {
       const user = Meteor.users.findOne(ownerId);
       if(user) {
-        const image = Files.Images.findOne(user.profile.photo);
-        if(image) {
-          return image.link();
-        }
+        return user.profile.photo || '/userDefault.gif';
       }
     }
     return '/userDefault.gif';
