@@ -376,8 +376,15 @@
     </div>
   </div>
 
-  {{> confirmDeleteModal workshopName=name}}
-  {{> participantsModal list=participants}}
+    {{#if isCurrentUserOwner}}
+    {{> confirmDeleteModal workshopName=name}}
+    {{/if}}
+
+    {{#unless currentUser}}
+    {{> accountsModal}}
+    {{/unless}}
+
+    {{> participantsModal list=participants}}
   {{else}}
   <div class="ui main workshop container">
     <!-- Yelis ponlo bonito :D -->

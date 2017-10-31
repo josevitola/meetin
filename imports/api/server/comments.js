@@ -16,6 +16,10 @@ Meteor.methods({
     check(content, String);
     check(workshopId, String);
 
+    if(!this.userId) {
+      throw new Meteor.Error(403, "User is not allowed");
+    }
+
     if(content.length == 0) {
       throw new Meteor.Error(403, "Comment can't be empty")
     }
