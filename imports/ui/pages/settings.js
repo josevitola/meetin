@@ -155,7 +155,71 @@ Template.profileSettings.events({
   }
 });
 
+Template.accountSettings.onCreated(function() {
+  this.emptyOldPass = new ReactiveVar(false);
+  this.emptyNewPass = new ReactiveVar(false);
+  this.emptyConPass = new ReactiveVar(false);
+  this.notPass = new ReactiveVar(false);
+  this.notMatch = new ReactiveVar(false);
+})
+
+Template.accountSettings.helpers({
+  emptyOldPass() {
+    return Template.instance().emptyOldPass.get();
+  },
+  emptyNewPass() {
+    return Template.instance().emptyNewPass.get();
+  },
+  emptyConPass() {
+    return Template.instance().emptyConPass.get();
+  },
+  notMatch() {
+    return Template.instance().notMatch.get();
+  },
+});
+
 Template.accountSettings.events({
+  'click .ui.change.password.button'(e, instance) {
+    e.preventDefault();
+
+    const oldPass = $('input.old.pass').val();
+    const newPass = $('input.new.pass').val();
+    const conPass = $('input.pass.con').val();
+
+    if(oldPass.trim().length === 0) {
+      instance.emptyOldPass.set(true);
+    }
+
+    if(newPass.trim().length === 0) {
+      instance.emptyNewPass.set(true);
+    }
+
+    if(conPass.trim().length === 0) {
+      instance.emptyConPass.set(true);
+    }
+
+    if(newPass != conPass) {
+      console.log(newPass, conPass);
+      instance.notMatch.set(true);
+    }
+
+    if(!instance.emptyOldPass.get()
+        && !instance.emptyNewPass.get()
+        && !instance.emptyConPass.get()
+        && !instance.notMatch.get()) {
+      Accounts.changePassword(oldPass, newPass, (error) => {
+        if(error && error.reason === "Incorrect password") {
+          $('.ui.error.hidden.message').transition('slide down');
+        } else {
+          if(!$('.ui.error.message').hasClass('hidden')) {
+            $('.ui.error.hidden.message').transition('slide down');
+          }
+          $('.ui.success.hidden.message').transition('slide down');
+          $('input.pass').val('');
+        }
+      })
+    }
+  },
   'click .ui.delete.user.button'() {
     $('#confirmUserDeleteModal').modal('show');
   },

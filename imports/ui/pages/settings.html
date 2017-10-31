@@ -84,20 +84,45 @@
   <div class="ui segment">
     <h2 class="ui header">Cambiar contraseña</h2>
     <div class="ui divider"></div>
+    <div class="ui success hidden message">
+      ¡Cambiaste la contraseña con éxito!
+    </div>
+    <div class="ui error hidden message">
+      Lo sentimos. La contraseña que ingresaste no es la correcta.
+    </div>
     <form class="ui update password form">
       <div class="field">
         <label>Contraseña anterior</label>
         <input type="password" class="update pass old">
+        {{#if emptyOldPass}}
+        <div class="ui pointing red label">
+          Por favor ingresa una contraseña.
+        </div>
+        {{/if}}
       </div>
       <div class="field">
         <label>Nueva contraseña</label>
         <input type="password" class="update pass new">
+        {{#if emptyNewPass}}
+        <div class="ui pointing red label">
+          Por favor ingresa una nueva contraseña.
+        </div>
+        {{/if}}
       </div>
       <div class="field">
         <label>Repetir nueva contraseña</label>
         <input type="password" class="update pass con">
+        {{#if emptyPassCon}}
+        <div class="ui pointing red label">
+          Por favor verifica tu nueva contraseña.
+        </div>
+        {{else if notMatch}}
+        <div class="ui pointing red label">
+          Las contraseñas no coinciden.
+        </div>
+        {{/if}}
       </div>
-      <button class="ui submit button" type="submit">Confirmar</button>
+      <button class="ui change password button">Confirmar</button>
     </form>
 
     <h2 class="ui red header">Eliminar cuenta</h2>
