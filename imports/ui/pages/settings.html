@@ -61,9 +61,9 @@
           Uploading <b>{{file.name}}</b>:
           <span id="progress">{{progress.get}}%</span>
         {{else}}
-          <img class="ui small centered rounded profile pic image" src="{{picSrc currentUser.profile.photo}}" alt="" />
+          <img class="ui small centered rounded profile pic image" src="{{picSrc currentUser.profile}}" alt="" />
 
-          <input class="fileinput" id="imageInput" type="file" name="image" multiple="multiple"/>
+          <input class="fileinput" id="imageInput" type="file" name="image" accept="image/*"/>
           {{#unless label}}
           <label id="imageLabel" for="imageInput"></label>
           <button class="ui file fluid green icon button" style="margin-top:20px">

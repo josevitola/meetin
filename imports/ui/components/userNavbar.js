@@ -35,13 +35,7 @@ Template.userNavbar.helpers({
     return Notifications.find({_id: {$in: notifIds}}, {limit: 6, sort: {createdAt: -1}}).fetch();
   },
   picSrc(picId) {
-    if(picId) {
-      const image = Files.Images.findOne(picId);
-      if(image) {
-        return image.link();
-      }
-    }
-    return 'https://robohash.org/default.png?size=50x50';
+    return picId || 'https://robohash.org/default.png?size=50x50';
   },
   notification(notifId) {
     return Notifications.findOne(notifId);

@@ -7,8 +7,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function fileUpload(path, contents){
-  return dbx.filesUpload({path: path , contents: contents})
+function fileUpload(path, contents,){
+  return dbx.filesUpload({path: path , contents: contents, mode: 'overwrite'})
     .then(function(response) {
       return dbx.sharingCreateSharedLink({path:path});
     },function(error) {

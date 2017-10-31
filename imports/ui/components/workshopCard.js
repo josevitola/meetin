@@ -73,10 +73,7 @@ Template.workshopCard.helpers({
     if(ownerId) {
       const user = Meteor.users.findOne(ownerId);
       if(user) {
-        const image = Files.Images.findOne(user.profile.photo);
-        if(image) {
-          return image.link();
-        }
+        return user.profile.photo || '/userDefault.gif';
       }
     }
     return '/userDefault.gif';
