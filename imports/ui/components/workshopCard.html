@@ -3,8 +3,9 @@
   <a class="ui card" href="/workshops/{{_id}}">
     <div class="image">
       <div class="overlay"></div>
+      <div class="background" style="background-image:url({{photo}})"></div>
       {{#with getImage pics.[0]}}
-        <div class="background" style="background-image:url({{this.link}})"></div>
+      <!-- <div class="background" style="background-image:url({{this.link}})"></div> -->
       {{/with}}
       <h3 class="workshop price">{{formatPrice price}}</h3>
       <div class="info">

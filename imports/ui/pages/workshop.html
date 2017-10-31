@@ -1,7 +1,8 @@
 <template name="workshop">
   {{#with workshop}}
   <div class="main workshop container">
-    <header style="background-image: url({{getImageLink}})" class="masthead">
+    <!-- <header style="background-image: url({{getImageLink}})" class="masthead"> -->
+    <header style="background-image: url({{photo}})" class="masthead">
       <div class="overlay"></div>
       <div class="header-content">
         <div class="header-content-inner">
@@ -387,7 +388,7 @@
   {{else}}
   <div class="ui main workshop container">
     <!-- Yelis ponlo bonito :D -->
-    <h1 class="ui header">404 - Este taller no existe =( <br> Intenta con alguno de los siguientes talleres</h1>
+    <h1 class="ui bottom line header">Actividades Recientes</h1>
     <section id="activities">
       {{#if currentUser}}
         {{> userDashboard}}
