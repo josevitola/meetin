@@ -1,12 +1,15 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
 import { check } from 'meteor/check';
+
+import { Promise } from 'meteor/promise';
 
 import { WorkshopSchema } from '/imports/api/schemas.js';
 
-//import { Files } from '/imports/api/server/files';
 import { Files } from '/imports/lib/core.js';
 import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
+import { fileUpload, filesGetThumbnail } from '/imports/api/server/dropbox.js'
 
 /***** Hooks *****/
 Workshops.before.remove((userId, workshop) => {
@@ -34,20 +37,17 @@ Meteor.methods({
   },
 
   /* Updating */
-  'workshops.addPic'( workId, imageId ) {
-    check(imageId, String);
-
-    const image = Files.Images.findOne({_id: imageId});
-    if(!image) {
-      throw new Meteor.Error(404, 'Imagen no encontrada');
-    }
-
+  'workshops.addPic'( workId, image, type) {
+    // check(imageId, String);
+    //
     if(Workshops.findOne(workId).owner !== this.userId) {
       throw new Meteor.Error(403, 'Usuario no autorizado');
     }
 
+    let imageId = Random.id() + '.' + type.split('/').pop();
+    var urlImage = Promise.await(fileUpload('/images/workshop/' + imageId, Buffer.from(image, 'binary')));
     Workshops.update(workId, {
-      $push: { pics: imageId }
+      $push: { pics: urlImage.url.replace('dl=0','raw=1') }
     });
   },
 
@@ -145,7 +145,11 @@ Meteor.methods({
   },
   'workshops.delete'( workshopId ) {
     check(workshopId, String);
-
     Workshops.remove(workshopId);
+  },
+  'workshops.getPic'(workshopId, i){
+    const workshop = Workshops.findOne({_id: workshopId});
+    //var file = Promise.await(filesGetThumbnail('/images/workshop/' + workshop.pics[i]));
+    return workshop.pics[i];
   }
 });

@@ -40,6 +40,14 @@ Template.workshopCard.helpers({
   getWorkshopAddr() {
     return Template.instance().workshop.get().addr;
   },
+  getImageLink() {
+    let workshop = Template.instance().data.workshop;
+    if(workshop.pics.length > 0){
+      return workshop.pics[0];
+    }else {
+      return '/default.png';
+    }
+  },
   getImage(imageId) {
     if(imageId) {
       let image = Files.Images.findOne(imageId);

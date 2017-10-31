@@ -92,16 +92,28 @@ Template.workshop.helpers({
     return '/userDefault.gif';
   },
   getImageLink() {
-    let pics = Template.instance().workshop.get().pics;
-    if(pics) {
-      let image = Files.Images.findOne({_id: pics[0]});
-      if(image) {
-        console.log(image.link());
-        return image.link();
-      }
+    let workshop = Template.instance().workshop.get();
+    if(workshop.pics.length > 0){
+      return workshop.pics[0];
     }else {
-       return '/default.png';
+      return '/default.png';
     }
+    /*const workshopId = FlowRouter.getParam('_id');
+    let pic;
+    Meteor.call('workshops.getPic', workshopId, 0, function(error, data){
+      if(error) {
+        console.error("at imports/ui/pages/workshop.js row:95",error);
+        return '/default.png';
+      }else if(data){
+        pic = btoa(data);
+        $('.masthead').css('background-image','url("data:image/jpeg;base64,'+ pic+'")')
+      }else {
+        return '/default.png';
+      }
+    });
+    return pic;*/
+
+
     // console.log(pics);
     // var path;
     // if(pics){
@@ -109,22 +121,7 @@ Template.workshop.helpers({
     // }else {
     //   return '/default.png';
     // }
-    //
-    // var image = dbx.filesDownload({path: path})
-    //   .then(function (response) {
-    //       console.log(response);
-    //       var reader = new FileReader();
-    //       var tmp;
-    //       reader.addEventListener("load", function () {
-    //          tmp = reader.result;
-    //       }, false);
-    //       reader.readAsDataURL(response.fileBlob);
-    //       return tmp;
-    //   })
-    //   .catch(function (error) {
-    //       return '/default.png';
-    //   })
-    // return image;
+
   },
   getUserName( id ) {
     let user = Meteor.users.findOne(id);
