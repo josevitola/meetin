@@ -42,7 +42,7 @@ Template.workshopCard.helpers({
   },
   getImageLink() {
     let workshop = Template.instance().data.workshop;
-    if(workshop.pics.length > 0){
+    if(workshop.pics && workshop.pics.length > 0){
       return workshop.pics[0];
     }else {
       return '/default.png';

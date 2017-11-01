@@ -90,6 +90,7 @@ Template.workshop.helpers({
   },
   getImageLink() {
     let workshop = Template.instance().workshop.get();
+    console.log(workshop);
     if(workshop.pics.length > 0){
       return workshop.pics[0];
     }else {
