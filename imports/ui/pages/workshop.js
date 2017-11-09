@@ -54,6 +54,9 @@ Template.workshop.onRendered(function workshopOnRendered() {
 });
 
 Template.workshop.helpers({
+  available(d) {
+    return Template.instance().workshop.get().days.indexOf(d) === -1 ? "disabled" : "blue";
+  },
   isUserAttending() {
     if(!Meteor.user()) {
       return;

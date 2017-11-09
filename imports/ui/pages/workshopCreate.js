@@ -1,15 +1,17 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Workshops } from '/imports/api/workshops.js';
-import { Files } from '/imports/lib/core.js';
+import { Template }     from 'meteor/templating';
+import { ReactiveVar }  from 'meteor/reactive-var';
+import { Workshops }    from '/imports/api/workshops.js';
+import { Files }        from '/imports/lib/core.js';
 
 import '../components/imageUpload.js';
+
 import './workshopCreate.html';
 
 Template.workshopCreate.onCreated(function workCreateOnCreated() {
-  this.items = new ReactiveVar([]);
-  this.tags = new ReactiveVar([]);
-  this.currentUpload = new ReactiveVar(false);
+  this.activeDays     = new ReactiveVar([]);
+  this.items          = new ReactiveVar([]);
+  this.tags           = new ReactiveVar([]);
+  this.currentUpload  = new ReactiveVar(false);
 });
 
 Template.workshopCreate.helpers({
@@ -73,6 +75,10 @@ Template.workshopCreate.onRendered(function workCreateOnRendered() {
 })
 
 Template.workshopCreate.events({
+  'submit form'(event) {
+    event.preventDefault();
+  },
+  
   'change #initDate' (event) {
     $('#initTime').calendar({
       type: 'time',
@@ -89,20 +95,36 @@ Template.workshopCreate.events({
     });
   },
 
+  'click .ui.day.button'(event, instance) {
+    var target = event.currentTarget;
+
+    var day = $(target).data('day');
+    var activeDays = instance.activeDays.get();
+    var idx = activeDays.indexOf(day);
+    
+    if(idx == -1) {
+      activeDays.push(day);
+    } else {
+      activeDays.splice(idx, 1);
+    }
+
+    instance.activeDays.set(activeDays);    
+    $(target).toggleClass('blue');    
+  },
+
   'click .ui.create.workshop.button' (event, instance) {
     // TODO security on field - stop creation if price is NaN
-    const name = $('input[name=work-name]').val();
-    const addr = $('input[name=work-addr]').val();
-    const desc = $('textarea[name=work-desc]').val();
-    const price = parseInt($('input[name=work-price]').val());
-    const capacity = parseInt($('input[name=work-capacity]').val());
-    const initDate =  $('#initDate').calendar("get date");
-    const initTime =  $('#initTime').calendar("get date");
-    const endTime =  $('#endTime').calendar("get date");
-    const tags = instance.tags.get();
-    const items = instance.items.get();
-    const pics = '';
-    const participants = [];
+    const name      = $('input[name=work-name]').val();
+    const addr      = $('input[name=work-addr]').val();
+    const desc      = $('textarea[name=work-desc]').val();
+    const price     = parseInt($('input[name=work-price]').val());
+    const capacity  = parseInt($('input[name=work-capacity]').val());
+    const days      = instance.activeDays.get();
+    const initDate  =  $('#initDate').calendar("get date");
+    const initTime  =  $('#initTime').calendar("get date");
+    const endTime   =  $('#endTime').calendar("get date");
+    const tags      = instance.tags.get();
+    const items     = instance.items.get();
 
     const workshop = {
       name: name,
@@ -111,13 +133,14 @@ Template.workshopCreate.events({
       desc: desc,
       price: isNaN(price) || price < 1 ? 50 : price,
       capacity: capacity,
+      days: days,
       initDate: initDate,
       initTime: initTime,
       endTime: endTime,
       tags: tags,
       items: items,
       owner: Meteor.userId(),
-      participants: participants
+      participants: []
     }
 
     Meteor.call('workshops.insert', workshop, (error, workId) => {

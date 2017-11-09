@@ -43,9 +43,22 @@
         <h3 class="ui teal header" style="margin-bottom: 40px;">
           2. ¿Cuándo harás la actividad?
         </h3>
+        
+        <div class="field">
+          <h4 class="ui header">¿Qué días estará disponible el taller?</h4>
+          <div class="ui buttons">
+            <button class="ui day button" data-day="D">Domingo</button>
+            <button class="ui day button" data-day="L">Lunes</button>
+            <button class="ui day button" data-day="M">Martes</button>
+            <button class="ui day button" data-day="X">Miércoles</button>
+            <button class="ui day button" data-day="J">Jueves</button>
+            <button class="ui day button" data-day="V">Viernes</button>
+            <button class="ui day button" data-day="S">Sábado</button>
+          </div>  
+        </div>
 
         <div class="ui grid">
-          <div class="field four wide column">
+          <div class="field six wide column">
             <h4 class="ui header">Fecha de la actividad</h4>
             <div class="ui calendar" id="initDate">
               <div class="ui input left icon">
@@ -55,7 +68,7 @@
             </div>
           </div>
 
-          <div class="field four wide column">
+          <div class="field five wide column">
             <h4 class="ui header">Hora de Inicio</h4>
             <div class="ui calendar" id="initTime">
               <div class="ui input left icon">
@@ -65,7 +78,7 @@
             </div>
           </div>
 
-          <div class="field four wide column">
+          <div class="field five wide column">
             <h4 class="ui header">Hora de Cierre</h4>
             <div class="ui calendar" id="endTime">
               <div class="ui input left icon">

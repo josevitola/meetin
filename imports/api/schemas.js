@@ -32,6 +32,9 @@ export const WorkshopSchema = new SimpleSchema({
   initTime: { type: Date },
   endTime: { type: Date },
   price: { type: Number },
+
+  days: { type: Array },
+  'days.$': { type: String },
   tags: { type: Array, optional: true },
   'tags.$': { type: String },
   participants: { type: Array },

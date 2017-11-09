@@ -159,6 +159,8 @@
               <br>
             {{/if}}
           </div>
+
+          <!-- Comentarios -->
           <div class="ui segment">
             <div class="ui comments">
               <h3 class="ui dividing header">Comentarios y preguntas</h3>
@@ -192,10 +194,11 @@
             </div>
           </div>
         </div>
+
         <!-- Menú de información del evento -->
         <div class="six wide column">
-          <!-- Participantes -->
           <div class="ui segment" style="padding:30px;">
+            <!-- Enviar un correo -->
             {{#unless isCurrentUserOwner}}
             <center>
               <button class="ui email organizer light-red-orange icon labeled button">
@@ -218,7 +221,24 @@
               Tu mensaje fue enviado con éxito.
             </div>
             {{/unless}}
-            <h5 class="ui header">{{lengthOf participants}} personas asistirán</h5>
+
+            <!-- Información -->
+            <h5 class="ui header">Disponibilidad</h5>
+            <div class="small ui buttons">
+              <button class="ui day {{available 'D'}} button" data-day="D">D</button>
+              <button class="ui day {{available 'L'}} button" data-day="L">L</button>
+              <button class="ui day {{available 'M'}} button" data-day="M">M</button>
+              <button class="ui day {{available 'X'}} button" data-day="X">M</button>
+              <button class="ui day {{available 'J'}} button" data-day="J">J</button>
+              <button class="ui day {{available 'V'}} button" data-day="V">V</button>
+              <button class="ui day {{available 'S'}} button" data-day="S">S</button>
+            </div>
+            <br><br>
+
+            <div class="ui divider"></div>
+
+            <!-- Participantes -->
+            <h5 class="ui header">{{lengthOf participants}} personas están asistiendo</h5>
             {{#each firstParticipants participants}}
             <a href="/users/{{this}}">
               <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
@@ -227,8 +247,7 @@
             {{#if remain participants}}
             <a class="watch participants" href="#">Ver más...</a>
             {{/if}}
-            <!-- Información -->
-            <h5 class="ui header">Información</h5>
+
             <div class="ui items">
               <!-- Dirección -->
               <div class="item">
