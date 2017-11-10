@@ -1,7 +1,11 @@
 import { check } from 'meteor/check';
+import { Random } from 'meteor/random';
+import { Promise } from 'meteor/promise';
+
 import { validateEmail } from '/imports/lib/stylish.js';
 import { UserSchema } from '/imports/api/schemas.js';
 import { Notifications } from '/imports/api/notifications.js';
+import { fileUpload } from '/imports/api/server/dropbox.js'
 
 Meteor.methods({
   'users.insert'( name, mail, pass ) {
@@ -60,10 +64,21 @@ Meteor.methods({
       $set: { 'profile.desc': newDesc }
     });
   },
-  'user.updatePhoto'( photoId ) {
-    check(photoId, String);
+  'user.updatePhoto'( file, type ) {
+    let profile = Meteor.users.findOne(this.userId).profile;
+    let path = "/images/users";
+
+    if(profile.photo && profile.photo.indexOf('www.dropbox.com/') > 0){
+      path += slice(a.lastIndexOf('/'),a.lastIndexOf('?'));
+    }else{
+      path += '/' + Random.id() + '.' + type.split('/').pop();
+    }
+
+    var urlImage = Promise.await(fileUpload(path, Buffer.from(file, 'binary')));
+    console.log(urlImage);
+
     Meteor.users.update(this.userId, {
-      $set: { 'profile.photo': photoId }
+      $set: { 'profile.photo': urlImage.url.replace('dl=0','raw=1') }
     });
   },
   'users.pushAttendsTo'( userId, workId ) {

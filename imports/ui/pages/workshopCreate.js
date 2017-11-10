@@ -152,33 +152,13 @@ Template.workshopCreate.events({
         let images = $('#imageInput')[0].files;
         if(images) {
           for (let i = 0; i < images.length; i++) {
-            const upload = Files.Images.insert({
-              file: images[i],
-              streams: 'dynamic',
-              chunkSize: 'dynamic'
-            }, false);
-
-            upload.on('start', function () {
-              instance.currentUpload.set(this);
-            });
-
-            upload.on('end', function (error, fileObj) {
-              if (error) {
-                alert('Error during upload: ' + error);
-              } else {
-                // console.log('File "' + fileObj.name + '" successfully uploaded');
-                // console.log(fileObj._id);
-                console.log("asdad");
-                console.log(fileObj);
-                Meteor.call('workshops.addPic', workId, fileObj._id);
-              }
-              instance.currentUpload.set(false);
-            });
-
-            upload.start();
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              Meteor.call('workshops.addPic', workId, reader.result,images[i].type);
+            };
+            reader.readAsBinaryString(images[i]);
           }
         }
-
         // Finally go to newly created workshop
         let workshopUrl = "/workshops/" + workId;
         FlowRouter.go(workshopUrl);

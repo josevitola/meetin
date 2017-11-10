@@ -32,13 +32,7 @@ Template.user.helpers({
     return Meteor.userId() === Template.instance().user.get()._id;
   },
   picSrc(picId) {
-    if(picId) {
-      const image = Files.Images.findOne(picId);
-      if(image) {
-        return image.link();
-      }
-    }
-    return '/userDefault.gif';
+    return picId || '/userDefault.gif';
   },
   getOwnedWorkshops() {
     // TODO decide whether to use double reference in database or not

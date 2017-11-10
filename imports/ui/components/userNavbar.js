@@ -35,13 +35,7 @@ Template.userNavbar.helpers({
     return Notifications.find({_id: {$in: notifIds}}, {limit: 6, sort: {createdAt: -1}}).fetch();
   },
   picSrc(picId) {
-    if(picId) {
-      const image = Files.Images.findOne(picId);
-      if(image) {
-        return image.link();
-      }
-    }
-    return '/userDefault.gif';
+    return picId || '/userDefault.gif';;
   },
   notification(notifId) {
     return Notifications.findOne(notifId);
