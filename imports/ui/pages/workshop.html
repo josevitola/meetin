@@ -179,6 +179,9 @@
                   <a class="author">{{getUserName user}}</a>
                   <div class="metadata">
                     <span class="date">{{datetime createdAt}}</span>
+                    {{#if isCurrentUser user}}
+                    <i class="remove del-comment icon" data-id="{{_id}}"></i>
+                    {{/if}}
                   </div>
                   <div class="text">
                     {{content}}
@@ -322,19 +325,6 @@
     {{/unless}}
 
     {{> participantsModal list=participants}}
-  {{else}}
-  <div class="ui main workshop container">
-    <!-- Yelis ponlo bonito :D -->
-    <h1 class="ui bottom line header">Actividades Recientes</h1>
-    <section id="activities">
-      {{#if currentUser}}
-        {{> userDashboard}}
-      {{else}}
-        {{> generalDashboard}}
-      {{/if}}
-    </section>
-  </div>
-
   {{/with}}
 </template>
 

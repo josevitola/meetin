@@ -183,6 +183,9 @@ Template.workshop.helpers({
   capacityAvailable() {
     let workshop = Template.instance().workshop.get();
     return workshop.capacity - workshop.participants.length > 0;
+  },
+  isCurrentUser(user) {
+    return user === Meteor.userId();
   }
 });
 
@@ -351,6 +354,11 @@ Template.workshop.events({
       Session.set('accountsModal', 'login');
       $('#accountsModal').modal('show');
     }
+  },
+
+  'click i.remove.del-comment.icon'(event, instance) {
+    let cid = $(event.currentTarget).data('id');
+    Meteor.call('comments.remove', cid);
   }
 });
 

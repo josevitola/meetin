@@ -3,6 +3,11 @@ import { check } from 'meteor/check';
 import { Comments } from '/imports/api/comments.js';
 import { Workshops } from '/imports/api/workshops.js';
 
+//
+// ─── PUBLISHING ─────────────────────────────────────────────────────────────────
+//
+
+  
 Meteor.publish('comments', function(workshopId, limit = 7) {
   if(workshopId) {
     return Comments.find({event: workshopId}, {sort: {createdAt: -1}, limit: limit});
@@ -11,6 +16,11 @@ Meteor.publish('comments', function(workshopId, limit = 7) {
   return Comments.find();
 });
 
+//
+// ─── METHODS ────────────────────────────────────────────────────────────────────
+//
+
+  
 Meteor.methods({
   'comments.insert'( content, workshopId ) {
     check(content, String);
@@ -39,5 +49,16 @@ Meteor.methods({
     };
 
     Comments.insert(comment);
+  },
+
+  'comments.remove'( commentId ) {
+    check(commentId, String);
+
+    commentOwnerId = Comments.findOne(commentId).user;
+    if(commentOwnerId == this.userId)
+      Comments.remove(commentId);
+    else {
+      throw new Meteor.Error('403', 'User not authorized');
+    }
   }
 });
