@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { styleDate, styleShortDate, formatTime } from '/imports/lib/stylish.js';
+import { styleDate, styleShortDate, formatTime, formatPrice } from '/imports/lib/stylish.js';
 import { isToday } from '/imports/lib/clock.js';
 
 import { Files } from '/imports/lib/core.js';
@@ -10,6 +10,7 @@ import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 
 import '../components/accountsModal.js';
+import '../components/workshopInfoEdit.js';
 
 import './workshop.html';
 
@@ -21,16 +22,11 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.subscribe('users');
   this.subscribe('workshops');
 
+  this.isEditing = new ReactiveVar(false);
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
-  this.isEditingCapacity = new ReactiveVar(false);
-  this.isEditingInitDate = new ReactiveVar(false);
-  this.isEditingInitTime = new ReactiveVar(false);
-  this.isEditingEndTime = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
   this.isEditingItems = new ReactiveVar(false);
-  this.isEditingAddr = new ReactiveVar(false);
-  this.isEditingPrice = new ReactiveVar(false);
 
   this.workshop = new ReactiveVar({});
 
@@ -51,6 +47,8 @@ Template.workshop.onRendered(function workshopOnRendered() {
   $('.ui.named.avatar.image').popup();
 
   $('.ui.email.form').hide();
+
+  window.scrollTo(0, 0);
 });
 
 Template.workshop.helpers({
@@ -94,7 +92,7 @@ Template.workshop.helpers({
   getImageLink() {
     let workshop = Template.instance().workshop.get();
     console.log(workshop);
-    if(workshop.pics.length > 0){
+    if(workshop.pics && workshop.pics.length > 0){
       return workshop.pics[0];
     }else {
       return '/default.png';
@@ -133,6 +131,9 @@ Template.workshop.helpers({
   comments() {
     return Comments.find().fetch();
   },
+  isEditing() {
+    return Template.instance().isEditing.get();
+  },
   isCurrentUserOwner() {
     return Template.instance().workshop.get().owner === Meteor.userId();
   },
@@ -148,26 +149,14 @@ Template.workshop.helpers({
   isEditingItems() {
     return Template.instance().isEditingItems.get();
   },
-  isEditingAddr() {
-    return Template.instance().isEditingAddr.get();
-  },
-  isEditingPrice() {
-    return Template.instance().isEditingPrice.get();
-  },
-  isEditingCapacity() {
-    return Template.instance().isEditingCapacity.get();
-  },
-  isEditingInitDate() {
-    return Template.instance().isEditingInitDate.get();
-  },
-  isEditingInitTime() {
-    return Template.instance().isEditingInitTime.get();
-  },
-  isEditingEndTime() {
-    return Template.instance().isEditingEndTime.get();
-  },
   styleDate(date) {
     return styleDate(date);
+  },
+  styleShortDate(date) {
+    return styleShortDate(date);
+  },
+  stylePrice(price) {
+    return formatPrice(price);
   },
   formatTime(time) {
     return formatTime(time);
@@ -184,6 +173,12 @@ Template.workshop.helpers({
   workshop() {
     return Template.instance().workshop.get();
   },
+  remainingPlaces() {
+    let workshop = Template.instance().workshop.get();
+    if(workshop) {
+      return workshop.capacity - workshop.participants.length;
+    }
+  },
   capacityAvailable() {
     let workshop = Template.instance().workshop.get();
     return workshop.capacity - workshop.participants.length > 0;
@@ -191,8 +186,9 @@ Template.workshop.helpers({
 });
 
 Template.workshop.events({
-  /* == DATA == */
-  /* --- name --- */
+  'click .ui.top.attached.button'(event, instance) {
+    instance.isEditing.set(!instance.isEditing.get());
+  },
   'click .edit.name.icon'(event, instance) {
     instance.isEditingName.set(true);
   },
@@ -261,72 +257,6 @@ Template.workshop.events({
 
   'click .ui.save.items.button'(event, instance) {
     instance.isEditingItems.set(false);
-  },
-
-  /* --- Address---*/
-  'click .edit.addr.icon'(event, instance) {
-    instance.isEditingAddr.set(true);
-  },
-
-  'click .ui.save.addr.button'(event, instance) {
-    const newAddr = $('input[name=wedit-addr]').val();
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.update', workshopId, { addr: newAddr});
-    instance.isEditingAddr.set(false);
-  },
-  /* --- Price --- */
-  'click .edit.price.icon'(event, instance) {
-    instance.isEditingPrice.set(true);
-  },
-
-  'click .ui.save.price.button'(event, instance) {
-    const newPrice = $('input[name=wedit-price]').val();
-    if(+newPrice){
-      const workshopId = FlowRouter.getParam('_id');
-      Meteor.call('workshops.update', workshopId, { price: newPrice});
-      instance.isEditingPrice.set(false);
-    }
-  },
-  /* --- Capacity --- */
-  'click .edit.capacity.icon'(event, instance) {
-    instance.isEditingCapacity.set(true);
-  },
-
-  'click .ui.save.capacity.button'(event, instance) {
-    const newCapacity = $('input[name=wedit-capacity]').val();
-    if(+newCapacity){
-      const workshopId = FlowRouter.getParam('_id');
-      Meteor.call('workshops.update', workshopId, { capacity: newCapacity});
-      instance.isEditingCapacity.set(false);
-    }
-  },
-  /* --- Init Date---*/
-  'click .edit.initDate.icon'(event, instance) {
-    instance.isEditingInitDate.set(true);
-    setTimeout(function () {
-      $('#initDate').calendar({
-        onChange: function (date, text, mode) {
-          const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { initDate: date});
-          instance.isEditingInitDate.set(false);
-        }
-      });
-    }, 100);
-  },
-
-  /* --- Init Time---*/
-  'click .edit.initTime.icon'(event, instance) {
-    instance.isEditingInitTime.set(true);
-    setTimeout(function () {
-      $('#initTime').calendar({
-        type: 'time',
-        onChange: function (date, text, mode) {
-          const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { initTime: date});
-          instance.isEditingInitTime.set(false);
-        }
-      });
-    }, 100);
   },
 
   'click .ui.join.workshop.button'(event, instance) {
@@ -466,6 +396,6 @@ Template.participantsModal.helpers({
         }
       }
     }
-    return 'https://robohash.org/default.png?size=300x300';
+    return 'userDefault.gif';
   },
 });
