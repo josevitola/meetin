@@ -257,6 +257,12 @@
             <a class="watch participants" href="#">Ver más...</a>
             {{/if}}
 
+            <!-- Edit workshop info -->
+            {{#if isCurrentUserOwner}}
+            <div class="ui divider"></div>            
+            {{> workshopInfoEdit workshop=this}}
+            {{/if}}
+
             <div class="ui divider"></div>
 
             <!-- Enviar un correo -->
@@ -281,137 +287,7 @@
             <div class="ui fluid success hidden message">
               Tu mensaje fue enviado con éxito.
             </div>
-            {{/unless}}
-
-            <div class="ui divider"></div>
-
-            <!-- TODO create only-edit view -->
-            <!-- {{#if isCurrentUserOwner}} -->
-            <div class="ui items">
-              <!-- Dirección -->
-              <div class="item">
-                {{#unless isEditingAddr}}
-                  <i class="home icon"></i>
-                  <div class="content">
-                    {{addr}}
-                    {{#if isCurrentUserOwner}}
-                    <a href="#"><i class="small edit addr icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <input type="text" name="wedit-addr" value="{{addr}}"/>
-                    <button class="ui teal icon save addr button"><i class="check icon"></i></button>
-                  </div><br>
-                {{/unless}}
-              </div>
-              <!-- Precio -->
-              <div class="item">
-                {{#unless isEditingPrice}}
-                  <i class="dollar icon"></i>
-                  <div class="content">
-                    {{price}}
-                    {{#if isCurrentUserOwner}}
-                    <a href="#"><i class="small edit price icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <input type="number" name="wedit-price" value="{{price}}" min="0" step="100"/>
-                    <button class="ui teal icon save price button"><i class="check icon"></i></button>
-                  </div><br>
-                {{/unless}}
-              </div>
-              <!-- Cupos -->
-              <div class="item">
-                {{#unless isEditingCapacity}}
-                  <i class="users icon"></i>
-                  <div class="content">
-                    {{capacity}}
-                    {{#if isCurrentUserOwner}}
-                    <a href="#"><i class="small edit capacity icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <input type="number" name="wedit-capacity" value="{{capacity}}" min="1" max="50"/>
-                    <button class="ui teal icon save capacity button"><i class="check icon"></i></button>
-                  </div><br>
-                {{/unless}}
-              </div>
-              <!-- Fecha -->
-              <div class="item">
-                {{#unless isEditingInitDate}}
-                  <i class="calendar icon"></i>
-                  <div class="content initDate">
-                    {{styleDate initDate}}
-                    {{#if isCurrentUserOwner}}
-                      <a href="#"><i class="small edit initDate icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <!-- <label>Fecha inicial</label> -->
-                    <div class="ui calendar" id="initDate">
-                      <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input type="text" name="wedit-initDate" value="{{initDate}}">
-                      </div>
-                    </div>
-                  </div><br>
-                {{/unless}}
-              </div>
-              <!-- Hora de inicio -->
-              <div class="item">
-                {{#unless isEditingInitTime}}
-                  <i class="time icon"></i>
-                  <div class="content endDate">
-                    {{formatTime initTime}}
-                    {{#if isCurrentUserOwner}}
-                      <a href="#"><i class="small edit initTime icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <!-- <label>Fecha inicial</label> -->
-                    <div class="ui calendar" id="initTime">
-                      <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input type="text" name="wedit-initTime" value="{{initTime}}">
-                      </div>
-                    </div>
-                  </div><br>
-                {{/unless}}
-              </div>
-              <div class="item">
-                {{#unless isEditingEndTime}}
-                  <i class="time icon"></i>
-                  <div class="content endTime">
-                    {{formatTime endTime}}
-                    {{#if isCurrentUserOwner}}
-                      <a href="#"><i class="small edit endTime icon"></i></a>
-                    {{/if}}
-                  </div>
-                {{else}}
-                  <!-- Edit input -->
-                  <div class="ui edit action input">
-                    <!-- <label>Fecha inicial</label> -->
-                    <div class="ui calendar" id="endTime">
-                      <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input type="text" name="wedit-endTime" value="{{endTime}}">
-                      </div>
-                    </div>
-                  </div><br>
-                {{/unless}}
-              </div>
-            </div>
-            <!-- {{/if}} -->
+            {{/unless}}            
 
             <!-- Eliminar -->
             {{#if isCurrentUserOwner}}

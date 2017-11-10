@@ -10,6 +10,7 @@ import { Workshops } from '/imports/api/workshops.js';
 import { Email } from 'meteor/email';
 
 import '../components/accountsModal.js';
+import '../components/workshopInfoEdit.js';
 
 import './workshop.html';
 
@@ -23,14 +24,8 @@ Template.workshop.onCreated(function workshopOnCreated() {
 
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
-  this.isEditingCapacity = new ReactiveVar(false);
-  this.isEditingInitDate = new ReactiveVar(false);
-  this.isEditingInitTime = new ReactiveVar(false);
-  this.isEditingEndTime = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
   this.isEditingItems = new ReactiveVar(false);
-  this.isEditingAddr = new ReactiveVar(false);
-  this.isEditingPrice = new ReactiveVar(false);
 
   this.workshop = new ReactiveVar({});
 
@@ -150,24 +145,6 @@ Template.workshop.helpers({
   isEditingItems() {
     return Template.instance().isEditingItems.get();
   },
-  isEditingAddr() {
-    return Template.instance().isEditingAddr.get();
-  },
-  isEditingPrice() {
-    return Template.instance().isEditingPrice.get();
-  },
-  isEditingCapacity() {
-    return Template.instance().isEditingCapacity.get();
-  },
-  isEditingInitDate() {
-    return Template.instance().isEditingInitDate.get();
-  },
-  isEditingInitTime() {
-    return Template.instance().isEditingInitTime.get();
-  },
-  isEditingEndTime() {
-    return Template.instance().isEditingEndTime.get();
-  },
   styleDate(date) {
     return styleDate(date);
   },
@@ -275,72 +252,6 @@ Template.workshop.events({
 
   'click .ui.save.items.button'(event, instance) {
     instance.isEditingItems.set(false);
-  },
-
-  /* --- Address---*/
-  'click .edit.addr.icon'(event, instance) {
-    instance.isEditingAddr.set(true);
-  },
-
-  'click .ui.save.addr.button'(event, instance) {
-    const newAddr = $('input[name=wedit-addr]').val();
-    const workshopId = FlowRouter.getParam('_id');
-    Meteor.call('workshops.update', workshopId, { addr: newAddr});
-    instance.isEditingAddr.set(false);
-  },
-  /* --- Price --- */
-  'click .edit.price.icon'(event, instance) {
-    instance.isEditingPrice.set(true);
-  },
-
-  'click .ui.save.price.button'(event, instance) {
-    const newPrice = $('input[name=wedit-price]').val();
-    if(+newPrice){
-      const workshopId = FlowRouter.getParam('_id');
-      Meteor.call('workshops.update', workshopId, { price: newPrice});
-      instance.isEditingPrice.set(false);
-    }
-  },
-  /* --- Capacity --- */
-  'click .edit.capacity.icon'(event, instance) {
-    instance.isEditingCapacity.set(true);
-  },
-
-  'click .ui.save.capacity.button'(event, instance) {
-    const newCapacity = $('input[name=wedit-capacity]').val();
-    if(+newCapacity){
-      const workshopId = FlowRouter.getParam('_id');
-      Meteor.call('workshops.update', workshopId, { capacity: newCapacity});
-      instance.isEditingCapacity.set(false);
-    }
-  },
-  /* --- Init Date---*/
-  'click .edit.initDate.icon'(event, instance) {
-    instance.isEditingInitDate.set(true);
-    setTimeout(function () {
-      $('#initDate').calendar({
-        onChange: function (date, text, mode) {
-          const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { initDate: date});
-          instance.isEditingInitDate.set(false);
-        }
-      });
-    }, 100);
-  },
-
-  /* --- Init Time---*/
-  'click .edit.initTime.icon'(event, instance) {
-    instance.isEditingInitTime.set(true);
-    setTimeout(function () {
-      $('#initTime').calendar({
-        type: 'time',
-        onChange: function (date, text, mode) {
-          const workshopId = FlowRouter.getParam('_id');
-          Meteor.call('workshops.update', workshopId, { initTime: date});
-          instance.isEditingInitTime.set(false);
-        }
-      });
-    }, 100);
   },
 
   'click .ui.join.workshop.button'(event, instance) {
@@ -480,6 +391,6 @@ Template.participantsModal.helpers({
         }
       }
     }
-    return 'https://robohash.org/default.png?size=300x300';
+    return 'userDefault.gif';
   },
 });
