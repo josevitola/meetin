@@ -23,6 +23,11 @@ Meteor.publish('workshopById', function (id) {
   return Workshops.find(id);
 })
 
+Meteor.publish('workshopByUser', function (id) {
+  console.log(Workshops.find({owner: id}));
+  return Workshops.find({owner: id});
+})
+
 
 //
 // ─── HOOKS ──────────────────────────────────────────────────────────────────────

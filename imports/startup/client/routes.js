@@ -78,6 +78,13 @@ FlowRouter.route('/workshops/:_id', {
 });
 
 FlowRouter.route('/users/:_id', {
+  subscription: function( params, queryParams ) {
+    var userId = '';
+    if(params)  userId = params._id;
+
+    this.register('user', Meteor.subscribe('user', userId));
+    this.register('workshopsByUser', Meteor.subscribe('workshopsByUser', userId));
+  },
   action: function( params, queryParams ) {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'user', footer: 'footer' })
   },

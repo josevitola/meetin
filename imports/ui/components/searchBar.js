@@ -8,7 +8,7 @@ import './searchBar.html';
 var altContent = [];
 
 Template.searchBar.onCreated(function searchBarOnCreated() {
-  Meteor.subscribe('workshops');
+  this.subscribe('workshops');
 })
 
 Template.searchBar.onRendered(function searchBarOnRendered() {

@@ -5,7 +5,7 @@ import { Workshops } from '/imports/api/workshops.js';
 import './search.html';
 
 Template.search.onCreated(function searchOnCreated() {
-  Meteor.subscribe('workshops');
+  this.subscribe('workshops');
 });
 
 Template.search.onRendered(function searchOnRendered() {

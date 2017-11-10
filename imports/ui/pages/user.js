@@ -8,15 +8,14 @@ import '../components/workshopCard.js';
 import './user.html';
 
 Template.user.onCreated(function() {
-  Meteor.subscribe('users');
-  Meteor.subscribe('workshops');
-
   this.user = new ReactiveVar({});
 
   this.getParam = () => FlowRouter.getParam('_id');
 
   this.autorun(() => {
-    this.user.set(Meteor.users.findOne(this.getParam()));
+    if(FlowRouter.subsReady()) {
+      this.user.set(Meteor.users.findOne(this.getParam()));
+    }
   });
 });
 

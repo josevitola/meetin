@@ -1,12 +1,81 @@
 import { check } from 'meteor/check';
 import { Random } from 'meteor/random';
 import { Promise } from 'meteor/promise';
+import { Workshops } from '/imports/api/workshops.js';
 
 import { validateEmail } from '/imports/lib/stylish.js';
 import { UserSchema } from '/imports/api/schemas.js';
 import { Notifications } from '/imports/api/notifications.js';
 import { fileUpload } from '/imports/api/server/dropbox.js'
 
+//
+// ─── PUBLISHING ─────────────────────────────────────────────────────────────────
+//
+
+
+Meteor.publish('users', function() {
+  return Meteor.users.find();
+});
+
+Meteor.publish('user', function(id) {
+  return Meteor.users.find(id);
+});
+
+Meteor.publish('userGroup', function(ids) {
+  return Meteor.users.find({_id: {$in: ids}});
+});
+
+//
+// ─── VALIDATION ─────────────────────────────────────────────────────────────────
+//
+
+  
+Accounts.onCreateUser(function(options, user) { 
+  if (user.services.facebook) {
+    user.emails = [{address: user.services.facebook.email}];
+    user.profile = {};
+    user.profile.name = user.services.facebook.name;
+    // TODO profile pic!
+    user.profile.attendsTo  = [];
+    user.profile.owns       = [];
+    user.profile.phone      = 0;
+    user.profile.desc       = '';
+    user.profile.notifications = [];
+  }  
+
+  if(options.profile) {
+    user.profile = options.profile;
+  }
+
+  UserSchema.validate(user);
+  return user;
+});
+
+//
+// ─── HOOKS ──────────────────────────────────────────────────────────────────────
+//
+
+  
+Meteor.users.before.remove((id, user) => {
+  const userId = user._id;
+  // remove owned workshops
+  Workshops.remove({owner: userId});
+
+  // remove participation from workshops
+  const participating = Workshops.find({participants: userId});
+  participating.forEach((workshop) => {
+    Meteor.call('workshops.pullParticipant', workshop._id );
+  });
+
+  // remove sent notifications
+  const notifications = Notifications.remove({sender: userId});
+});
+  
+//
+// ─── METHODS ────────────────────────────────────────────────────────────────────
+//
+
+  
 Meteor.methods({
   'users.insert'( name, mail, pass ) {
     if (!pass || pass.length < 4) {
