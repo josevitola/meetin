@@ -71,11 +71,24 @@ Template.loginContent.helpers({
 });
 
 Template.loginContent.events({
-  'keypress input'(e, instance) {
-    if(e.keyCode === 13) {  // if enter
+  'keypress input'(event, instance) {
+    if(event.keyCode === 13) {  // if enter
       $('.ui.login.button.ok').click();
     }
   },
+
+  'click .ui.facebook.button'(event, instance) {
+    event.preventDefault();
+    
+    Meteor.loginWithFacebook(
+      {requestPermissions: ['public_profile', 'email']}, 
+      function(err) {
+        if (err) {
+          console.log('Handle errors here: ', err);
+        }
+      }
+    );
+  }
 });
 
 Template.signupContent.onCreated(function signupModalOnCreated() {

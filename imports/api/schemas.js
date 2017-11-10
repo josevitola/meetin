@@ -3,7 +3,7 @@ export const UserSchema = new SimpleSchema({
   emails: { type: Array },
   'emails.$': { type: Object },
   'emails.$.address': { type: String },
-  'emails.$.verified': { type: Boolean },
+  'emails.$.verified': { type: Boolean, optional: true },   // TODO should probably change
   services: { type: Object, blackbox: true },
   createdAt: { type: Date },
   profile: { type: Object },
@@ -13,7 +13,7 @@ export const UserSchema = new SimpleSchema({
   'profile.attendsTo.$': { type: String },
   'profile.owns': { type: Array },
   'profile.owns.$': { type: String },
-  'profile.phone': { type: Number },
+  'profile.phone': { type: Number, optional: true },
   'profile.desc': { type: String },
   'profile.notifications': { type: Array },
   'profile.notifications.$': { type: String }

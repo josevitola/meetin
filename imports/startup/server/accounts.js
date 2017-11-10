@@ -9,6 +9,22 @@ const validateEmail = function(email) {
 }
 
 /**** VALIDATION ****/
+Accounts.onCreateUser(function(options, user) { 
+  if (user.services.facebook) {
+    user.emails = [{address: user.services.facebook.email}];
+    user.profile = {};
+    user.profile.name = user.services.facebook.name;
+    // TODO profile pic!
+    user.profile.attendsTo  = [];
+    user.profile.owns       = [];
+    user.profile.phone      = 0;
+    user.profile.desc       = '';
+    user.profile.notifications = [];
+  }  
+
+  return user;
+});
+
 Accounts.validateNewUser((user) => {
   UserSchema.validate(user);
 
@@ -37,3 +53,4 @@ if(Meteor.isServer) {
     return Meteor.users.find();
   });
 }
+  

@@ -20,3 +20,15 @@ const port = 587;
 const url = "smtp://" + user + ":" + pass + "@" + host + ":" + port;
 
 process.env.MAIL_URL = url;
+
+// TODO security. There's got to be a better way to do this
+ServiceConfiguration.configurations.upsert(
+  { service: 'facebook' },
+  {
+    $set: {
+      loginStyle: 'popup',
+      appId: '142750623026905',
+      secret: 'f9114b80e874995081bce938b8c503b3'
+    }
+  }
+);
