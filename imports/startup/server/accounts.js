@@ -8,7 +8,11 @@ const validateEmail = function(email) {
   return re.test(email);
 }
 
-/**** VALIDATION ****/
+//
+// ─── VALIDATION ─────────────────────────────────────────────────────────────────
+//
+
+  
 Accounts.onCreateUser(function(options, user) { 
   if (user.services.facebook) {
     user.emails = [{address: user.services.facebook.email}];
@@ -22,16 +26,19 @@ Accounts.onCreateUser(function(options, user) {
     user.profile.notifications = [];
   }  
 
+  if(options.profile) {
+    user.profile = options.profile;
+  }
+
+  UserSchema.validate(user);
   return user;
 });
 
-Accounts.validateNewUser((user) => {
-  UserSchema.validate(user);
+//
+// ─── HOOKS ──────────────────────────────────────────────────────────────────────
+//
 
-  return true;
-});
-
-/**** HOOKS ****/
+  
 Meteor.users.before.remove((id, user) => {
   const userId = user._id;
   // remove owned workshops
