@@ -1,6 +1,7 @@
 import '/imports/ui/layouts/navbar.js';
 import '/imports/ui/layouts/footer.html';
 
+import '/imports/ui/pages/404.js';
 import '/imports/ui/pages/home.js';
 import '/imports/ui/pages/notifications.js';
 import '/imports/ui/pages/search.js';
@@ -17,6 +18,12 @@ FlowRouter.route('/', {
   },
   name: 'home'
 });
+
+FlowRouter.notFound = {
+  action() {
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: '_404' })
+  }
+}
 
 FlowRouter.route('/notifications', {
   action: function( params, queryParams ) {

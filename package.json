@@ -9,6 +9,7 @@
     "bcrypt": "^1.0.3",
     "dropbox": "2.5.12",
     "meteor-node-stubs": "^0.2.11",
+    "path-to-regexp": "^2.1.0",
     "semantic-ui-calendar": "0.0.8"
   }
 }
