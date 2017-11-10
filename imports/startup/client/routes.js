@@ -25,6 +25,12 @@ FlowRouter.notFound = {
   }
 }
 
+FlowRouter.route('/404', {
+  action: function() {
+    BlazeLayout.render('applicationLayout', { top: 'navbar', main: '_404' })    
+  }
+});
+
 FlowRouter.route('/notifications', {
   action: function( params, queryParams ) {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'notifications', footer: 'footer' });
@@ -57,6 +63,14 @@ FlowRouter.route('/workshops/create', {
 });
 
 FlowRouter.route('/workshops/:_id', {
+  subscriptions: function( params, queryParams ) {
+    var wid = '';
+    if(params) wid = params._id;
+
+    this.register('userGroup', Meteor.subscribe('users'));
+    this.register('comments', Meteor.subscribe('comments', wid));
+    this.register('workshop', Meteor.subscribe('workshopById', wid));
+  },
   action: function( params, queryParams ) {
     BlazeLayout.render('applicationLayout', { top: 'navbar', main: 'workshop', footer: 'footer' })
   },

@@ -11,7 +11,24 @@ import { Notifications } from '/imports/api/notifications.js';
 import { Workshops } from '/imports/api/workshops.js';
 import { fileUpload, filesGetThumbnail } from '/imports/api/server/dropbox.js'
 
-/***** Hooks *****/
+//
+// ─── PUBLISHING ─────────────────────────────────────────────────────────────────
+//
+
+Meteor.publish('workshops', function () {
+  return Workshops.find({});
+})
+
+Meteor.publish('workshopById', function (id) {
+  return Workshops.find(id);
+})
+
+
+//
+// ─── HOOKS ──────────────────────────────────────────────────────────────────────
+//
+
+  
 Workshops.before.remove((userId, workshop) => {
   // delete attendsTo from users
   for(var i = 0; i < workshop.participants.length; i++) {
@@ -28,7 +45,11 @@ Workshops.before.remove((userId, workshop) => {
   });
 })
 
-/***** Methods *****/
+//
+// ─── METHODS ────────────────────────────────────────────────────────────────────
+//
+
+  
 Meteor.methods({
   /* Inserting */
   'workshops.insert'( workshop ) {

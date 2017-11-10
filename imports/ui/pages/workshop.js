@@ -16,12 +16,7 @@ import './workshop.html';
 
 const pLimit = 6;
 
-// TODO pop up when error occurs (event is deleted)
 Template.workshop.onCreated(function workshopOnCreated() {
-  this.subscribe('files.images.all');
-  this.subscribe('users');
-  this.subscribe('workshops');
-
   this.isEditing = new ReactiveVar(false);
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
@@ -33,9 +28,16 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.getParam = () => FlowRouter.getParam('_id');
 
   this.autorun(() => {
-    var param = this.getParam();
-    this.subscribe('comments', param);
-    this.workshop.set(Workshops.findOne(param));
+    if(FlowRouter.subsReady()) {
+      var param = this.getParam();
+      var workshop = Workshops.findOne(param);
+
+      if(!workshop) {
+        FlowRouter.go('/404');
+      } else {
+        this.workshop.set(Workshops.findOne(param));
+      }
+    }
   })
 });
 
@@ -91,7 +93,6 @@ Template.workshop.helpers({
   },
   getImageLink() {
     let workshop = Template.instance().workshop.get();
-    console.log(workshop);
     if(workshop.pics && workshop.pics.length > 0){
       return workshop.pics[0];
     }else {
@@ -150,20 +151,20 @@ Template.workshop.helpers({
     return Template.instance().isEditingItems.get();
   },
   styleDate(date) {
-    return styleDate(date);
+    if(date) return styleDate(date);
   },
   styleShortDate(date) {
-    return styleShortDate(date);
+    if(date) return styleShortDate(date);
   },
   stylePrice(price) {
-    return formatPrice(price);
+    if(price) return formatPrice(price);
   },
   formatTime(time) {
-    return formatTime(time);
+    if(time) return formatTime(time);
   },
   datetime(date) {
     var day = '';
-    if(isToday(date)) {
+    if(date && isToday(date)) {
       day = 'Hoy';
     } else {
       day = styleShortDate(date);
