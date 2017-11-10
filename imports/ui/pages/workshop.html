@@ -55,6 +55,7 @@
 
     <div class="ui container">
       <div class="ui workshop info stackable grid">
+        <!-- General info -->
         <div class="ten wide column">
           <!-- Descripción, tags -->
           <div class="ui segment">
@@ -192,119 +193,120 @@
           </div>
         </div>
 
-        <!-- Menú de información del evento -->
+        <!-- Detalles del evento -->
         <div class="six wide column">
-          <div class="ui segment" style="padding:30px;">
-            <!-- Precio -->
-            <h2 class="ui centered header">
-              {{stylePrice price}}
-              <div class="sub header">precio</div>
-            </h2>
+          {{#if isCurrentUserOwner}}
+          {{#unless isEditing}}
+          <div class="ui top attached blue labeled icon button">
+            <i class="settings icon"></i>
+            Editar información del evento
+          </div>
+          {{else}}
+          <div class="ui top attached green labeled icon button">
+            <i class="check icon"></i>
+            Finalizar cambios
+          </div>
+          {{/unless}}
+          {{/if}}
 
-            <div class="ui divider"></div>
+          <div class="ui attached segment" style="padding:30px;">
+            {{#unless isEditing}}
+              <!-- Precio -->
+              <h2 class="ui centered header">
+                {{stylePrice price}}
+                <div class="sub header">precio</div>
+              </h2>
 
-            <!-- Disponibilidad -->            
-            <h3 class="ui centered header">
-              Días disponible
-              <div class="sub header">comienza el {{styleShortDate initDate}}</div>
-            </h3>
-            <div class="small ui buttons">
-              <button class="ui day {{available 'D'}} button" data-day="D">D</button>
-              <button class="ui day {{available 'L'}} button" data-day="L">L</button>
-              <button class="ui day {{available 'M'}} button" data-day="M">M</button>
-              <button class="ui day {{available 'X'}} button" data-day="X">M</button>
-              <button class="ui day {{available 'J'}} button" data-day="J">J</button>
-              <button class="ui day {{available 'V'}} button" data-day="V">V</button>
-              <button class="ui day {{available 'S'}} button" data-day="S">S</button>
-            </div>
-            <br><br>
-            <div class="ui grid">
-              <div class="eight wide column">
-                <center>
-                  <h2 class="ui sub header">comienza</h2>
-                  <span><i class="time icon"></i>{{formatTime initTime}}</span>
-                </center>
+              <div class="ui divider"></div>
+
+              <!-- Disponibilidad -->            
+              <h3 class="ui centered header">
+                Días disponible
+                <div class="sub header">comienza el {{styleShortDate initDate}}</div>
+              </h3>
+              <div class="small ui buttons">
+                <button class="ui day {{available 'D'}} button" data-day="D">D</button>
+                <button class="ui day {{available 'L'}} button" data-day="L">L</button>
+                <button class="ui day {{available 'M'}} button" data-day="M">M</button>
+                <button class="ui day {{available 'X'}} button" data-day="X">M</button>
+                <button class="ui day {{available 'J'}} button" data-day="J">J</button>
+                <button class="ui day {{available 'V'}} button" data-day="V">V</button>
+                <button class="ui day {{available 'S'}} button" data-day="S">S</button>
               </div>
-              <div class="eight wide column">
-                <center>
-                  <h2 class="ui centered sub header">termina</h2>
-                  <span><i class="time icon"></i>{{formatTime endTime}}</span>
-                </center>            
-              </div>
-            </div>
-
-            <!-- TODO dirección -->
-            <h3 class="ui centered header">
-              <i class="home icon"></i>
-              {{addr}}
-            </h3>
-
-            <div class="ui divider"></div>
-
-            <!-- Participantes -->
-            <h3 class="ui centered header">
-              {{remainingPlaces}} cupos restantes
-              <div class="sub header">{{lengthOf participants}} personas están asistiendo</div>
-            </h3>
-            <center>
-            {{#each firstParticipants participants}}
-            <a href="/users/{{this}}">
-              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
-            </a>
-            {{/each}}
-            </center>
-            {{#if remain participants}}
-            <a class="watch participants" href="#">Ver más...</a>
-            {{/if}}
-
-            <!-- Edit workshop info -->
-            {{#if isCurrentUserOwner}}
-            <div class="ui divider"></div>            
-            {{> workshopInfoEdit workshop=this}}
-            {{/if}}
-
-            <div class="ui divider"></div>
-
-            <!-- Enviar un correo -->
-            {{#unless isCurrentUserOwner}}
-            <center>
-              <button class="ui email organizer light-red-orange icon labeled button">
-                <i class="comment icon"></i>
-                Escríbele al organizador
-              </button>
               <br><br>
-              <form action="" class="ui email form segment" style="display:none;background-color: #f2f2f2;">
-                <div class="field">
-                  <label>Envía tus preguntas y comentarios al organizador de este evento</label><br>
-                  <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
+              <div class="ui grid">
+                <div class="eight wide column">
+                  <center>
+                    <h2 class="ui sub header">comienza</h2>
+                    <span><i class="time icon"></i>{{formatTime initTime}}</span>
+                  </center>
                 </div>
-                <div class="ui blue send email button">
-                  <i class="send icon"></i>
-                  Enviar
+                <div class="eight wide column">
+                  <center>
+                    <h2 class="ui centered sub header">termina</h2>
+                    <span><i class="time icon"></i>{{formatTime endTime}}</span>
+                  </center>            
                 </div>
-              </form>
-            </center>
-            <div class="ui fluid success hidden message">
-              Tu mensaje fue enviado con éxito.
-            </div>
-            {{/unless}}            
-
-            <!-- Eliminar -->
-            {{#if isCurrentUserOwner}}
-            <i class="red trash icon"></i>
-            <a class="delete event" href="#">Eliminar este evento</a>
-
-            <!-- <div class="ui accordion">
-              <div class="title">
-                <i class="dropdown icon"></i>
-                Más opciones
               </div>
-              <div class="content">
-                <i class="red trash icon"></i>
-                <a class="delete event" href="#">Eliminar este evento</a>
+
+              <!-- TODO dirección -->
+              <h3 class="ui centered header">
+                <i class="home icon"></i>
+                {{addr}}
+              </h3>
+
+              <div class="ui divider"></div>
+
+              <!-- Participantes -->
+              <h3 class="ui centered header">
+                {{remainingPlaces}} cupos restantes
+                <div class="sub header">{{lengthOf participants}} personas están asistiendo</div>
+              </h3>
+              <center>
+              {{#each firstParticipants participants}}
+              <a href="/users/{{this}}">
+                <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
+              </a>
+              {{/each}}
+              </center>
+              {{#if remain participants}}
+              <a class="watch participants" href="#">Ver más...</a>
+              {{/if}}
+
+              <!-- Enviar un correo -->
+              {{#unless isCurrentUserOwner}}
+              <div class="ui divider"></div>
+              <center>
+                <button class="ui email organizer light-red-orange icon labeled button">
+                  <i class="comment icon"></i>
+                  Escríbele al organizador
+                </button>
+                <br><br>
+                <form action="" class="ui email form segment" style="display:none;background-color: #f2f2f2;">
+                  <div class="field">
+                    <label>Envía tus preguntas y comentarios al organizador de este evento</label><br>
+                    <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
+                  </div>
+                  <div class="ui blue send email button">
+                    <i class="send icon"></i>
+                    Enviar
+                  </div>
+                </form>
+              </center>
+              <div class="ui fluid success hidden message">
+                Tu mensaje fue enviado con éxito.
               </div>
-            </div> -->
-            {{/if}}
+              {{/unless}}      
+            {{else}}
+              <!-- Edit workshop info -->
+              {{#if isCurrentUserOwner}}     
+              {{> workshopInfoEdit workshop=this}}
+              <div class="ui divider"></div>
+              <!-- Eliminar -->
+              <i class="red trash icon"></i>
+              <a class="delete event" href="#">Eliminar este evento</a>
+              {{/if}}
+            {{/unless}}
           </div>
         </div>
       </div>

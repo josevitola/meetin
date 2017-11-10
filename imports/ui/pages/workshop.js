@@ -22,6 +22,7 @@ Template.workshop.onCreated(function workshopOnCreated() {
   this.subscribe('users');
   this.subscribe('workshops');
 
+  this.isEditing = new ReactiveVar(false);
   this.isEditingName = new ReactiveVar(false);
   this.isEditingDesc = new ReactiveVar(false);
   this.isEditingTag = new ReactiveVar(false);
@@ -130,6 +131,9 @@ Template.workshop.helpers({
   comments() {
     return Comments.find().fetch();
   },
+  isEditing() {
+    return Template.instance().isEditing.get();
+  },
   isCurrentUserOwner() {
     return Template.instance().workshop.get().owner === Meteor.userId();
   },
@@ -182,8 +186,9 @@ Template.workshop.helpers({
 });
 
 Template.workshop.events({
-  /* == DATA == */
-  /* --- name --- */
+  'click .ui.top.attached.button'(event, instance) {
+    instance.isEditing.set(!instance.isEditing.get());
+  },
   'click .edit.name.icon'(event, instance) {
     instance.isEditingName.set(true);
   },
