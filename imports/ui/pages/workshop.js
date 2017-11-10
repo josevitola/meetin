@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { styleDate, styleShortDate, formatTime } from '/imports/lib/stylish.js';
+import { styleDate, styleShortDate, formatTime, formatPrice } from '/imports/lib/stylish.js';
 import { isToday } from '/imports/lib/clock.js';
 
 import { Files } from '/imports/lib/core.js';
@@ -51,6 +51,8 @@ Template.workshop.onRendered(function workshopOnRendered() {
   $('.ui.named.avatar.image').popup();
 
   $('.ui.email.form').hide();
+
+  window.scrollTo(0, 0);
 });
 
 Template.workshop.helpers({
@@ -94,7 +96,7 @@ Template.workshop.helpers({
   getImageLink() {
     let workshop = Template.instance().workshop.get();
     console.log(workshop);
-    if(workshop.pics.length > 0){
+    if(workshop.pics && workshop.pics.length > 0){
       return workshop.pics[0];
     }else {
       return '/default.png';
@@ -169,6 +171,12 @@ Template.workshop.helpers({
   styleDate(date) {
     return styleDate(date);
   },
+  styleShortDate(date) {
+    return styleShortDate(date);
+  },
+  stylePrice(price) {
+    return formatPrice(price);
+  },
   formatTime(time) {
     return formatTime(time);
   },
@@ -183,6 +191,12 @@ Template.workshop.helpers({
   },
   workshop() {
     return Template.instance().workshop.get();
+  },
+  remainingPlaces() {
+    let workshop = Template.instance().workshop.get();
+    if(workshop) {
+      return workshop.capacity - workshop.participants.length;
+    }
   },
   capacityAvailable() {
     let workshop = Template.instance().workshop.get();

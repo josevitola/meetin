@@ -67,7 +67,6 @@
             {{/each}}
 
             {{#if isCurrentUserOwner}}
-
               {{#unless isEditingTag}}
                 <button class="circular ui teal create tag icon mini button">
                   <i class="add icon"></i>
@@ -81,19 +80,17 @@
               <br>
               {{/unless}}
               <div class="ui divider"></div>
-            {{else}}
-            {{#if tags}}
+            {{else if tags}}
             <div class="ui divider"></div>
             {{/if}}
-            {{/if}}
-            {{#with desc}}
-            <h5 class="ui header">
-              ¿Qué se hace en este taller?
-              {{#if isCurrentUserOwner}}
-              <a href="#"><i class="small edit desc icon"></i></a>
-              {{/if}}
-            </h5>
 
+            {{#with desc}}
+              <h5 class="ui header">
+                ¿Qué se hace en este taller?
+                {{#if isCurrentUserOwner}}
+                <a href="#"><i class="small edit desc icon"></i></a>
+                {{/if}}
+              </h5>
               {{#if isEditingDesc}}
               <div class="ui desc form">
                 <div class="field">
@@ -198,6 +195,70 @@
         <!-- Menú de información del evento -->
         <div class="six wide column">
           <div class="ui segment" style="padding:30px;">
+            <!-- Precio -->
+            <h2 class="ui centered header">
+              {{stylePrice price}}
+              <div class="sub header">precio</div>
+            </h2>
+
+            <div class="ui divider"></div>
+
+            <!-- Disponibilidad -->            
+            <h3 class="ui centered header">
+              Días disponible
+              <div class="sub header">comienza el {{styleShortDate initDate}}</div>
+            </h3>
+            <div class="small ui buttons">
+              <button class="ui day {{available 'D'}} button" data-day="D">D</button>
+              <button class="ui day {{available 'L'}} button" data-day="L">L</button>
+              <button class="ui day {{available 'M'}} button" data-day="M">M</button>
+              <button class="ui day {{available 'X'}} button" data-day="X">M</button>
+              <button class="ui day {{available 'J'}} button" data-day="J">J</button>
+              <button class="ui day {{available 'V'}} button" data-day="V">V</button>
+              <button class="ui day {{available 'S'}} button" data-day="S">S</button>
+            </div>
+            <br><br>
+            <div class="ui grid">
+              <div class="eight wide column">
+                <center>
+                  <h2 class="ui sub header">comienza</h2>
+                  <span><i class="time icon"></i>{{formatTime initTime}}</span>
+                </center>
+              </div>
+              <div class="eight wide column">
+                <center>
+                  <h2 class="ui centered sub header">termina</h2>
+                  <span><i class="time icon"></i>{{formatTime endTime}}</span>
+                </center>            
+              </div>
+            </div>
+
+            <!-- TODO dirección -->
+            <h3 class="ui centered header">
+              <i class="home icon"></i>
+              {{addr}}
+            </h3>
+
+            <div class="ui divider"></div>
+
+            <!-- Participantes -->
+            <h3 class="ui centered header">
+              {{remainingPlaces}} cupos restantes
+              <div class="sub header">{{lengthOf participants}} personas están asistiendo</div>
+            </h3>
+            <center>
+            {{#each firstParticipants participants}}
+            <a href="/users/{{this}}">
+              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
+            </a>
+            {{/each}}
+            </center>
+            {{#if remain participants}}
+            <a class="watch participants" href="#">Ver más...</a>
+            {{/if}}
+
+            <div class="ui divider"></div>
+
             <!-- Enviar un correo -->
             {{#unless isCurrentUserOwner}}
             <center>
@@ -222,50 +283,28 @@
             </div>
             {{/unless}}
 
-            <!-- Información -->
-            <h5 class="ui header">Disponibilidad</h5>
-            <div class="small ui buttons">
-              <button class="ui day {{available 'D'}} button" data-day="D">D</button>
-              <button class="ui day {{available 'L'}} button" data-day="L">L</button>
-              <button class="ui day {{available 'M'}} button" data-day="M">M</button>
-              <button class="ui day {{available 'X'}} button" data-day="X">M</button>
-              <button class="ui day {{available 'J'}} button" data-day="J">J</button>
-              <button class="ui day {{available 'V'}} button" data-day="V">V</button>
-              <button class="ui day {{available 'S'}} button" data-day="S">S</button>
-            </div>
-            <br><br>
-
             <div class="ui divider"></div>
 
-            <!-- Participantes -->
-            <h5 class="ui header">{{lengthOf participants}} personas están asistiendo</h5>
-            {{#each firstParticipants participants}}
-            <a href="/users/{{this}}">
-              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
-            </a>
-            {{/each}}
-            {{#if remain participants}}
-            <a class="watch participants" href="#">Ver más...</a>
-            {{/if}}
-
+            <!-- TODO create only-edit view -->
+            <!-- {{#if isCurrentUserOwner}} -->
             <div class="ui items">
               <!-- Dirección -->
               <div class="item">
-                  {{#unless isEditingAddr}}
-                    <i class="home icon"></i>
-                    <div class="content">
-                      {{addr}}
-                      {{#if isCurrentUserOwner}}
-                      <a href="#"><i class="small edit addr icon"></i></a>
-                      {{/if}}
-                    </div>
-                  {{else}}
-                    <!-- Edit input -->
-                    <div class="ui edit action input">
-                      <input type="text" name="wedit-addr" value="{{addr}}"/>
-                      <button class="ui teal icon save addr button"><i class="check icon"></i></button>
-                    </div><br>
-                  {{/unless}}
+                {{#unless isEditingAddr}}
+                  <i class="home icon"></i>
+                  <div class="content">
+                    {{addr}}
+                    {{#if isCurrentUserOwner}}
+                    <a href="#"><i class="small edit addr icon"></i></a>
+                    {{/if}}
+                  </div>
+                {{else}}
+                  <!-- Edit input -->
+                  <div class="ui edit action input">
+                    <input type="text" name="wedit-addr" value="{{addr}}"/>
+                    <button class="ui teal icon save addr button"><i class="check icon"></i></button>
+                  </div><br>
+                {{/unless}}
               </div>
               <!-- Precio -->
               <div class="item">
@@ -326,6 +365,7 @@
                   </div><br>
                 {{/unless}}
               </div>
+              <!-- Hora de inicio -->
               <div class="item">
                 {{#unless isEditingInitTime}}
                   <i class="time icon"></i>
@@ -370,8 +410,8 @@
                   </div><br>
                 {{/unless}}
               </div>
-
             </div>
+            <!-- {{/if}} -->
 
             <!-- Eliminar -->
             {{#if isCurrentUserOwner}}
