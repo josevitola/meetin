@@ -9,6 +9,7 @@ Template.workshopInfoEdit.onCreated(function() {
   this.isEditingInitDate = new ReactiveVar(false);
   this.isEditingInitTime = new ReactiveVar(false);
   this.isEditingEndTime = new ReactiveVar(false);
+  this.isEditingEndTime = new ReactiveVar(false);
   this.isEditingAddr = new ReactiveVar(false);
   this.isEditingPrice = new ReactiveVar(false);
 });
@@ -137,4 +138,18 @@ Template.workshopInfoEdit.events({
   },
 
   // TODO end time
+  'click .edit.endTime.icon'(event, instance) {
+    event.preventDefault();
+    instance.isEditingEndTime.set(true);
+    setTimeout(function () {
+      $('#endTime').calendar({
+        type: 'time',
+        onChange: function (date, text, mode) {
+          const workshopId = FlowRouter.getParam('_id');
+          Meteor.call('workshops.update', workshopId, {endTime: date});
+          instance.isEditingEndTime.set(false);
+        }
+      });
+    }, 100);
+  },
 });
