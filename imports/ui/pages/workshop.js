@@ -54,6 +54,12 @@ Template.workshop.onRendered(function workshopOnRendered() {
 });
 
 Template.workshop.helpers({
+  about(userId) {
+    const user = Meteor.users.findOne(userId);
+    if(userId && user) {
+      return user.profile.desc;
+    }
+  },
   available(d) {
     return Template.instance().workshop.get().days.indexOf(d) === -1 ? "disabled" : "blue";
   },
@@ -132,6 +138,12 @@ Template.workshop.helpers({
   comments() {
     return Comments.find().fetch();
   },
+  info() {
+    var workshop = Template.instance().workshop.get();
+    if(workshop) {
+      return workshop.items.length !== 0
+    }
+  },
   isEditing() {
     return Template.instance().isEditing.get();
   },
@@ -182,7 +194,8 @@ Template.workshop.helpers({
   },
   capacityAvailable() {
     let workshop = Template.instance().workshop.get();
-    return workshop.capacity - workshop.participants.length > 0;
+    if(workshop)
+      return workshop.capacity - workshop.participants.length > 0;
   },
   isCurrentUser(user) {
     return user === Meteor.userId();

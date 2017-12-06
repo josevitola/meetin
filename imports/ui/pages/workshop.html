@@ -1,64 +1,223 @@
 <template name="workshop">
   {{#with workshop}}
-  <div class="main workshop container">
-    <!-- <header style="background-image: url({{getImageLink}})" class="masthead"> -->
-    <header style="background-image: url({{getImageLink}})" class="masthead">
-      <div class="overlay"></div>
-      <div class="header-content">
-        <div class="header-content-inner">
-          <!-- Name and created by fields -->
-          {{#unless isEditingName}}
-          <h2 class="ui inverted header" id="tagline">
-            <strong>{{name}}</strong>
-            <!-- Edit icon -->
-            {{#if isCurrentUserOwner}}
-            <a href="#"><i class="small edit name icon"></i></a>
-            {{/if}}
-            <div class="sub header">creado por
-              <a href="/users/{{owner}}">
-                {{getUserName owner}}
-              </a>
-            </div>
-          </h2>
+  <div class="ui main workshop container">
+    <div class="ui workshop info stackable grid">
+      <!-- General info --> 
+      <div class="ten wide column">
+        {{#with getImageLink}}
+        <div class="ui top title attached segment" style="background-image: url({{this}});">
+        </div>
+        {{/with}}
+        <div class="ui main attached title inverted teal segment">
+          <h1 class="ui header">Título del evento</h1>
+        </div>
+        <!-- Attend button -->
+        {{#unless isUserAttending}}
+        {{#unless isCurrentUserOwner}}
+          {{#if capacityAvailable}}
+          <div class="ui blue join workshop labeled icon bottom attached button">
+            <i class="right arrow icon"></i>
+            <b>Asistir</b>
+          </div>
           {{else}}
-          <!-- Name edit input -->
-          <div class="ui big edit action input">
-            <input type="text" name="wedit-name" value="{{name}}"/>
-            <button class="ui teal icon save name button"><i class="check icon"></i></button>
-          </div><br>
-          {{/unless}}
-          <div class="ui inverted horizontal divider"></div>
-          <!-- Attend button -->
-          {{#unless isUserAttending}}
-            {{#unless isCurrentUserOwner}}
-              {{#if capacityAvailable}}
-              <button class="ui teal join workshop labeled icon button">
-                <i class="right arrow icon"></i>
-                Asistir
-              </button>
-              {{else}}
-              <button class="ui orange labeled icon button">
-                <i class="right arrow icon"></i>
-                No hay cupos
-              </button>
+          <div class="ui orange labeled icon bottom attached button">
+            <i class="right arrow icon"></i>
+            No hay cupos
+          </div>
+          {{/if}}
+        {{/unless}}
+        {{else}}
+        <div class="ui dark-blue join workshop labeled icon bottom attached button">
+          <i class="check icon"></i>
+          Estás asistiendo
+        </div>
+        {{/unless}}
+
+        <!-- Fotos -->
+        <div class="ui teal segment">
+          <h3 class="ui dividing header">Fotos</h3>
+          <div class="ui small images">
+            <img src="{{getImageLink}}" alt="">
+          </div>  
+        </div>
+
+        <!-- Descripción, tags -->
+        {{#if info}}
+        <div class="ui info segment">
+          {{#with desc}}
+            <h5 class="ui header">
+              ¿Qué se hace en este taller?
+              {{#if isCurrentUserOwner}}
+              <a href="#"><i class="small edit desc icon"></i></a>
               {{/if}}
-            {{/unless}}
+            </h5>
+            {{#if isEditingDesc}}
+            <div class="ui desc form">
+              <div class="field">
+                <textarea name="wedit-desc" rows="6" value="{{this}}" placeholder="Descríbete como persona!"></textarea>
+              </div>
+              <button class="ui save desc button">Guardar</button>
+            </div>
             {{else}}
-            <button class="ui dark-blue join workshop labeled icon button">
-              <i class="check icon"></i>
-              Estás asistiendo
-            </button>
-          {{/unless}}
+            <p>{{this}}</p>
+            {{/if}}
+          {{/with}}
+
+          {{#with items}}
+          <div class="ui di
+          vider"></div>
+          <h5 class="ui header">
+            ¿Qué hay que traer?
+            {{#if isCurrentUserOwner}}
+            <a href="#"><i class="small edit items icon"></i></a>
+            {{/if}}
+          </h5>
+            {{#unless isEditingItems}}
+              <div class="ui items">
+                {{#each this}}
+                <div class="item">
+                  <i class="check icon"></i>
+                  <div class="content">
+                    {{this}}
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+            {{/unless}}
+          {{/with}}
+          {{#if isEditingItems}}
+          <!-- Edit input -->
+            <div class="ui items form">  <!-- Lista de cosas para llevar -->
+              <div class="ui action input">
+                <input name="wedit-item" type="text" placeholder='Lista de cosas para llevar...'/>
+                <div class="ui light-aqua add item button">Agregar</div>
+              </div>
+              <div class="ui message">
+                {{#unless items}}
+                <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
+                {{else}}
+                  <div class="ui middle aligned relaxed divided list">
+                    {{#each items}}
+                    <div class="item" data-idx="{{@index}}">
+                      <div class="right floated content">
+                        <a href="#"><i class="item delete icon"></i></a>
+                      </div>
+                    <i class="check icon"></i>
+                      <div class="content">
+                        {{this}}
+                      </div>
+                    </div>
+                    {{/each}}
+                  </div>
+                {{/unless}}
+              </div>
+              <button class="ui save items button">Guardar</button>
+            </div>
+            <br>
+          {{/if}}
+        </div>
+        {{/if}}
+
+        <!-- Comentarios -->
+        <div class="ui segment">
+          <div class="ui comments">
+            <h3 class="ui dividing header">Comentarios y preguntas</h3>
+            <form class="ui new comment form">
+              <div class="field">
+                <textarea name="new-comment" rows="2" placeholder="Añade un comentario..."></textarea>
+              </div>
+              <div class="ui blue labeled submit icon button">
+                <i class="comment icon"></i> Añadir un comentario
+              </div>
+            </form>
+            {{#each comments}}
+            <div class="comment">
+              <a class="avatar">
+                <img src="https://robohash.org/default.png?size=300x300">
+              </a>
+              <div class="content">
+                <a class="author">{{getUserName user}}</a>
+                <div class="metadata">
+                  <span class="date">{{datetime createdAt}}</span>
+                  {{#if isCurrentUser user}}
+                  <i class="remove del-comment icon" data-id="{{_id}}"></i>
+                  {{/if}}
+                </div>
+                <div class="text">
+                  {{content}}
+                </div>
+                <!-- <div class="actions">
+                  <a class="reply">Reply</a>
+                </div> -->
+              </div>
+            </div>
+            {{/each}}
+          </div>
         </div>
       </div>
-    </header>
 
-    <div class="ui container">
-      <div class="ui workshop info stackable grid">
-        <!-- General info -->
-        <div class="ten wide column">
-          <!-- Descripción, tags -->
-          <div class="ui segment">
+    <!-- Detalles del evento -->
+      <div class="six wide column">
+        <!-- Owner info -->
+        {{#unless isCurrentUserOwner}}
+        <div class="ui segments">
+          <div class="ui owner segment">
+            <img src="{{profilePicSrc owner}}" alt="" class="ui profile circular centered image">              
+            <h2 class="ui centered header">
+              <a href="/users/{{owner}}">{{getUserName owner}}</a>
+              <div class="sub header">es el organizador de este evento</div>
+            </h2>
+  
+            {{#with about owner}}          
+            <h3 class="ui centered grey header">Un poco sobre él:</h3>
+            <blockquote><i>"{{this}}"</i></blockquote>
+            {{/with}}
+          </div>
+
+          <div class="ui segment">            
+            <h3 class="ui centered blue header">¿Tienes preguntas?</h3>
+            <!-- Enviar un correo -->
+            <center>
+              <button class="ui email organizer basic blue icon labeled button">
+                  <i class="comment icon"></i>
+                  Escríbele
+              </button>
+            </center>
+            <center>
+              <form action="" class="ui email form segment" style="display:none;background-color: #f2f2f2;">
+                <div class="field">
+                  <label>Envía tus preguntas y comentarios al organizador de este evento</label><br>
+                  <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
+                </div>
+                <div class="ui blue send email button">
+                  <i class="send icon"></i>
+                  Enviar
+                </div>
+              </form>
+            </center>
+            <div class="ui fluid success hidden message">
+              Tu mensaje fue enviado con éxito.
+            </div>
+          </div>
+        </div>
+        {{/unless}}
+
+        {{#if isCurrentUserOwner}}
+        {{#unless isEditing}}
+        <div class="ui top attached blue labeled icon button">
+          <i class="settings icon"></i>
+          Editar información del evento
+        </div>
+        {{else}}
+        <div class="ui top attached green labeled icon button">
+          <i class="check icon"></i>
+          Finalizar cambios
+        </div>
+        {{/unless}}
+        {{/if}}
+
+        <div class="ui attached segment" style="padding:30px;">
+          {{#unless isEditing}}
             <!-- Tags -->
             {{#each tags}}
               <a data-idx="{{@index}}" class="ui label">
@@ -66,7 +225,6 @@
                 {{#if isCurrentUserOwner}} <i class="delete tag icon"></i> {{/if}}
               </a>
             {{/each}}
-
             {{#if isCurrentUserOwner}}
               {{#unless isEditingTag}}
                 <button class="circular ui teal create tag icon mini button">
@@ -85,232 +243,77 @@
             <div class="ui divider"></div>
             {{/if}}
 
-            {{#with desc}}
-              <h5 class="ui header">
-                ¿Qué se hace en este taller?
-                {{#if isCurrentUserOwner}}
-                <a href="#"><i class="small edit desc icon"></i></a>
-                {{/if}}
-              </h5>
-              {{#if isEditingDesc}}
-              <div class="ui desc form">
-                <div class="field">
-                  <textarea name="wedit-desc" rows="6" value="{{this}}" placeholder="Descríbete como persona!"></textarea>
-                </div>
-                <button class="ui save desc button">Guardar</button>
-              </div>
-              {{else}}
-              <p>{{this}}</p>
-              {{/if}}
-            {{/with}}
+            <!-- Precio -->
+            <h2 class="ui centered header">
+              {{stylePrice price}}
+              <div class="sub header">precio</div>
+            </h2>
 
-            {{#with items}}
             <div class="ui divider"></div>
-            <h5 class="ui header">
-              ¿Qué hay que traer?
-              {{#if isCurrentUserOwner}}
-              <a href="#"><i class="small edit items icon"></i></a>
-              {{/if}}
-            </h5>
-              {{#unless isEditingItems}}
-                <div class="ui items">
-                  {{#each this}}
-                  <div class="item">
-                    <i class="check icon"></i>
-                    <div class="content">
-                      {{this}}
-                    </div>
-                  </div>
-                  {{/each}}
-                </div>
-              {{/unless}}
-            {{/with}}
-            {{#if isEditingItems}}
-            <!-- Edit input -->
-              <div class="ui items form">  <!-- Lista de cosas para llevar -->
-                <div class="ui action input">
-                  <input name="wedit-item" type="text" placeholder='Lista de cosas para llevar...'/>
-                  <div class="ui light-aqua add item button">Agregar</div>
-                </div>
 
-                <div class="ui message">
-                  {{#unless items}}
-                  <i class="checkmark box icon"></i>Los elementos que agregues aparecerán aquí.
-                  {{else}}
-                    <div class="ui middle aligned relaxed divided list">
-                      {{#each items}}
-                      <div class="item" data-idx="{{@index}}">
-                        <div class="right floated content">
-                          <a href="#"><i class="item delete icon"></i></a>
-                        </div>
-                        <i class="check icon"></i>
-                        <div class="content">
-                          {{this}}
-                        </div>
-                      </div>
-                      {{/each}}
-                    </div>
-                  {{/unless}}
-                </div>
-                <button class="ui save items button">Guardar</button>
-              </div>
-              <br>
-            {{/if}}
-          </div>
-
-          <!-- Comentarios -->
-          <div class="ui segment">
-            <div class="ui comments">
-              <h3 class="ui dividing header">Comentarios y preguntas</h3>
-              <form class="ui new comment form">
-                <div class="field">
-                  <textarea name="new-comment" rows="2" placeholder="Añade un comentario..."></textarea>
-                </div>
-                <div class="ui blue labeled submit icon fluid button">
-                  <i class="comment icon"></i> Añadir un comentario
-                </div>
-              </form>
-              {{#each comments}}
-              <div class="comment">
-                <a class="avatar">
-                  <img src="https://robohash.org/default.png?size=300x300">
-                </a>
-                <div class="content">
-                  <a class="author">{{getUserName user}}</a>
-                  <div class="metadata">
-                    <span class="date">{{datetime createdAt}}</span>
-                    {{#if isCurrentUser user}}
-                    <i class="remove del-comment icon" data-id="{{_id}}"></i>
-                    {{/if}}
-                  </div>
-                  <div class="text">
-                    {{content}}
-                  </div>
-                  <!-- <div class="actions">
-                    <a class="reply">Reply</a>
-                  </div> -->
-                </div>
-              </div>
-              {{/each}}
+            <!-- Disponibilidad -->            
+            <h3 class="ui centered header">
+              Días disponible
+              <div class="sub header">comienza el {{styleShortDate initDate}}</div>
+            </h3>
+            <div class="small ui buttons">
+              <button class="ui day {{available 'D'}} button" data-day="D">D</button>
+              <button class="ui day {{available 'L'}} button" data-day="L">L</button>
+              <button class="ui day {{available 'M'}} button" data-day="M">M</button>
+              <button class="ui day {{available 'X'}} button" data-day="X">M</button>
+              <button class="ui day {{available 'J'}} button" data-day="J">J</button>
+              <button class="ui day {{available 'V'}} button" data-day="V">V</button>
+              <button class="ui day {{available 'S'}} button" data-day="S">S</button>
             </div>
-          </div>
-        </div>
+            <br><br>
+            <div class="ui grid">
+              <div class="eight wide column">
+                <center>
+                  <h2 class="ui sub header">comienza</h2>
+                  <span><i class="time icon"></i>{{formatTime initTime}}</span>
+                </center>
+              </div>
+              <div class="eight wide column">
+                <center>
+                  <h2 class="ui centered sub header">termina</h2>
+                  <span><i class="time icon"></i>{{formatTime endTime}}</span>
+                </center>            
+              </div>
+            </div>
 
-        <!-- Detalles del evento -->
-        <div class="six wide column">
-          {{#if isCurrentUserOwner}}
-          {{#unless isEditing}}
-          <div class="ui top attached blue labeled icon button">
-            <i class="settings icon"></i>
-            Editar información del evento
-          </div>
+            <!-- TODO dirección -->
+            <h3 class="ui centered header">
+              <i class="home icon"></i>
+              {{addr}}
+            </h3>
+
+            <div class="ui divider"></div>
+
+            <!-- Participantes -->
+            <h3 class="ui centered header">
+              {{remainingPlaces}} cupos restantes
+              <div class="sub header">{{lengthOf participants}} personas están asistiendo</div>
+            </h3>
+            <center>
+            {{#each firstParticipants participants}}
+            <a href="/users/{{this}}">
+              <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
+            </a>
+            {{/each}}
+            </center>
+            {{#if remain participants}}
+            <a class="watch participants" href="#">Ver más...</a>
+            {{/if}}
           {{else}}
-          <div class="ui top attached green labeled icon button">
-            <i class="check icon"></i>
-            Finalizar cambios
-          </div>
+            <!-- Edit workshop info -->
+            {{#if isCurrentUserOwner}}     
+            {{> workshopInfoEdit workshop=this}}
+            <div class="ui divider"></div>
+            <!-- Eliminar -->
+            <i class="red trash icon"></i>
+            <a class="delete event" href="#">Eliminar este evento</a>
+            {{/if}}
           {{/unless}}
-          {{/if}}
-
-          <div class="ui attached segment" style="padding:30px;">
-            {{#unless isEditing}}
-              <!-- Precio -->
-              <h2 class="ui centered header">
-                {{stylePrice price}}
-                <div class="sub header">precio</div>
-              </h2>
-
-              <div class="ui divider"></div>
-
-              <!-- Disponibilidad -->            
-              <h3 class="ui centered header">
-                Días disponible
-                <div class="sub header">comienza el {{styleShortDate initDate}}</div>
-              </h3>
-              <div class="small ui buttons">
-                <button class="ui day {{available 'D'}} button" data-day="D">D</button>
-                <button class="ui day {{available 'L'}} button" data-day="L">L</button>
-                <button class="ui day {{available 'M'}} button" data-day="M">M</button>
-                <button class="ui day {{available 'X'}} button" data-day="X">M</button>
-                <button class="ui day {{available 'J'}} button" data-day="J">J</button>
-                <button class="ui day {{available 'V'}} button" data-day="V">V</button>
-                <button class="ui day {{available 'S'}} button" data-day="S">S</button>
-              </div>
-              <br><br>
-              <div class="ui grid">
-                <div class="eight wide column">
-                  <center>
-                    <h2 class="ui sub header">comienza</h2>
-                    <span><i class="time icon"></i>{{formatTime initTime}}</span>
-                  </center>
-                </div>
-                <div class="eight wide column">
-                  <center>
-                    <h2 class="ui centered sub header">termina</h2>
-                    <span><i class="time icon"></i>{{formatTime endTime}}</span>
-                  </center>            
-                </div>
-              </div>
-
-              <!-- TODO dirección -->
-              <h3 class="ui centered header">
-                <i class="home icon"></i>
-                {{addr}}
-              </h3>
-
-              <div class="ui divider"></div>
-
-              <!-- Participantes -->
-              <h3 class="ui centered header">
-                {{remainingPlaces}} cupos restantes
-                <div class="sub header">{{lengthOf participants}} personas están asistiendo</div>
-              </h3>
-              <center>
-              {{#each firstParticipants participants}}
-              <a href="/users/{{this}}">
-                <img class="ui named avatar image" data-content="{{getUserName this}}" data-position="bottom center" src="{{profilePicSrc this}}" alt="">
-              </a>
-              {{/each}}
-              </center>
-              {{#if remain participants}}
-              <a class="watch participants" href="#">Ver más...</a>
-              {{/if}}
-
-              <!-- Enviar un correo -->
-              {{#unless isCurrentUserOwner}}
-              <div class="ui divider"></div>
-              <center>
-                <button class="ui email organizer light-red-orange icon labeled button">
-                  <i class="comment icon"></i>
-                  Escríbele al organizador
-                </button>
-                <br><br>
-                <form action="" class="ui email form segment" style="display:none;background-color: #f2f2f2;">
-                  <div class="field">
-                    <label>Envía tus preguntas y comentarios al organizador de este evento</label><br>
-                    <textarea id="emailToOwner" name="name" rows="8" cols="80"></textarea>
-                  </div>
-                  <div class="ui blue send email button">
-                    <i class="send icon"></i>
-                    Enviar
-                  </div>
-                </form>
-              </center>
-              <div class="ui fluid success hidden message">
-                Tu mensaje fue enviado con éxito.
-              </div>
-              {{/unless}}      
-            {{else}}
-              <!-- Edit workshop info -->
-              {{#if isCurrentUserOwner}}     
-              {{> workshopInfoEdit workshop=this}}
-              <div class="ui divider"></div>
-              <!-- Eliminar -->
-              <i class="red trash icon"></i>
-              <a class="delete event" href="#">Eliminar este evento</a>
-              {{/if}}
-            {{/unless}}
-          </div>
         </div>
       </div>
     </div>
